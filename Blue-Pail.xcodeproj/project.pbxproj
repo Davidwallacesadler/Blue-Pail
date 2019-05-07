@@ -55,13 +55,61 @@
 			isa = PBXGroup;
 			children = (
 				6326500322810CFE0025E10C /* AppDelegate.swift */,
-				6326500522810CFE0025E10C /* ViewController.swift */,
-				6326500722810CFE0025E10C /* Main.storyboard */,
-				6326500A22810D050025E10C /* Assets.xcassets */,
-				6326500C22810D050025E10C /* LaunchScreen.storyboard */,
+				6326501A22810E140025E10C /* Resources */,
+				6326501922810DE90025E10C /* HelperFiles */,
+				6326501822810DCE0025E10C /* ViewControllers */,
+				6326501722810DC90025E10C /* Views */,
+				6326501622810DC10025E10C /* ModelControllers */,
+				6326501522810DB90025E10C /* Models */,
 				6326500F22810D050025E10C /* Info.plist */,
 			);
 			path = "Blue-Pail";
+			sourceTree = "<group>";
+		};
+		6326501522810DB90025E10C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6326501622810DC10025E10C /* ModelControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ModelControllers;
+			sourceTree = "<group>";
+		};
+		6326501722810DC90025E10C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6326500722810CFE0025E10C /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6326501822810DCE0025E10C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				6326500522810CFE0025E10C /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		6326501922810DE90025E10C /* HelperFiles */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HelperFiles;
+			sourceTree = "<group>";
+		};
+		6326501A22810E140025E10C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6326500A22810D050025E10C /* Assets.xcassets */,
+				6326500C22810D050025E10C /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
