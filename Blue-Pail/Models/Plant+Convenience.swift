@@ -10,10 +10,9 @@ import Foundation
 import UIKit
 import CoreData
 
-// Extend Plant Object for convenience initializer:
 extension Plant {
     
-    // MARK: - Property
+    // MARK: - Properties
 
     var photo: UIImage {
         // Make sure the image data is not nil:
@@ -24,10 +23,21 @@ extension Plant {
         return photo
     }
     
+    var fireTimeAsString: String {
+        get {
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeStyle = .none
+            dateFormatter.dateStyle = .short
+            return dateFormatter.string(from: needsWateredFireDate!)
+        }
+    }
+    
+    
     // MARK - Convenience Initializer
     
+    // Note that isWatered defaults to true, needsWateredFireDate defaults to curent date
     convenience init(name: String?,
-                     isWatered: Bool,
+                     isWatered: Bool = true,
                      needsWateredFireDate: Date = Date(),
                      image: Data?,
                      context: NSManagedObjectContext = CoreDataStack.context) {
