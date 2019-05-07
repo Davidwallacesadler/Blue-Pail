@@ -41,9 +41,11 @@ class PlantController : AlarmScheduler {
         }
         let plant = Plant(name: name, isWatered: true, needsWateredFireDate: needsWaterFireDate ?? Date(), image: imageData, context: CoreDataStack.context)
         TagController.shared.createTag(withPlant: plant, title: tagName, colorNumber: colorNumber)
+        scheduleUserNotifications(for: plant)
         saveToPersistentStorage()
         return plant
     }
+    
     
     // TODO: - Implement editing later
     //func updatePlant(plant: Plant, newName: String?, newImage: UIImage,  )
@@ -51,6 +53,7 @@ class PlantController : AlarmScheduler {
     func deletePlant(plant: Plant) {
         let moc = plant.managedObjectContext
         moc?.delete(plant)
+        cancelUserNotifications(for: plant)
         saveToPersistentStorage()
     }
     
