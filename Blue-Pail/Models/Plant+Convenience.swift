@@ -40,6 +40,7 @@ extension Plant {
                      isWatered: Bool = true,
                      needsWateredFireDate: Date = Date(),
                      image: Data?,
+                     uuid: UUID,
                      context: NSManagedObjectContext = CoreDataStack.context) {
         self.init(context: context)
         
@@ -47,6 +48,7 @@ extension Plant {
         self.isWatered = isWatered
         self.needsWateredFireDate = needsWateredFireDate
         self.image = image
+        self.uuid = uuid
     }
     
 }

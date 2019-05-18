@@ -8,13 +8,13 @@
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="tag" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Tag" inverseName="plants" inverseEntity="Tag" syncable="YES"/>
     </entity>
-    <entity name="Tag" representedClassName="Tag" parentEntity="Plant" syncable="YES" codeGenerationType="class">
+    <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
         <attribute name="colorNumber" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="plants" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Plant" inverseName="tag" inverseEntity="Plant" syncable="YES"/>
+        <relationship name="plants" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Plant" inverseName="tag" inverseEntity="Plant" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Plant" positionX="-131.42578125" positionY="-135.3671875" width="128" height="133"/>
+        <element name="Plant" positionX="-148.7109375" positionY="-116.53125" width="128" height="135"/>
         <element name="Tag" positionX="-357.0859375" positionY="-15.859375" width="128" height="88"/>
     </elements>
 </model>

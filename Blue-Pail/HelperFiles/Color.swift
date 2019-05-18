@@ -29,4 +29,10 @@ extension UIColor {
     static var brightRed: UIColor {
         return UIColor(red: 235/255, green: 25/255, blue: 50/255, alpha: 1.0)
     }
+    static var wateredBlue: UIColor {
+        return UIColor(red: 190/255, green: 226/255, blue: 253/255, alpha: 1.0)
+    }
+    static var dryYellow: UIColor {
+        return UIColor(red: 211/255, green: 207/255, blue: 143/255, alpha: 1.0)
+    }
 }

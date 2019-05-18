@@ -32,23 +32,35 @@ class PlantController : AlarmScheduler {
     
     // MARK: - CRUD
     
-    func createPlant(name: String?, image: UIImage?, needsWaterFireDate: Date?, tagName: String?, colorNumber: Double) -> Plant {
+    func createPlant(name: String?, image: UIImage?, needsWaterFireDate: Date?, tag: Tag) {
         let imageData: Data?
         if let image = image {
             imageData = image.jpegData(compressionQuality: 1.0)
         } else {
             imageData = nil
         }
-        let plant = Plant(name: name, isWatered: true, needsWateredFireDate: needsWaterFireDate ?? Date(), image: imageData, context: CoreDataStack.context)
-        TagController.shared.createTag(withPlant: plant, title: tagName, colorNumber: colorNumber)
+        let uuid = UUID()
+        let plant = Plant(name: name, isWatered: true, needsWateredFireDate: needsWaterFireDate ?? Date(), image: imageData, uuid: uuid, context: CoreDataStack.context)
+        TagController.shared.appendPlantTo(targetTag: tag, desiredPlant: plant)
         scheduleUserNotifications(for: plant)
         saveToPersistentStorage()
-        return plant
     }
     
-    
-    // TODO: - Implement editing later
-    //func updatePlant(plant: Plant, newName: String?, newImage: UIImage,  )
+    // TODO: Make this properly update the tag
+    func updatePlant(plant: Plant, newName: String?, newImage: UIImage?, newFireDate: Date?, newTag: Tag) {
+        let imageData: Data?
+        if let image = newImage {
+            imageData = image.jpegData(compressionQuality: 1.0)
+        } else {
+            imageData = nil
+        }
+        plant.name = newName
+        plant.image = imageData
+        plant.needsWateredFireDate = newFireDate
+        //TagController.shared.updateTag(withPlant: plant, title: newTagTitle, colorNumber: newColorNumber)
+        scheduleUserNotifications(for: plant)
+        saveToPersistentStorage()
+    }
     
     func deletePlant(plant: Plant) {
         let moc = plant.managedObjectContext
@@ -57,6 +69,20 @@ class PlantController : AlarmScheduler {
         saveToPersistentStorage()
     }
     
+    // MARK: - Additional Helper Methods
+    
+    // Need a function that deals with checking the isWatered Bool - if true set the background color of the desired view to be blue/green and to yellow/brown if false. Or display some icon that shows watered/notwatered state.
+    func waterPlant(plant: Plant, view: UIView) {
+        if plant.isWatered {
+            plant.isWatered = true
+            view.backgroundColor = UIColor.wateredBlue
+            scheduleUserNotifications(for: plant)
+        } else {
+            plant.isWatered = false
+            view.backgroundColor = UIColor.dryYellow
+            cancelUserNotifications(for: plant)
+        }
+    }
     
     // MARK: - Persistence
     

@@ -10,6 +10,10 @@ import UIKit
 
 class PlantCollectionViewCell: UICollectionViewCell {
     
+    func moveSelectedBorderTo(selectedButton button: UIButton) {
+        
+    }
+    
     // MARK: - Outlets
     
     @IBOutlet weak var tagColorView: UIView!

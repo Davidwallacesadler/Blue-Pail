@@ -19,9 +19,13 @@ class PlantCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+        self.collectionView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.collectionView.reloadData()
     }
 
     /*
@@ -51,7 +55,7 @@ class PlantCollectionViewController: UICollectionViewController {
             return UICollectionViewCell()
         }
         let selectedPlant = PlantController.shared.plants[indexPath.row]
-        let selectedPlantTagColor = ColorHelper.colorFrom(colorNumber: selectedPlant.tag?.colorNumber ?? 7.0)
+        let selectedPlantTagColor = ColorHelper.colorFrom(colorNumber: selectedPlant.tag?.colorNumber ?? Double(Int.random(in: 1...6)))
         cell.plantNameLabel.text = selectedPlant.name
         cell.tagTitleLabel.text = selectedPlant.tag?.title
         cell.plantImageView.image = selectedPlant.photo
@@ -67,15 +71,11 @@ class PlantCollectionViewController: UICollectionViewController {
         return true
     }
     */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-    */
 
-    /*
+
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
         return false
@@ -88,6 +88,13 @@ class PlantCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
     }
-    */
 
+}
+
+// MARK: Delegate Flow Layout
+
+extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 150, height: 200)
+    }
 }
