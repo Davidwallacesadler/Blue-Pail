@@ -224,10 +224,36 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Notification" id="JYL-v3-lEY">
+                            <tableViewSection headerTitle="Days until next watering" id="Abw-0I-vpg">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="45" id="Eki-kA-qN6">
+                                        <rect key="frame" x="0.0" y="203" width="375" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Eki-kA-qN6" id="4hu-Wn-Ifu">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select an amount of days..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GmG-qO-Eah" userLabel="dayTextField">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="GmG-qO-Eah" secondAttribute="trailing" id="9vH-Dr-6m1"/>
+                                                <constraint firstAttribute="bottom" secondItem="GmG-qO-Eah" secondAttribute="bottom" id="LAV-Ct-6qU"/>
+                                                <constraint firstItem="GmG-qO-Eah" firstAttribute="top" secondItem="4hu-Wn-Ifu" secondAttribute="top" id="R2g-8Y-qeK"/>
+                                                <constraint firstItem="GmG-qO-Eah" firstAttribute="leading" secondItem="4hu-Wn-Ifu" secondAttribute="leading" id="mQk-uU-oX7"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Days Until Next Watering" id="JYL-v3-lEY">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="150" id="1NY-VU-hAo">
-                                        <rect key="frame" x="0.0" y="203" width="375" height="150"/>
+                                        <rect key="frame" x="0.0" y="276" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1NY-VU-hAo" id="evY-mi-EHH">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
@@ -256,7 +282,7 @@
                             <tableViewSection headerTitle="Image or Icon" id="tYZ-QD-Vtw">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="150" id="fkv-xv-HxK">
-                                        <rect key="frame" x="0.0" y="381" width="375" height="150"/>
+                                        <rect key="frame" x="0.0" y="454" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fkv-xv-HxK" id="T4k-tm-cfZ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
@@ -308,6 +334,8 @@
                         <outlet property="blueButton" destination="Ape-MU-OYM" id="PEW-aq-hr0"/>
                         <outlet property="crimsonButton" destination="VOg-U9-pNh" id="67c-qi-C93"/>
                         <outlet property="datePicker" destination="WBL-1u-ARR" id="cX4-5K-Hcd"/>
+                        <outlet property="dayPickerView" destination="vo3-5Q-93F" id="KXv-6o-CV6"/>
+                        <outlet property="dayTextField" destination="GmG-qO-Eah" id="rv0-Un-ggf"/>
                         <outlet property="greenButton" destination="kBo-I1-to7" id="w2R-au-yHC"/>
                         <outlet property="orangeButton" destination="yXO-BZ-sD0" id="bqe-B3-adv"/>
                         <outlet property="plantNameTextField" destination="xxP-HM-uXp" id="Wan-1S-EeW"/>
@@ -316,6 +344,10 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o57-DN-x20" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pickerView contentMode="scaleToFill" id="vo3-5Q-93F">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="216"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                </pickerView>
             </objects>
             <point key="canvasLocation" x="1132" y="143.47826086956522"/>
         </scene>
