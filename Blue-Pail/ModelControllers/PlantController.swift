@@ -57,6 +57,7 @@ class PlantController : AlarmScheduler {
         plant.name = newName
         plant.image = imageData
         plant.needsWateredFireDate = newFireDate
+        TagController.shared.appendPlantTo(targetTag: newTag, desiredPlant: plant)
         //TagController.shared.updateTag(withPlant: plant, title: newTagTitle, colorNumber: newColorNumber)
         scheduleUserNotifications(for: plant)
         saveToPersistentStorage()
@@ -121,7 +122,7 @@ extension AlarmScheduler {
                 print("Unable to add notification request. \(error.localizedDescription)")
             }
         }
-        print("NotificationCenter added the notification for alarm: \(String(describing: plant.name)) with uuid: \(String(describing: plant.uuid?.uuidString)).")
+        print("NotificationCenter added the notification for alarm: \(String(describing: plant.name)) with uuid: \(String(describing: plant.uuid?.uuidString)) to go off: \(String(describing: plant.needsWateredFireDate)).")
     }
     
     func cancelUserNotifications(for plant: Plant) {

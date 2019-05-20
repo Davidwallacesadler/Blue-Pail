@@ -250,39 +250,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Days Until Next Watering" id="JYL-v3-lEY">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="150" id="1NY-VU-hAo">
-                                        <rect key="frame" x="0.0" y="276" width="375" height="150"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1NY-VU-hAo" id="evY-mi-EHH">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="WBL-1u-ARR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
-                                                    <date key="date" timeIntervalSinceReferenceDate="578945500.32935703">
-                                                        <!--2019-05-07 18:11:40 +0000-->
-                                                    </date>
-                                                    <connections>
-                                                        <action selector="datePickerDateChanged:" destination="ADt-cV-qID" eventType="valueChanged" id="Gz7-5f-CBg"/>
-                                                    </connections>
-                                                </datePicker>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="WBL-1u-ARR" secondAttribute="bottom" id="8En-dz-zNd"/>
-                                                <constraint firstAttribute="trailing" secondItem="WBL-1u-ARR" secondAttribute="trailing" id="j54-x6-J69"/>
-                                                <constraint firstItem="WBL-1u-ARR" firstAttribute="top" secondItem="evY-mi-EHH" secondAttribute="top" id="kH9-Vh-8tq"/>
-                                                <constraint firstItem="WBL-1u-ARR" firstAttribute="leading" secondItem="evY-mi-EHH" secondAttribute="leading" id="ozb-de-aV6"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="Image or Icon" id="tYZ-QD-Vtw">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="150" id="fkv-xv-HxK">
-                                        <rect key="frame" x="0.0" y="454" width="375" height="150"/>
+                                        <rect key="frame" x="0.0" y="276" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fkv-xv-HxK" id="T4k-tm-cfZ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
@@ -333,7 +304,6 @@
                     <connections>
                         <outlet property="blueButton" destination="Ape-MU-OYM" id="PEW-aq-hr0"/>
                         <outlet property="crimsonButton" destination="VOg-U9-pNh" id="67c-qi-C93"/>
-                        <outlet property="datePicker" destination="WBL-1u-ARR" id="cX4-5K-Hcd"/>
                         <outlet property="dayPickerView" destination="vo3-5Q-93F" id="KXv-6o-CV6"/>
                         <outlet property="dayTextField" destination="GmG-qO-Eah" id="rv0-Un-ggf"/>
                         <outlet property="greenButton" destination="kBo-I1-to7" id="w2R-au-yHC"/>

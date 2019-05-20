@@ -41,10 +41,15 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Text Field
+        // Gesture recognizer Setup:
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
+        
+        // DayText Field Setup:
         dayTextField.inputView = dayPickerView
         
-        // Picker
+        // Picker Setup:
         self.dayPickerView.delegate = self
         self.dayPickerView.dataSource = self
         pickerIntegers = [
@@ -62,13 +67,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         }
     }
     var needsWateringDateValue: Date?
-    /*
-     var needsWateringDateValue: Date? {
-        didSet {
-            self = Date() + dayHelper.timeIntervalFromDay(dayInteger)
-        }
-     }
-     */
     var dayInteger: Int?
     var image: UIImage?
     var tag: Tag?
@@ -86,7 +84,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     @IBOutlet weak var crimsonButton: UIButton!
     @IBOutlet weak var purpleButton: UIButton!
     @IBOutlet weak var redButton: UIButton!
-    @IBOutlet weak var datePicker: UIDatePicker!
     
      // MARK: - Actions
     // TODO: - Make the text field for the tag title to be a picker with the names
@@ -99,11 +96,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     @IBAction func saveButtonPressed(_ sender: Any) {
         updatePlant()
-    }
-    
-    // Date Picker
-    @IBAction func datePickerDateChanged(_ sender: UIDatePicker) {
-        needsWateringDateValue = sender.date
     }
     
     // Color Buttons
