@@ -32,8 +32,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         let selectedInteger = pickerIntegers[row]
         dayTextField.text = String(selectedInteger)
         dayInteger = selectedInteger
-        let timeToNextWatering = DayHelper.timeIntervalFrom(dayIntegerCount: selectedInteger)
-        let notificationDate = Date(timeIntervalSinceNow: timeToNextWatering)
+        let notificationDate = DayHelper.futureDateFromToday(givenNumberOfDays: selectedInteger)
         print("\(notificationDate)")
         needsWateringDateValue = notificationDate
     }
@@ -134,7 +133,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     func updatePlant() {
         guard let selectedPlant = plant, let plantName = plantNameTextField.text, let needsWateringDate = needsWateringDateValue, let selectedTag = tag, let plantImage = image else {
-            PlantController.shared.createPlant(name: plantNameTextField.text ?? "Plant", image: UIImage(named: "defualt"), needsWaterFireDate: needsWateringDateValue ?? Date(timeInterval: DayHelper.timeIntervalFrom(dayIntegerCount: 1), since: Date()), tag: tag ?? TagController.shared.tags[0])
+            PlantController.shared.createPlant(name: plantNameTextField.text ?? "Plant", image: UIImage(named: "defualt"), needsWaterFireDate: needsWateringDateValue ?? DayHelper.futureDateFromToday(givenNumberOfDays: 1), tag: tag ?? TagController.shared.tags[0])
             self.navigationController?.popViewController(animated: true)
             return
         }
