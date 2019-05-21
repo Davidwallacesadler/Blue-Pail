@@ -10,10 +10,8 @@ import Foundation
 
 struct DayHelper {
     static func timeIntervalFrom(dayIntegerCount days: Int) -> TimeInterval {
-
-        // For some reason the notification is scheduled 6 hours LATE - remove 6 hours of time.
-        let timeDiscrepency = 21600
-        let secondsInADay = 86400 - timeDiscrepency
+        // 6 hour discrepency
+        let secondsInADay = 86400
         let selectedDaysInSeconds = Double(days * secondsInADay)
         guard let timeIntervalFromSeconds = TimeInterval(exactly: selectedDaysInSeconds) else {
             return TimeInterval()

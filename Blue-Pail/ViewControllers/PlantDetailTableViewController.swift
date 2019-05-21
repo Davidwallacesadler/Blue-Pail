@@ -33,7 +33,8 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         dayTextField.text = String(selectedInteger)
         dayInteger = selectedInteger
         let timeToNextWatering = DayHelper.timeIntervalFrom(dayIntegerCount: selectedInteger)
-        let notificationDate = Date(timeInterval: timeToNextWatering, since: Date())
+        let notificationDate = Date(timeIntervalSinceNow: timeToNextWatering)
+        print("\(notificationDate)")
         needsWateringDateValue = notificationDate
     }
     

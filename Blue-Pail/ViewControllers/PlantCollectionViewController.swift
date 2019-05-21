@@ -15,12 +15,6 @@ class PlantCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-
-        // Do any additional setup after loading the view.
         self.collectionView.reloadData()
     }
     
@@ -28,15 +22,7 @@ class PlantCollectionViewController: UICollectionViewController {
         self.collectionView.reloadData()
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
+  
 
     // MARK: UICollectionViewDataSource
 
@@ -54,12 +40,16 @@ class PlantCollectionViewController: UICollectionViewController {
             print("ERROR: The collectionViewCell is not an instance of PlantCollectionViewCell!")
             return UICollectionViewCell()
         }
+        // Made this a variable to change the value with the isDry method:
         let selectedPlant = PlantController.shared.plants[indexPath.row]
+        PlantController.shared.checkIfDry(plant: selectedPlant)
         let selectedPlantTagColor = ColorHelper.colorFrom(colorNumber: selectedPlant.tag?.colorNumber ?? Double(Int.random(in: 1...6)))
+        let plantWateredStateColor = PlantController.shared.colorBasedOnWateredState(plant: selectedPlant)
         cell.plantNameLabel.text = selectedPlant.name
         cell.tagTitleLabel.text = selectedPlant.tag?.title
         cell.plantImageView.image = selectedPlant.photo
         cell.tagColorView.backgroundColor = selectedPlantTagColor
+        cell.backgroundColor = plantWateredStateColor
         return cell
     }
 
@@ -97,4 +87,14 @@ extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 150, height: 200)
     }
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using [segue destinationViewController].
+     // Pass the selected object to the new view controller.
+     }
+     */
 }

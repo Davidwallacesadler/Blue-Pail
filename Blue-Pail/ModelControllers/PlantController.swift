@@ -13,6 +13,8 @@ import UserNotifications
 
 class PlantController : AlarmScheduler {
     
+    //TODO: - when the app is opened or when that plant is viewed or whatever you could check how many days have passed since it was last watered and if it's more than the desired amount than change the bool.
+    
     // MARK: - Shared Instance / Singelton
     
     static let shared = PlantController()
@@ -73,17 +75,34 @@ class PlantController : AlarmScheduler {
     // MARK: - Additional Helper Methods
     
     // Need a function that deals with checking the isWatered Bool - if true set the background color of the desired view to be blue/green and to yellow/brown if false. Or display some icon that shows watered/notwatered state.
-    func waterPlant(plant: Plant, view: UIView) {
-        if plant.isWatered {
-            plant.isWatered = true
-            view.backgroundColor = UIColor.wateredBlue
-            scheduleUserNotifications(for: plant)
+    func swapWateredState(plant: Plant) {
+//        if plant.isWatered {
+//            plant.isWatered = true
+//            scheduleUserNotifications(for: plant)
+//        } else {
+//            plant.isWatered = false
+//        }
+    }
+    
+    func colorBasedOnWateredState(plant: Plant) -> UIColor {
+        if plant.isWatered == true {
+            return UIColor.wateredBlue
         } else {
-            plant.isWatered = false
-            view.backgroundColor = UIColor.dryYellow
-            cancelUserNotifications(for: plant)
+            return UIColor.dryYellow
         }
     }
+    
+    // if the current date is greater than or equal to the fireDate then set the plant to dry.
+    func checkIfDry(plant:Plant) {
+        guard let isDryDate = plant.needsWateredFireDate else { return }
+        let currentDate = Date()
+        if currentDate >= isDryDate {
+            plant.isWatered = false
+        }
+    }
+    
+    // Need a function that can run when the notification gets triggered -- meaning when the notification goes off get the plant for that notification and change the isWatered state from true to false.
+    
     
     // MARK: - Persistence
     
@@ -104,7 +123,8 @@ protocol AlarmScheduler {
 }
 
 extension AlarmScheduler {
-    
+    // IDEA: maybe have a 'delay' action that will set the notification a desired time interval away from the current time - wont affect day integer - Just a way of one time putting off the notification to a time that better suits the user - in hours.
+    // IDEA: maybe have an 'water' action that will run the code required to update the watered property and schedule the next notification
     func scheduleUserNotifications(for plant: Plant) {
         let content  = UNMutableNotificationContent()
         content.title = "Time To Water!"
@@ -112,7 +132,7 @@ extension AlarmScheduler {
         content.sound = UNNotificationSound.default
         
         let calendar = Calendar.current
-        
+    
         let dateCompoenents = calendar.dateComponents([.day, .hour, .minute], from: plant.needsWateredFireDate ?? Date())
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateCompoenents, repeats: true)
         let request = UNNotificationRequest(identifier: plant.uuid!.uuidString, content: content, trigger: trigger)

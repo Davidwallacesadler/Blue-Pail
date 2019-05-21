@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             CreateDataFactory.createData()
         }
     }
-    
+    // CHECK WITH COLTON ABOUT THIS
     private func alwaysFirstLaunch() {
         let alwaysFirstLaunch = FirstLaunch.alwaysFirst()
     }

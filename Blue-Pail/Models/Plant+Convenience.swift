@@ -16,7 +16,7 @@ extension Plant {
 
     var photo: UIImage {
         // Make sure the image data is not nil:
-        guard let image = image else { return UIImage() }
+        guard let image = image else { return UIImage(named: "default") ?? UIImage() }
         // Make sure we can create a UIImage out of the image data:
         guard let photo = UIImage(data: image as Data) else { return UIImage() }
         // Return the image UIImage:
