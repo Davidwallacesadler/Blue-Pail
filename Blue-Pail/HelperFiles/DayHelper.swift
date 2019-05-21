@@ -9,23 +9,19 @@
 import Foundation
 
 struct DayHelper {
-//    static func timeIntervalFrom(dayIntegerCount days: Int) -> TimeInterval {
-// 
-//        let secondsInADay = 86400
-//        let todaysDate = Date()
-//        let formatter = DateFormatter()
-//        let calendar = Calendar.current
-//        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: todaysDate)
-//        // Grab todays day value as an int - add our day value and create a new date from
-//        // Call this to create a date from a string -- create a string rather than a time interval
-//        //formatter.date(from: <#T##String#>)
-//        let selectedDaysInSeconds = Double(days * secondsInADay)
-//        guard let timeIntervalFromSeconds = TimeInterval(exactly: selectedDaysInSeconds) else {
-//            return TimeInterval()
-//        }
-//        return timeIntervalFromSeconds
-//        
-//    }
+    
+    /// Returns a time interval that is equivalent to the number of days passed in.
+    static func timeIntervalFrom(dayIntegerCount days: Int) -> TimeInterval {
+        // => 60 sec/min  * 60 min/hour * 24 hour/day
+        let secondsInADay = 86400
+        let selectedDaysInSeconds = Double(days * secondsInADay)
+        guard let timeIntervalFromSeconds = TimeInterval(exactly: selectedDaysInSeconds) else {
+            return TimeInterval()
+        }
+        return timeIntervalFromSeconds
+        
+    }
+    /// Returns a future date that is equivalent to the current date plus a given number of days away (s.t the given number of days is from 1 to 31).
     static func futureDateFromToday(givenNumberOfDays days: Int) -> Date {
         let todaysDate = Date()
         let calendar = Calendar.current
@@ -116,8 +112,9 @@ struct DayHelper {
         if todaysHour < 10 {
             newDateString.append("0")
         }
-        // ACCOUNT FOR UTC -- find a better way of accounting for this
-        newDateString.append(" \(todaysHour - 6):")
+        // ACCOUNT FOR UTC -- find a better way of accounting for this because its different based on the currentTimeZone
+        //newDateString.append(" \(todaysHour - 6):")
+        newDateString.append(" \(todaysHour):")
         newDateString.append("\(todaysMinute):")
         // Round the minute off
         newDateString.append("00")
