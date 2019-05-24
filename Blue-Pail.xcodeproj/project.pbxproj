@@ -26,6 +26,7 @@
 		63265037228F28E30025E10C /* FirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63265036228F28E30025E10C /* FirstLaunch.swift */; };
 		63265039228F2A190025E10C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63265038228F2A180025E10C /* Keys.swift */; };
 		6326503B228F34900025E10C /* DayHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6326503A228F34900025E10C /* DayHelper.swift */; };
+		635AEFEC2296124200A9026F /* PlantPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635AEFEB2296124200A9026F /* PlantPopupViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		63265036228F28E30025E10C /* FirstLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstLaunch.swift; sourceTree = "<group>"; };
 		63265038228F2A180025E10C /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		6326503A228F34900025E10C /* DayHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayHelper.swift; sourceTree = "<group>"; };
+		635AEFEB2296124200A9026F /* PlantPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantPopupViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 			children = (
 				63265028228204E10025E10C /* PlantCollectionViewController.swift */,
 				63265030228217710025E10C /* PlantDetailTableViewController.swift */,
+				635AEFEB2296124200A9026F /* PlantPopupViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				63265037228F28E30025E10C /* FirstLaunch.swift in Sources */,
 				63265035228E786D0025E10C /* CreateDataFactory.swift in Sources */,
 				6326502322812F060025E10C /* Tag+Convenience.swift in Sources */,
+				635AEFEC2296124200A9026F /* PlantPopupViewController.swift in Sources */,
 				63265039228F2A190025E10C /* Keys.swift in Sources */,
 				6326502122811CDA0025E10C /* Plant+Convenience.swift in Sources */,
 				6326502D2282165B0025E10C /* Color.swift in Sources */,

@@ -10,6 +10,8 @@ import UIKit
 
 class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    // TODO: 
+    
     // MARK: - Picker Protocol Stubs
     
     // Columns in picker:
@@ -32,7 +34,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         let selectedInteger = pickerIntegers[row]
         dayTextField.text = String(selectedInteger)
         dayInteger = selectedInteger
-        let notificationDate = DayHelper.futureDateFromToday(givenNumberOfDays: selectedInteger)
+        let notificationDate = DayHelper.futrueDateFrom(givenNumberOfDays: selectedInteger)
         print("\(notificationDate)")
         needsWateringDateValue = notificationDate
     }
@@ -132,12 +134,12 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     // MARK: - Methods
     
     func updatePlant() {
-        guard let selectedPlant = plant, let plantName = plantNameTextField.text, let needsWateringDate = needsWateringDateValue, let selectedTag = tag, let plantImage = image else {
-            PlantController.shared.createPlant(name: plantNameTextField.text ?? "Plant", image: UIImage(named: "defualt"), needsWaterFireDate: needsWateringDateValue ?? DayHelper.futureDateFromToday(givenNumberOfDays: 1), tag: tag ?? TagController.shared.tags[0])
+        guard let selectedPlant = plant, let plantName = plantNameTextField.text, let needsWateringDate = needsWateringDateValue, let selectedTag = tag, let plantImage = image, let selectedDay = dayInteger else {
+            PlantController.shared.createPlant(name: plantNameTextField.text ?? "Plant", image: UIImage(named: "defualt"), needsWaterFireDate: needsWateringDateValue ?? DayHelper.futrueDateFrom(givenNumberOfDays: 1), tag: tag ?? TagController.shared.tags[0], dayInteger: dayInteger ?? 1)
             self.navigationController?.popViewController(animated: true)
             return
         }
-        PlantController.shared.updatePlant(plant: selectedPlant, newName: plantName, newImage: plantImage, newFireDate: needsWateringDate, newTag: selectedTag)
+        PlantController.shared.updatePlant(plant: selectedPlant, newName: plantName, newImage: plantImage, newFireDate: needsWateringDate, newTag: selectedTag, dayInteger: selectedDay)
         self.navigationController?.popViewController(animated: true)
         
     }
@@ -148,5 +150,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
        // tagTitleTextField.text = selectedPlant.tag?.title
         
     }
-
+    
 }
+

@@ -34,7 +34,8 @@ class PlantController : AlarmScheduler {
     
     // MARK: - CRUD
     
-    func createPlant(name: String?, image: UIImage?, needsWaterFireDate: Date?, tag: Tag) {
+    // TODO: Fix optional values
+    func createPlant(name: String?, image: UIImage?, needsWaterFireDate: Date?, tag: Tag, dayInteger: Int) {
         let imageData: Data?
         if let image = image {
             imageData = image.jpegData(compressionQuality: 1.0)
@@ -42,14 +43,14 @@ class PlantController : AlarmScheduler {
             imageData = nil
         }
         let uuid = UUID()
-        let plant = Plant(name: name, isWatered: true, needsWateredFireDate: needsWaterFireDate ?? Date(), image: imageData, uuid: uuid, context: CoreDataStack.context)
+        let plant = Plant(name: name, isWatered: true, needsWateredFireDate: needsWaterFireDate ?? Date(), image: imageData, uuid: uuid, dayToNextWater: Int16(dayInteger), context: CoreDataStack.context)
         TagController.shared.appendPlantTo(targetTag: tag, desiredPlant: plant)
         scheduleUserNotifications(for: plant)
         saveToPersistentStorage()
     }
     
-    // TODO: Make this properly update the tag
-    func updatePlant(plant: Plant, newName: String?, newImage: UIImage?, newFireDate: Date?, newTag: Tag) {
+    
+    func updatePlant(plant: Plant, newName: String?, newImage: UIImage?, newFireDate: Date?, newTag: Tag, dayInteger: Int) {
         let imageData: Data?
         if let image = newImage {
             imageData = image.jpegData(compressionQuality: 1.0)
@@ -59,12 +60,13 @@ class PlantController : AlarmScheduler {
         plant.name = newName
         plant.image = imageData
         plant.needsWateredFireDate = newFireDate
+        plant.dayToNextWater = Int16(dayInteger)
         TagController.shared.appendPlantTo(targetTag: newTag, desiredPlant: plant)
-        //TagController.shared.updateTag(withPlant: plant, title: newTagTitle, colorNumber: newColorNumber)
         scheduleUserNotifications(for: plant)
         saveToPersistentStorage()
     }
     
+    /// Deletes the target plant from the moc, and saves to persistent storage.
     func deletePlant(plant: Plant) {
         let moc = plant.managedObjectContext
         moc?.delete(plant)
@@ -74,16 +76,15 @@ class PlantController : AlarmScheduler {
     
     // MARK: - Additional Helper Methods
     
-    // Need a function that deals with checking the isWatered Bool - if true set the background color of the desired view to be blue/green and to yellow/brown if false. Or display some icon that shows watered/notwatered state.
-    func swapWateredState(plant: Plant) {
-//        if plant.isWatered {
-//            plant.isWatered = true
-//            scheduleUserNotifications(for: plant)
-//        } else {
-//            plant.isWatered = false
-//        }
+    /// Sets the target plant's isWatered property to true, and schedules a notification for the argument number of days away from the current date.
+    func waterPlant(plant: Plant) {
+        plant.isWatered = true
+        let nextNotifcationDate = DayHelper.futrueDateFrom(givenNumberOfDays: Int(plant.dayToNextWater))
+        plant.needsWateredFireDate = nextNotifcationDate
+        scheduleUserNotifications(for: plant)
     }
     
+    /// Returns a UIColor reflecting the target Plants isWatered property (blue for true, yellow for false):
     func colorBasedOnWateredState(plant: Plant) -> UIColor {
         if plant.isWatered == true {
             return UIColor.wateredBlue
@@ -92,7 +93,7 @@ class PlantController : AlarmScheduler {
         }
     }
     
-    // if the current date is greater than or equal to the fireDate then set the plant to dry.
+    /// Checks if the current date is greater than or equal to the fireDate of the target Plant, if so it sets the plant to dry.
     func checkIfDry(plant:Plant) {
         guard let isDryDate = plant.needsWateredFireDate else { return }
         let currentDate = Date()
@@ -100,9 +101,6 @@ class PlantController : AlarmScheduler {
             plant.isWatered = false
         }
     }
-    
-    // Need a function that can run when the notification gets triggered -- meaning when the notification goes off get the plant for that notification and change the isWatered state from true to false.
-    
     
     // MARK: - Persistence
     

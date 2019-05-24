@@ -9,126 +9,121 @@
 import Foundation
 
 struct DayHelper {
+
+    // MARK: - Methods
     
-    /// Returns a time interval that is equivalent to the number of days passed in.
-    static func timeIntervalFrom(dayIntegerCount days: Int) -> TimeInterval {
-        // => 60 sec/min  * 60 min/hour * 24 hour/day
+    /// Returns a date that is equivalent to today's date plus the argument number of days.
+    static func futrueDateFrom(givenNumberOfDays days: Int) -> Date {
+        // => 60 sec/min  * 60 min/hour * 24 hour/day = 86400 sec/day
         let secondsInADay = 86400
         let selectedDaysInSeconds = Double(days * secondsInADay)
         guard let timeIntervalFromSeconds = TimeInterval(exactly: selectedDaysInSeconds) else {
-            return TimeInterval()
-        }
-        return timeIntervalFromSeconds
-        
-    }
-    /// Returns a future date that is equivalent to the current date plus a given number of days away (s.t the given number of days is from 1 to 31).
-    static func futureDateFromToday(givenNumberOfDays days: Int) -> Date {
-        let todaysDate = Date()
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: todaysDate)
-        guard let todaysYear = components.year, let todaysMonth = components.month,  let todaysDay = components.day, let todaysHour = components.hour, let todaysMinute = components.minute else { return Date() }
-        let futureDayValue = todaysDay + days
-        var futureDay = Int()
-        var futureMonth = Int()
-        var futureYear = Int()
-        var monthLength = Int()
-        switch todaysMonth {
-        case 1, 3, 5, 7, 8, 10:
-            // Months that have 31 days
-            monthLength = 31
-            if futureDayValue > monthLength {
-                // increase month by one and get rid of extra days
-                futureMonth = todaysMonth + 1
-                futureDay = futureDayValue - monthLength
-                futureYear = todaysYear
-            } else {
-                // We are inside the month so just increase the day value
-                futureDay = futureDayValue
-                futureMonth = todaysMonth
-                futureYear = todaysYear
-            }
-        case 2:
-            // Month has 28 days by default -- check if the year is a leap year
-            if todaysYear == 2020 {
-                monthLength = 29
-            } else {
-                monthLength = 28
-            }
-            if futureDayValue > monthLength {
-                // increase month by one and get rid of extra days
-                futureMonth = todaysMonth + 1
-                futureDay = futureDayValue - monthLength
-                futureYear = todaysYear
-            } else {
-                // We are inside the month so just increase the day value
-                futureDay = futureDayValue
-                futureMonth = todaysMonth
-                futureYear = todaysYear
-            }
-        case 4, 6, 9, 11:
-            // Months with 30 days
-            monthLength = 30
-            if futureDayValue > monthLength {
-                // increase month by one and get rid of extra days
-                futureMonth = todaysMonth + 1
-                futureDay = futureDayValue - monthLength
-                futureYear = todaysYear
-            } else {
-                // We are inside the month so just increase the day value
-                futureDay = futureDayValue
-                futureMonth = todaysMonth
-                futureYear = todaysYear
-            }
-        case 12:
-            monthLength = 31
-            if futureDayValue > monthLength {
-                // set month to one, increase year by one, and get rid of extra days
-                futureMonth = 1
-                futureDay = futureDayValue - monthLength
-                futureYear = todaysYear + 1
-            } else {
-                // We are inside the month so just increase the day value
-                futureDay = futureDayValue
-                futureMonth = todaysMonth
-                futureYear = todaysYear
-            }
-        default:
-            futureDay = futureDayValue
-            futureMonth = todaysMonth
-            futureYear = todaysYear
-        }
-        
-        // Have everything we need to create the date
-        var newDateString = ""
-        newDateString.append("\(futureYear)-")
-        if futureMonth < 10 {
-            newDateString.append("0")
-        }
-        newDateString.append("\(futureMonth)-")
-        if futureDay < 10 {
-            newDateString.append("0")
-        }
-        newDateString.append("\(futureDay)")
-        if todaysHour < 10 {
-            newDateString.append("0")
-        }
-        // ACCOUNT FOR UTC -- find a better way of accounting for this because its different based on the currentTimeZone
-        //newDateString.append(" \(todaysHour - 6):")
-        newDateString.append(" \(todaysHour):")
-        newDateString.append("\(todaysMinute):")
-        // Round the minute off
-        newDateString.append("00")
-        
-        // Format the date:
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        // Create the date from the string:
-        
-        guard let desintationDate = formatter.date(from: newDateString) else {
-            print("Error instantiating new date from date string - returning current date")
             return Date()
         }
-        return desintationDate
+        return Date(timeInterval: timeIntervalFromSeconds, since: Date())
+        
+    }
+    
+    /// Returns true if the two passed in dates are on the same day:
+    static func twoDatesAreOnTheSameDay(dateOne: Date, dateTwo: Date) -> Bool {
+        let calendar = Calendar.current
+        let dateOneComponent = calendar.dateComponents([.day], from: dateOne)
+        let dateTwoComponent = calendar.dateComponents([.day], from: dateTwo)
+        if dateOneComponent.day == dateTwoComponent.day {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    /// Returns a string representing how many days there are until the desired fireDate. Note: Call this only when the current date is less than the fireDate.
+    static func daysUntil(fireDate: Date) -> String {
+        let currentDate = Date()
+        let currentDateTimeInterval = currentDate.timeIntervalSinceReferenceDate
+        let futureDateTimeInterval = fireDate.timeIntervalSinceReferenceDate
+        let difference = futureDateTimeInterval - currentDateTimeInterval
+        let secondsInADay = 86400.0
+        let daysLeft = difference / secondsInADay
+        var daysLeftText = String(Int(daysLeft.rounded(.up)))
+        if twoDatesAreOnTheSameDay(dateOne: currentDate, dateTwo: fireDate) {
+            daysLeftText = "Today"
+        } else if daysLeft <= 1.0 {
+            daysLeftText.append(" day")
+        } else {
+            daysLeftText.append(" Days")
+        }
+        return daysLeftText
+    }
+    
+    /// Returns a "month day" abbreviation of the argument date. I.E If the argument date is in january 10 2019, then the return string will be "Jan 10th".
+    static func formatMonthAndDay(givenDate: Date) -> String {
+     
+        /// Returns the proper suffix for a day. I.E 11 => "11th", 21 => "21st".
+        func formatDayDigit(givenDay day: Int) -> String {
+            var formatted = String()
+            formatted.append("\(day)")
+            var tenCount = 0
+            var digit = day
+            while digit > 10 {
+                digit = digit - 10
+                tenCount += 1
+            }
+            if tenCount == 1 {
+                formatted.append("th")
+            } else {
+                switch digit {
+                case 1:
+                    formatted.append("st")
+                case 2:
+                    formatted.append("nd")
+                case 3:
+                    formatted.append("rd")
+                default:
+                    formatted.append("th")
+                }
+            }
+            return formatted
+        }
+        
+        var formattedDate = String()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.month, .day], from: givenDate)
+        guard let currentMonthNumber = components.month, let currentDayNumber = components.day else {
+            print("ERROR: formatMonthAndDay failed to get month and day components - Default date returned")
+            return "Jan 1st"
+            
+        }
+        switch currentMonthNumber {
+        case 01:
+            formattedDate.append("Jan ")
+        case 02:
+            formattedDate.append("Feb ")
+        case 03:
+            formattedDate.append("Mar ")
+        case 04:
+            formattedDate.append("Apr ")
+        case 05:
+            formattedDate.append("May ")
+        case 06:
+            formattedDate.append("Jun ")
+        case 07:
+            formattedDate.append("Jul ")
+        case 08:
+            formattedDate.append("Aug ")
+        case 09:
+            formattedDate.append("Sep ")
+        case 10:
+            formattedDate.append("Oct ")
+        case 11:
+            formattedDate.append("Nov ")
+        case 12:
+            formattedDate.append("Dec ")
+        default:
+            print("ERROR: FormatDayAndMonth method switch statment failed - defualting to January")
+            formattedDate.append("Jan ")
+        }
+        let formattedDay = formatDayDigit(givenDay: currentDayNumber)
+        formattedDate.append(formattedDay)
+        return formattedDate
     }
 }
