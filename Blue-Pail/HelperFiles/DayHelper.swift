@@ -47,8 +47,8 @@ struct DayHelper {
         var daysLeftText = String(Int(daysLeft.rounded(.up)))
         if twoDatesAreOnTheSameDay(dateOne: currentDate, dateTwo: fireDate) {
             daysLeftText = "Today"
-        } else if daysLeft <= 1.0 {
-            daysLeftText.append(" day")
+        } else if daysLeft < 1.5 {
+            daysLeftText = "1 Day"
         } else {
             daysLeftText.append(" Days")
         }

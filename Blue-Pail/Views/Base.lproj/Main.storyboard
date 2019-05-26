@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -25,80 +24,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7M6-qh-q1e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-487" y="140"/>
-        </scene>
-        <!--Plant Popup View Controller-->
-        <scene sceneID="DlA-fN-CW0">
-            <objects>
-                <viewController storyboardIdentifier="popupViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="O2h-TB-XeV" customClass="PlantPopupViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="jbN-1A-yUS" customClass="Plant">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sRc-qb-WkI">
-                                <rect key="frame" x="100" y="220" width="175" height="128"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plant Name Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQd-qz-30o">
-                                        <rect key="frame" x="0.0" y="0.0" width="175" height="21"/>
-                                        <color key="backgroundColor" red="0.92352740990000004" green="0.92352740990000004" blue="0.92352740990000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1rO-YI-25a">
-                                        <rect key="frame" x="0.0" y="71" width="175" height="57"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Edit"/>
-                                        <connections>
-                                            <action selector="editButtonTapped:" destination="O2h-TB-XeV" eventType="touchUpInside" id="Zas-9X-vyQ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBE-cr-QlV">
-                                        <rect key="frame" x="0.0" y="21" width="175" height="50"/>
-                                        <color key="backgroundColor" red="0.014965149570000001" green="0.47698318960000002" blue="0.98540872339999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="izv-TD-EUW"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Water">
-                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="waterButtonTapped:" destination="O2h-TB-XeV" eventType="touchUpInside" id="Zgo-dz-EKQ"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.92148786780000003" green="0.92162030939999995" blue="0.92145878079999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="1rO-YI-25a" secondAttribute="trailing" id="4tb-wQ-QyB"/>
-                                    <constraint firstItem="PQd-qz-30o" firstAttribute="top" secondItem="sRc-qb-WkI" secondAttribute="top" id="9Jq-wL-bAY"/>
-                                    <constraint firstAttribute="height" constant="128" id="9Uh-1U-tem"/>
-                                    <constraint firstItem="1rO-YI-25a" firstAttribute="top" secondItem="SBE-cr-QlV" secondAttribute="bottom" id="BFq-ez-5Na"/>
-                                    <constraint firstAttribute="width" constant="175" id="Izm-sg-gXO"/>
-                                    <constraint firstItem="SBE-cr-QlV" firstAttribute="leading" secondItem="sRc-qb-WkI" secondAttribute="leading" id="JfF-da-GMX"/>
-                                    <constraint firstItem="PQd-qz-30o" firstAttribute="leading" secondItem="sRc-qb-WkI" secondAttribute="leading" id="KaA-Jj-Z8t"/>
-                                    <constraint firstAttribute="bottom" secondItem="1rO-YI-25a" secondAttribute="bottom" id="VDZ-ft-UF5"/>
-                                    <constraint firstAttribute="trailing" secondItem="PQd-qz-30o" secondAttribute="trailing" id="VHS-fF-eQ5"/>
-                                    <constraint firstAttribute="trailing" secondItem="SBE-cr-QlV" secondAttribute="trailing" id="erz-VY-LEK"/>
-                                    <constraint firstItem="SBE-cr-QlV" firstAttribute="top" secondItem="PQd-qz-30o" secondAttribute="bottom" id="hkj-Tu-vBX"/>
-                                    <constraint firstItem="1rO-YI-25a" firstAttribute="leading" secondItem="sRc-qb-WkI" secondAttribute="leading" id="qqo-O5-gw3"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="sRc-qb-WkI" firstAttribute="top" secondItem="rDk-Ya-a3e" secondAttribute="top" constant="200" id="1Ja-3P-mD5"/>
-                            <constraint firstItem="sRc-qb-WkI" firstAttribute="centerX" secondItem="jbN-1A-yUS" secondAttribute="centerX" id="AIA-xQ-yRR"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="rDk-Ya-a3e"/>
-                    </view>
-                    <connections>
-                        <outlet property="editButton" destination="1rO-YI-25a" id="5RF-6C-W76"/>
-                        <outlet property="plantNameLabel" destination="PQd-qz-30o" id="qpM-er-ESL"/>
-                        <outlet property="waterButton" destination="SBE-cr-QlV" id="t0i-58-7x8"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wcU-be-56W" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="361" y="843"/>
         </scene>
         <!--Blue Pail-->
         <scene sceneID="k1Y-lE-fEa">
@@ -218,6 +143,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="ADt-cV-qID" kind="show" identifier="toEditPlant" id="pGJ-Ms-J0E"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RfU-ke-gy2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -429,4 +357,7 @@
             <point key="canvasLocation" x="1132" y="143.47826086956522"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="pGJ-Ms-J0E"/>
+    </inferredMetricsTieBreakers>
 </document>

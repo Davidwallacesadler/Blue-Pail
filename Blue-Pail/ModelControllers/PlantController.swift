@@ -82,6 +82,7 @@ class PlantController : AlarmScheduler {
         let nextNotifcationDate = DayHelper.futrueDateFrom(givenNumberOfDays: Int(plant.dayToNextWater))
         plant.needsWateredFireDate = nextNotifcationDate
         scheduleUserNotifications(for: plant)
+        saveToPersistentStorage()
     }
     
     /// Returns a UIColor reflecting the target Plants isWatered property (blue for true, yellow for false):

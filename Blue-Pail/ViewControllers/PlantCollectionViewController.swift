@@ -17,24 +17,17 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
     
     
     func editPlant() {
-        // Want to pass selected plant to the detailViewController --
-        // 1. Call collectionView didSelectItemAtIndexPath - get selected plant
-        // Segue to detailViewController
-        print("Edit Button Pressed")
+        performSegue(withIdentifier: "toEditPlant", sender: self)
     }
     
     func waterPlant() {
-        // Grab plant at indexpath.row
-        // Want to call PlantController.shared.WaterPlant(selectedPlant)
-        print("Water Button Pressed")
         guard let targetPlant = selectedPlant else { return }
         if targetPlant.isWatered == false {
             // Water the plant and schedule the next notification:
             PlantController.shared.waterPlant(plant: targetPlant)
             targetPlant.needsWateredFireDate = DayHelper.futrueDateFrom(givenNumberOfDays: Int(targetPlant.dayToNextWater))
-            PlantController.shared.scheduleUserNotifications(for: targetPlant)
         }
-        // Pop the child view controller in the PlantPopupViewController
+        self.collectionView.reloadData()
     }
     
     
@@ -50,6 +43,10 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.collectionView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         self.collectionView.reloadData()
     }
 
@@ -70,7 +67,9 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
         }
         // Grab the selcted plant:
         let selectedPlant = PlantController.shared.plants[indexPath.row]
-        // Initialize the String that will populate the label for the nextDayToBeWatered:
+        
+        
+        // set up the daysToNextWater label:
         var daysToNextWater = String()
         // Check if the selectedPlant has a fireDate (it always should!):
         if let fireDate = selectedPlant.needsWateredFireDate {
@@ -78,10 +77,14 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
             if Date() <= fireDate || DayHelper.twoDatesAreOnTheSameDay(dateOne: Date(), dateTwo: fireDate){
                 // If so, get the amount of days until that day to display it:
                 daysToNextWater = DayHelper.daysUntil(fireDate: fireDate)
-                cell.waterNotificationStatusImageView.image = UIImage(named: "notTimeToWaterPlantIcon")
+                if daysToNextWater == "Today" {
+                     cell.waterNotificationStatusImageView.image = UIImage(named: "waterPlantIcon")
+                } else {
+                     cell.waterNotificationStatusImageView.image = UIImage(named: "notTimeToWaterPlantIcon")
+                }
             } else {
                 // The current date is greater than the fireDate, and its the next day or greater:
-                // If not, get the notificationFireDate to display on the cell:
+                // Get the notificationFireDate to display on the cell:
                 daysToNextWater = DayHelper.formatMonthAndDay(givenDate: fireDate)
                 cell.waterNotificationStatusImageView.image = UIImage(named: "waterPlantIcon")
             }
@@ -107,21 +110,28 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
     }
 
     // MARK: UICollectionViewDelegate
+    
+//    let injectionVC = InjectionViewController(site: site, bodyPart: bodyPart, injectionCanceledDelegate: self)
+//    self.addChildViewController(injectionVC)
+//    injectionVC.view.frame = self.view.frame
+//    self.view.addSubview(injectionVC.view)
+//    injectionVC.didMove(toParentViewController: self)
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let plant = PlantController.shared.plants[indexPath.row]
         selectedPlant = plant
-        // Want to Add child view and display it
-        guard let popupController = storyboard?.instantiateViewController(withIdentifier: "popupViewController") else { return }
-        self.addChild(popupController)
-        self.view.addSubview(popupController.view)
+        let plantPopupViewController = PlantPopupViewController(nibName: "PlantPopupViewController", bundle: nil)
+        plantPopupViewController.delegate = self
+        self.addChild(plantPopupViewController)
+        plantPopupViewController.view.frame = self.view.frame
+        self.view.addSubview(plantPopupViewController.view)
+        plantPopupViewController.didMove(toParent: self)
+        plantPopupViewController.plantNameLabel.text = plant.name
     }
-    
     
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-
 
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
@@ -135,10 +145,13 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
     }
+    
+    // MARK: - Internal Methods
+
 
 }
 
-// MARK: Delegate Flow Layout
+// MARK: - Delegate Flow Layout
 
 extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -146,13 +159,16 @@ extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: 150, height: 200)
     }
     
-    /*
+
+    
+    
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using [segue destinationViewController].
-     // Pass the selected object to the new view controller.
-     }
-     */
+        if segue.identifier == "toEditPlant" {
+            guard let detailVC = segue.destination as? PlantDetailTableViewController else { return }
+            detailVC.plant = selectedPlant
+            }
+        }
 }

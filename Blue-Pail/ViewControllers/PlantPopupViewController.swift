@@ -2,7 +2,7 @@
 //  PlantPopupViewController.swift
 //  Blue-Pail
 //
-//  Created by David Sadler on 5/22/19.
+//  Created by David Sadler on 5/26/19.
 //  Copyright © 2019 David Sadler. All rights reserved.
 //
 
@@ -20,7 +20,7 @@ class PlantPopupViewController: UIViewController {
     weak var delegate: PopupDelegate?
     
     // MARK: - View Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -37,22 +37,15 @@ class PlantPopupViewController: UIViewController {
     @IBAction func waterButtonTapped(_ sender: Any) {
         delegate?.waterPlant()
         // want to dismiss the view
+        self.removeFromParent()
+        self.view.isHidden = true
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func editButtonTapped(_ sender: Any) {
         delegate?.editPlant()
-        // want to segue to the detail view controller and pass the selected plant to the plant property
+        self.view.isHidden = true
+        self.removeFromParent()
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+

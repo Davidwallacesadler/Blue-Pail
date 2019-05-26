@@ -47,7 +47,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
-        
+        updateViews()
         // DayText Field Setup:
         dayTextField.inputView = dayPickerView
         
@@ -63,11 +63,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     // MARK: - Properties
     
-    var plant: Plant? {
-        didSet {
-            updateViews()
-        }
-    }
+    var plant: Plant?
     var needsWateringDateValue: Date?
     var dayInteger: Int?
     var image: UIImage?
@@ -147,6 +143,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     func updateViews() {
         guard let selectedPlant = plant else { return }
         plantNameTextField.text = selectedPlant.name
+        dayTextField.text = "\(selectedPlant.dayToNextWater)"
        // tagTitleTextField.text = selectedPlant.tag?.title
         
     }
