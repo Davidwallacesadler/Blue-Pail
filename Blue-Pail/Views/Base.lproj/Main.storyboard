@@ -186,74 +186,102 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Select Tag" id="pSc-5B-V7L">
+                            <tableViewSection headerTitle="Tag" id="pSc-5B-V7L">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="75" id="38K-rz-OXG">
-                                        <rect key="frame" x="0.0" y="100" width="375" height="75"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="120" id="38K-rz-OXG">
+                                        <rect key="frame" x="0.0" y="100" width="375" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="38K-rz-OXG" id="Bl6-sZ-1H8">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="TdF-aN-BxM">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yXO-BZ-sD0" userLabel="Orange Button">
-                                                            <rect key="frame" x="0.0" y="0.0" width="59" height="74.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="59" height="89.5"/>
                                                             <color key="backgroundColor" red="0.96862745098039216" green="0.50980392156862742" blue="0.023529411764705882" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <state key="normal" title="House"/>
+                                                            <state key="normal" title="House">
+                                                                <color key="titleColor" red="0.12504875660000001" green="0.33756917720000001" blue="0.57952213289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
                                                             <connections>
                                                                 <action selector="orangeButtonPressed:" destination="ADt-cV-qID" eventType="touchUpInside" id="rJB-55-aSW"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kBo-I1-to7" userLabel="Green Button">
-                                                            <rect key="frame" x="63" y="0.0" width="59.5" height="74.5"/>
+                                                            <rect key="frame" x="63" y="0.0" width="59.5" height="89.5"/>
                                                             <color key="backgroundColor" red="0.7803921568627451" green="0.93725490196078431" blue="0.42745098039215684" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <state key="normal" title="Out"/>
+                                                            <state key="normal" title="Out">
+                                                                <color key="titleColor" red="0.12504875660000001" green="0.33756917720000001" blue="0.57952213289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
                                                             <connections>
                                                                 <action selector="greenButtonPressed:" destination="ADt-cV-qID" eventType="touchUpInside" id="KPx-F2-p8Z"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ape-MU-OYM" userLabel="Blue Button">
-                                                            <rect key="frame" x="126.5" y="0.0" width="59" height="74.5"/>
+                                                            <rect key="frame" x="126.5" y="0.0" width="59" height="89.5"/>
                                                             <color key="backgroundColor" red="0.19215686274509802" green="0.29411764705882354" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <state key="normal" title="Herbs"/>
+                                                            <state key="normal" title="Herbs">
+                                                                <color key="titleColor" red="0.07865459878027084" green="0.21421818689849584" blue="0.37237191081878163" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
                                                             <connections>
                                                                 <action selector="blueButtonPressed:" destination="ADt-cV-qID" eventType="touchUpInside" id="aCL-dh-o4D"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOg-U9-pNh" userLabel="Crimson Button">
-                                                            <rect key="frame" x="189.5" y="0.0" width="59" height="74.5"/>
+                                                            <rect key="frame" x="189.5" y="0.0" width="59" height="89.5"/>
                                                             <color key="backgroundColor" red="0.28235294117647058" green="0.058823529411764705" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <state key="normal" title="Succulents"/>
+                                                            <state key="normal" title="Succ">
+                                                                <color key="titleColor" red="0.082558123442719886" green="0.22484955478633439" blue="0.39085224076802028" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
                                                             <connections>
                                                                 <action selector="crimsonButtonPressed:" destination="ADt-cV-qID" eventType="touchUpInside" id="DuG-BK-MYC"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gQ-86-8tg" userLabel="Purple Button">
-                                                            <rect key="frame" x="252.5" y="0.0" width="59.5" height="74.5"/>
+                                                            <rect key="frame" x="252.5" y="0.0" width="59.5" height="89.5"/>
                                                             <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <state key="normal" title="Ferns"/>
+                                                            <state key="normal" title="Ferns">
+                                                                <color key="titleColor" red="0.12504875660000001" green="0.33756917720000001" blue="0.57952213289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
                                                             <connections>
                                                                 <action selector="purpleButtonPressed:" destination="ADt-cV-qID" eventType="touchUpInside" id="bW4-Ii-nVf"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cIf-lh-cMC" userLabel="Red Button">
-                                                            <rect key="frame" x="316" y="0.0" width="59" height="74.5"/>
+                                                            <rect key="frame" x="316" y="0.0" width="59" height="89.5"/>
                                                             <color key="backgroundColor" red="0.92156862745098034" green="0.098039215686274508" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <state key="normal" title="Cactus"/>
+                                                            <state key="normal" title="Cactus">
+                                                                <color key="titleColor" red="0.12504875660000001" green="0.33756917720000001" blue="0.57952213289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
                                                             <connections>
                                                                 <action selector="redButtonPressed:" destination="ADt-cV-qID" eventType="touchUpInside" id="t9t-xb-AyY"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
                                                 </stackView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T2D-oT-NaL" userLabel="Selected Tag Color View">
+                                                    <rect key="frame" x="16" y="94.5" width="343" height="14.5"/>
+                                                    <color key="backgroundColor" red="0.21158523930000001" green="0.2130938708" blue="0.21761976520000001" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected Tag Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ScN-RN-Xrg">
+                                                    <rect key="frame" x="115" y="92" width="145.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="TdF-aN-BxM" secondAttribute="bottom" id="LVM-uK-P1z"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="T2D-oT-NaL" secondAttribute="trailing" id="HEe-5D-CnO"/>
+                                                <constraint firstAttribute="bottom" secondItem="TdF-aN-BxM" secondAttribute="bottom" constant="30" id="LVM-uK-P1z"/>
                                                 <constraint firstAttribute="trailing" secondItem="TdF-aN-BxM" secondAttribute="trailing" id="QNg-w9-y5Q"/>
+                                                <constraint firstItem="T2D-oT-NaL" firstAttribute="top" secondItem="TdF-aN-BxM" secondAttribute="bottom" constant="5" id="RRc-Nb-RDZ"/>
+                                                <constraint firstItem="T2D-oT-NaL" firstAttribute="bottom" secondItem="Bl6-sZ-1H8" secondAttribute="bottomMargin" id="fzl-WO-ypr"/>
+                                                <constraint firstItem="ScN-RN-Xrg" firstAttribute="centerX" secondItem="Bl6-sZ-1H8" secondAttribute="centerX" id="gAj-xQ-pSL"/>
+                                                <constraint firstItem="ScN-RN-Xrg" firstAttribute="top" secondItem="TdF-aN-BxM" secondAttribute="bottom" constant="2.5" id="rCf-QN-OEh"/>
                                                 <constraint firstItem="TdF-aN-BxM" firstAttribute="top" secondItem="Bl6-sZ-1H8" secondAttribute="top" id="rga-wJ-JOC"/>
                                                 <constraint firstItem="TdF-aN-BxM" firstAttribute="leading" secondItem="Bl6-sZ-1H8" secondAttribute="leading" id="veU-kB-JCc"/>
+                                                <constraint firstItem="T2D-oT-NaL" firstAttribute="leading" secondItem="Bl6-sZ-1H8" secondAttribute="leadingMargin" id="wGd-ea-yYZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -262,7 +290,7 @@
                             <tableViewSection headerTitle="Days until next watering" id="Abw-0I-vpg">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="45" id="Eki-kA-qN6">
-                                        <rect key="frame" x="0.0" y="203" width="375" height="45"/>
+                                        <rect key="frame" x="0.0" y="248" width="375" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Eki-kA-qN6" id="4hu-Wn-Ifu">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
@@ -288,7 +316,7 @@
                             <tableViewSection headerTitle="Image or Icon" id="tYZ-QD-Vtw">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="150" id="fkv-xv-HxK">
-                                        <rect key="frame" x="0.0" y="276" width="375" height="150"/>
+                                        <rect key="frame" x="0.0" y="321" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fkv-xv-HxK" id="T4k-tm-cfZ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
@@ -346,6 +374,8 @@
                         <outlet property="plantNameTextField" destination="xxP-HM-uXp" id="Wan-1S-EeW"/>
                         <outlet property="purpleButton" destination="9gQ-86-8tg" id="PZg-d0-ntp"/>
                         <outlet property="redButton" destination="cIf-lh-cMC" id="k93-oi-bs8"/>
+                        <outlet property="selectedTagColorView" destination="T2D-oT-NaL" id="15R-dm-Hey"/>
+                        <outlet property="selectedTagLabel" destination="ScN-RN-Xrg" id="4R8-8c-JSn"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o57-DN-x20" userLabel="First Responder" sceneMemberID="firstResponder"/>

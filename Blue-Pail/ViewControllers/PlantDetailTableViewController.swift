@@ -82,10 +82,11 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     @IBOutlet weak var crimsonButton: UIButton!
     @IBOutlet weak var purpleButton: UIButton!
     @IBOutlet weak var redButton: UIButton!
+    @IBOutlet weak var selectedTagColorView: UIView!
+    @IBOutlet weak var selectedTagLabel: UILabel!
     
-     // MARK: - Actions
+    // MARK: - Actions
     // TODO: - Make the text field for the tag title to be a picker with the names
-    // PICKER IS THE BEST -- WORKS BEST FOR WHEN EDITING THE PLANT - COULD POPULATE THE TEXT WITH THE SELECTED TAG NAME
     
     // Navigation Controller Buttons
     @IBAction func cancelButtonPressed(_ sender: Any) {
@@ -98,38 +99,52 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     // Color Buttons
     @IBAction func orangeButtonPressed(_ sender: Any) {
-        tag = TagController.shared.tags[0]
+        let selectedTag = TagController.shared.tags[0]
+        tag = selectedTag
+        updateTagSelection(tag: selectedTag)
         orangeButton.showsTouchWhenHighlighted = true
     }
     
     @IBAction func greenButtonPressed(_ sender: Any) {
-        tag = TagController.shared.tags[1]
+        let selectedTag = TagController.shared.tags[1]
+        tag = selectedTag
+        updateTagSelection(tag: selectedTag)
         greenButton.showsTouchWhenHighlighted = true
     }
     
     @IBAction func blueButtonPressed(_ sender: Any) {
-        tag = TagController.shared.tags[2]
+        let selectedTag = TagController.shared.tags[2]
+        tag = selectedTag
+        updateTagSelection(tag: selectedTag)
         blueButton.showsTouchWhenHighlighted = true
     }
     
     @IBAction func crimsonButtonPressed(_ sender: Any) {
-        tag = TagController.shared.tags[3]
+        let selectedTag = TagController.shared.tags[3]
+        tag = selectedTag
+        updateTagSelection(tag: selectedTag)
         crimsonButton.showsTouchWhenHighlighted = true
     }
     
     @IBAction func purpleButtonPressed(_ sender: Any) {
-        tag = TagController.shared.tags[4]
+        let selectedTag = TagController.shared.tags[4]
+        tag = selectedTag
+        updateTagSelection(tag: selectedTag)
         purpleButton.showsTouchWhenHighlighted = true
     }
     
     @IBAction func redButtonPressed(_ sender: Any) {
-        tag = TagController.shared.tags[5]
+        let selectedTag = TagController.shared.tags[5]
+        tag = selectedTag
+        updateTagSelection(tag: selectedTag)
         redButton.showsTouchWhenHighlighted = true
     }
     
-    // MARK: - Methods
+    // MARK: - Internal Methods
     
-    func updatePlant() {
+    // TODO: - Work on getting image set up to see if update is being called properly
+    
+    private func updatePlant() {
         guard let selectedPlant = plant, let plantName = plantNameTextField.text, let needsWateringDate = needsWateringDateValue, let selectedTag = tag, let plantImage = image, let selectedDay = dayInteger else {
             PlantController.shared.createPlant(name: plantNameTextField.text ?? "Plant", image: UIImage(named: "defualt"), needsWaterFireDate: needsWateringDateValue ?? DayHelper.futrueDateFrom(givenNumberOfDays: 1), tag: tag ?? TagController.shared.tags[0], dayInteger: dayInteger ?? 1)
             self.navigationController?.popViewController(animated: true)
@@ -140,12 +155,17 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         
     }
     
-    func updateViews() {
-        guard let selectedPlant = plant else { return }
+    private func updateViews() {
+        guard let selectedPlant = plant, let plantTag = plant?.tag else { return }
         plantNameTextField.text = selectedPlant.name
         dayTextField.text = "\(selectedPlant.dayToNextWater)"
-       // tagTitleTextField.text = selectedPlant.tag?.title
+        updateTagSelection(tag: plantTag)
         
+    }
+    
+    private func updateTagSelection(tag: Tag) {
+        selectedTagLabel.text = tag.title
+        selectedTagColorView.backgroundColor = ColorHelper.colorFrom(colorNumber: tag.colorNumber)
     }
     
 }

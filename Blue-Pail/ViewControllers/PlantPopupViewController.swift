@@ -36,7 +36,6 @@ class PlantPopupViewController: UIViewController {
     
     @IBAction func waterButtonTapped(_ sender: Any) {
         delegate?.waterPlant()
-        // want to dismiss the view
         self.removeFromParent()
         self.view.isHidden = true
         self.navigationController?.popViewController(animated: true)

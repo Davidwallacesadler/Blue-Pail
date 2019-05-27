@@ -11,10 +11,8 @@ import UIKit
 private let reuseIdentifier = "plantCell"
 
 class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
-
     
-    // MARK: - Delegate Methods
-    
+    // MARK: - PopupDelegate Methods
     
     func editPlant() {
         performSegue(withIdentifier: "toEditPlant", sender: self)
@@ -23,13 +21,11 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
     func waterPlant() {
         guard let targetPlant = selectedPlant else { return }
         if targetPlant.isWatered == false {
-            // Water the plant and schedule the next notification:
             PlantController.shared.waterPlant(plant: targetPlant)
             targetPlant.needsWateredFireDate = DayHelper.futrueDateFrom(givenNumberOfDays: Int(targetPlant.dayToNextWater))
         }
         self.collectionView.reloadData()
     }
-    
     
     // MARK: - Properties
     
@@ -50,7 +46,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
         self.collectionView.reloadData()
     }
 
-    // MARK: UICollectionViewDataSource
+    // MARK: UICollectionView DataSource Methods
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -109,13 +105,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
         return cell
     }
 
-    // MARK: UICollectionViewDelegate
-    
-//    let injectionVC = InjectionViewController(site: site, bodyPart: bodyPart, injectionCanceledDelegate: self)
-//    self.addChildViewController(injectionVC)
-//    injectionVC.view.frame = self.view.frame
-//    self.view.addSubview(injectionVC.view)
-//    injectionVC.didMove(toParentViewController: self)
+    // MARK: UICollectionView Delegate Methods
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let plant = PlantController.shared.plants[indexPath.row]
@@ -145,9 +135,6 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
     }
-    
-    // MARK: - Internal Methods
-
 
 }
 
