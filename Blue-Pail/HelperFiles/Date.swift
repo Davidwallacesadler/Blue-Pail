@@ -1,0 +1,18 @@
+//
+//  Date.swift
+//  Blue-Pail
+//
+//  Created by David Sadler on 5/27/19.
+//  Copyright © 2019 David Sadler. All rights reserved.
+//
+
+import Foundation
+
+extension Date {
+    func stringValue() -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .short
+        return formatter.string(from: self)
+    }
+}

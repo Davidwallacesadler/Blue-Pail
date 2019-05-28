@@ -264,8 +264,8 @@
                                                     <rect key="frame" x="16" y="94.5" width="343" height="14.5"/>
                                                     <color key="backgroundColor" red="0.21158523930000001" green="0.2130938708" blue="0.21761976520000001" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected Tag Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ScN-RN-Xrg">
-                                                    <rect key="frame" x="115" y="92" width="145.5" height="20.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected Tag" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ScN-RN-Xrg">
+                                                    <rect key="frame" x="138" y="92" width="99.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -289,25 +289,44 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Days until next watering" id="Abw-0I-vpg">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="45" id="Eki-kA-qN6">
-                                        <rect key="frame" x="0.0" y="248" width="375" height="45"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="75" id="Eki-kA-qN6">
+                                        <rect key="frame" x="0.0" y="248" width="375" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Eki-kA-qN6" id="4hu-Wn-Ifu">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select an amount of days..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GmG-qO-Eah" userLabel="dayTextField">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Amount of Days, Hour, minute..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GmG-qO-Eah" userLabel="dayTextField">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="43.5" id="M7Y-VY-tkR"/>
+                                                    </constraints>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ilc-pb-e3Y">
+                                                    <rect key="frame" x="123.5" y="48.5" width="128.5" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.65490196078431373" blue="0.82745098039215681" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MMe-qR-Wdf">
+                                                    <rect key="frame" x="90.5" y="47.5" width="23" height="23"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="23" id="ClB-nT-993"/>
+                                                        <constraint firstAttribute="width" secondItem="MMe-qR-Wdf" secondAttribute="height" multiplier="1:1" id="L49-iX-BKF"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="GmG-qO-Eah" secondAttribute="trailing" id="9vH-Dr-6m1"/>
-                                                <constraint firstAttribute="bottom" secondItem="GmG-qO-Eah" secondAttribute="bottom" id="LAV-Ct-6qU"/>
+                                                <constraint firstItem="MMe-qR-Wdf" firstAttribute="centerY" secondItem="Ilc-pb-e3Y" secondAttribute="centerY" id="DUU-q0-j38"/>
                                                 <constraint firstItem="GmG-qO-Eah" firstAttribute="top" secondItem="4hu-Wn-Ifu" secondAttribute="top" id="R2g-8Y-qeK"/>
+                                                <constraint firstItem="Ilc-pb-e3Y" firstAttribute="top" secondItem="GmG-qO-Eah" secondAttribute="bottom" constant="5" id="UU7-Fd-hf2"/>
                                                 <constraint firstItem="GmG-qO-Eah" firstAttribute="leading" secondItem="4hu-Wn-Ifu" secondAttribute="leading" id="mQk-uU-oX7"/>
+                                                <constraint firstItem="Ilc-pb-e3Y" firstAttribute="leading" secondItem="MMe-qR-Wdf" secondAttribute="trailing" constant="10" id="nTj-jm-Y7h"/>
+                                                <constraint firstItem="Ilc-pb-e3Y" firstAttribute="centerX" secondItem="4hu-Wn-Ifu" secondAttribute="centerX" id="r8I-KA-HDr"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -316,7 +335,7 @@
                             <tableViewSection headerTitle="Image or Icon" id="tYZ-QD-Vtw">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="150" id="fkv-xv-HxK">
-                                        <rect key="frame" x="0.0" y="321" width="375" height="150"/>
+                                        <rect key="frame" x="0.0" y="351" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fkv-xv-HxK" id="T4k-tm-cfZ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
@@ -370,6 +389,8 @@
                         <outlet property="dayPickerView" destination="vo3-5Q-93F" id="KXv-6o-CV6"/>
                         <outlet property="dayTextField" destination="GmG-qO-Eah" id="rv0-Un-ggf"/>
                         <outlet property="greenButton" destination="kBo-I1-to7" id="w2R-au-yHC"/>
+                        <outlet property="notifcationDateLabel" destination="Ilc-pb-e3Y" id="YXk-rj-Est"/>
+                        <outlet property="notificationIconImageView" destination="MMe-qR-Wdf" id="YTD-b6-VUg"/>
                         <outlet property="orangeButton" destination="yXO-BZ-sD0" id="bqe-B3-adv"/>
                         <outlet property="plantNameTextField" destination="xxP-HM-uXp" id="Wan-1S-EeW"/>
                         <outlet property="purpleButton" destination="9gQ-86-8tg" id="PZg-d0-ntp"/>

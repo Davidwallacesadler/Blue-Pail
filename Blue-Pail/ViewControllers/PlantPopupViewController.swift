@@ -36,9 +36,8 @@ class PlantPopupViewController: UIViewController {
     
     @IBAction func waterButtonTapped(_ sender: Any) {
         delegate?.waterPlant()
-        self.removeFromParent()
         self.view.isHidden = true
-        self.navigationController?.popViewController(animated: true)
+        self.removeFromParent()
     }
     
     @IBAction func editButtonTapped(_ sender: Any) {

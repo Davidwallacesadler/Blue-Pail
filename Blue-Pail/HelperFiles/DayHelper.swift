@@ -24,6 +24,16 @@ struct DayHelper {
         
     }
     
+    /// Returns a date that is equivalent to an argument date plus an arguemnt number of days.
+    static func futureDateFromADate(givenDate: Date, numberOfDays: Int) -> Date {
+        let secondsInADay = 86400
+        let selectedDaysInSeconds = Double(numberOfDays * secondsInADay)
+        guard let timeIntervalFromSeconds = TimeInterval(exactly: selectedDaysInSeconds) else {
+            return Date()
+        }
+        return Date(timeInterval: timeIntervalFromSeconds, since: givenDate)
+    }
+    
     /// Returns true if the two passed in dates are on the same day:
     static func twoDatesAreOnTheSameDay(dateOne: Date, dateTwo: Date) -> Bool {
         let calendar = Calendar.current
@@ -126,4 +136,21 @@ struct DayHelper {
         formattedDate.append(formattedDay)
         return formattedDate
     }
+    
+    ///Returns the desired hour on todays date
+    static func getCorrectTimeToday(desiredHourMinute: (Int, Int)) -> Date {
+        let calendar = Calendar.current
+        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
+        let correctHour = desiredHourMinute.0
+        let correctMinute = desiredHourMinute.1
+        components.hour = correctHour
+        components.minute = correctMinute
+        guard let todayAtTheCorrectTime = calendar.date(from: components) else {
+            print("getCorrectTimeToday: Error instantiating date from components - returning Date()")
+            return Date()
+        }
+        return todayAtTheCorrectTime
+    }
+    
+    
 }

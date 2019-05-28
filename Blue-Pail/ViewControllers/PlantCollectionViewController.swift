@@ -156,6 +156,7 @@ extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
         if segue.identifier == "toEditPlant" {
             guard let detailVC = segue.destination as? PlantDetailTableViewController else { return }
             detailVC.plant = selectedPlant
+            detailVC.navigationItem.title = selectedPlant?.name
             }
         }
 }
