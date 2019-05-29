@@ -76,11 +76,12 @@ class PlantController : AlarmScheduler {
     
     // MARK: - Additional Helper Methods
     
-    /// Sets the target plant's isWatered property to true, and schedules a notification for the argument number of days away from the current date.
+    /// Sets the target plant's isWatered property to true, and schedules a notification for the argument number of days away from the current date at the correct time.
     func waterPlant(plant: Plant) {
         plant.isWatered = true
-        let nextNotifcationDate = DayHelper.futrueDateFrom(givenNumberOfDays: Int(plant.dayToNextWater))
-        plant.needsWateredFireDate = nextNotifcationDate
+        guard let fireDate = plant.needsWateredFireDate else { return }
+        let todayAtCorrectTime = DayHelper.getSameTimeAsDateToday(targetDate: fireDate)
+        plant.needsWateredFireDate = DayHelper.futureDateFromADate(givenDate: todayAtCorrectTime, numberOfDays: Int(plant.dayToNextWater))
         scheduleUserNotifications(for: plant)
         saveToPersistentStorage()
     }

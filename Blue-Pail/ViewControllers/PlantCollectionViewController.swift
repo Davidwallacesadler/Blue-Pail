@@ -22,7 +22,6 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
         guard let targetPlant = selectedPlant else { return }
         if targetPlant.isWatered == false {
             PlantController.shared.waterPlant(plant: targetPlant)
-            targetPlant.needsWateredFireDate = DayHelper.futrueDateFrom(givenNumberOfDays: Int(targetPlant.dayToNextWater))
         }
         self.collectionView.reloadData()
     }
@@ -63,8 +62,6 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
         }
         // Grab the selcted plant:
         let selectedPlant = PlantController.shared.plants[indexPath.row]
-        
-        
         // set up the daysToNextWater label:
         var daysToNextWater = String()
         // Check if the selectedPlant has a fireDate (it always should!):
@@ -118,7 +115,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
         plantPopupViewController.didMove(toParent: self)
         plantPopupViewController.plantNameLabel.text = plant.name
     }
-    
+    /*
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -135,7 +132,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
     }
-
+*/
 }
 
 // MARK: - Delegate Flow Layout
@@ -145,9 +142,6 @@ extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
         // TODO: - Make this depended on the view rather than just being hard coded
         return CGSize(width: 150, height: 200)
     }
-    
-
-    
     
      // MARK: - Navigation
      

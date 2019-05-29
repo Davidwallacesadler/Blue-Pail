@@ -137,7 +137,7 @@ struct DayHelper {
         return formattedDate
     }
     
-    ///Returns the desired hour on todays date
+    ///Returns the desired hour/minute on todays date given the hour and minute values.
     static func getCorrectTimeToday(desiredHourMinute: (Int, Int)) -> Date {
         let calendar = Calendar.current
         var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
@@ -151,6 +151,23 @@ struct DayHelper {
         }
         return todayAtTheCorrectTime
     }
-    
+    ///Returns the desired hour/minute on todays date that matches the target dates hour/minute.
+    static func getSameTimeAsDateToday(targetDate date: Date) -> Date {
+        let calendar = Calendar.current
+        let desiredComponents = calendar.dateComponents([.hour, .minute], from: date)
+        var todaysComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date())
+        guard let correctHour = desiredComponents.hour, let correctMinute = desiredComponents.minute else {
+            print("GetSameTimeAsDateToday: Error grabbing date components - returning Date()")
+            return Date()
+        }
+        todaysComponents.hour = correctHour
+        todaysComponents.minute = correctMinute
+        todaysComponents.second = 0
+        guard let todayAtCorrectTime = calendar.date(from: todaysComponents) else {
+            print("GetSameTimeAsDateToday: Error instantiating date from components - returning Date()")
+            return Date()
+        }
+        return todayAtCorrectTime
+    }
     
 }
