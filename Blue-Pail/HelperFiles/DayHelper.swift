@@ -46,6 +46,7 @@ struct DayHelper {
         }
     }
     
+    // TODO: - Fix Today and 1 Day disrepencies
     /// Returns a string representing how many days there are until the desired fireDate. Note: Call this only when the current date is less than the fireDate.
     static func daysUntil(fireDate: Date) -> String {
         let currentDate = Date()
@@ -151,6 +152,8 @@ struct DayHelper {
         }
         return todayAtTheCorrectTime
     }
+    
+    // TODO: - Replace getCorrectTimeToday with getSameTimeAsDateToday
     ///Returns the desired hour/minute on todays date that matches the target dates hour/minute.
     static func getSameTimeAsDateToday(targetDate date: Date) -> Date {
         let calendar = Calendar.current

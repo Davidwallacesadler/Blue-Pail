@@ -26,6 +26,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     // Titles of Rows:
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
         return String(pickerData[component][row])
     }
     
@@ -35,7 +36,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         let day = pickerDays[pickerView.selectedRow(inComponent: 0)]
         let hour = pickerHours[pickerView.selectedRow(inComponent: 1)]
         let minute = pickerMinutes[pickerView.selectedRow(inComponent: 2)]
-        dayTextField.text = "\(day)"
         dayInteger = day
         let desiredNotificationTimeToday = DayHelper.getCorrectTimeToday(desiredHourMinute: (hour, minute))
         let notificationDate = DayHelper.futureDateFromADate(givenDate: desiredNotificationTimeToday, numberOfDays: day)
@@ -54,9 +54,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
         updateViews()
-        
-        // DayText Field Setup:
-        dayTextField.inputView = dayPickerView
         
         // Picker Setup:
         self.dayPickerView.delegate = self
@@ -80,8 +77,26 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             pickerMinutes
         ]
         
+        let dayLabel = UILabel()
+        dayLabel.text = "day"
+        let hourLabel = UILabel()
+        hourLabel.text = "hour"
+        let minuteLabel = UILabel()
+        minuteLabel.text = "min"
+        pickerLabels = [
+            0 : dayLabel,
+            1 : hourLabel,
+            2 : minuteLabel
+        ]
+        
+        
         // View Setup:
         self.notificationIconImageView.image = UIImage(named: "waterPlantIcon")
+        self.tagIconImageView.image = UIImage(named: "tagNameIcon")
+        self.dayPickerView.setPickerLabels(labels: pickerLabels, containedView: dayPickerView.superview ?? self.view)
+        if plant == nil {
+            deletePlantButton.backgroundColor = UIColor.gray
+        }
         
     }
     
@@ -96,11 +111,11 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     var pickerHours = [Int]()
     var pickerMinutes = [Int]()
     var pickerData = [[Int]]()
+    var pickerLabels = [Int:UILabel]()
     
     
     // MARK: - Outlets
     
-    @IBOutlet weak var dayTextField: UITextField!
     @IBOutlet var dayPickerView: UIPickerView!
     @IBOutlet weak var plantNameTextField: UITextField!
     @IBOutlet weak var orangeButton: UIButton!
@@ -113,6 +128,9 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     @IBOutlet weak var selectedTagLabel: UILabel!
     @IBOutlet weak var notifcationDateLabel: UILabel!
     @IBOutlet weak var notificationIconImageView: UIImageView!
+    @IBOutlet weak var tagIconImageView: UIImageView!
+    @IBOutlet weak var deletePlantButton: UIButton!
+    @IBOutlet weak var imageButton: UIButton!
     
     
     
@@ -127,6 +145,13 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     @IBAction func saveButtonPressed(_ sender: Any) {
         updatePlant()
     }
+    
+    //Photo
+    @IBAction func imageButtonPressed(_ sender: Any) {
+        getImage()
+    }
+    
+    
     
     // Color Buttons
     @IBAction func orangeButtonPressed(_ sender: Any) {
@@ -171,6 +196,14 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         redButton.showsTouchWhenHighlighted = true
     }
     
+    // CRUD
+    
+    @IBAction func deleteButtonPressed(_ sender: Any) {
+        guard let selectedPlant = plant else { return }
+        PlantController.shared.deletePlant(plant: selectedPlant)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     // MARK: - Internal Methods
     
     // TODO: - Work on getting image set up to see if PlantController.update is being called properly
@@ -178,7 +211,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     /// Updates the plant object if there was one passed in, otherwise creates a new plant object with the components from the view.
     private func updatePlant() {
         guard let selectedPlant = plant, let plantName = plantNameTextField.text, let needsWateringDate = needsWateringDateValue, let selectedTag = tag, let plantImage = image, let selectedDay = dayInteger else {
-            PlantController.shared.createPlant(name: plantNameTextField.text ?? "Plant", image: UIImage(named: "defualt"), needsWaterFireDate: needsWateringDateValue ?? DayHelper.futrueDateFrom(givenNumberOfDays: 1), tag: tag ?? TagController.shared.tags[0], dayInteger: dayInteger ?? 1)
+            PlantController.shared.createPlant(name: plantNameTextField.text ?? "Plant", image: image ?? UIImage(named: "defualt"), needsWaterFireDate: needsWateringDateValue ?? DayHelper.futrueDateFrom(givenNumberOfDays: 1), tag: tag ?? TagController.shared.tags[0], dayInteger: dayInteger ?? 1)
             self.navigationController?.popViewController(animated: true)
             return
         }
@@ -189,11 +222,12 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     /// Updates the components of the view with the properties of the passed in plant.
     private func updateViews() {
-        guard let selectedPlant = plant, let plantTag = plant?.tag else { return }
+        guard let selectedPlant = plant, let plantTag = plant?.tag, let plantImage = plant?.photo else { return }
         plantNameTextField.text = selectedPlant.name
-        dayTextField.text = "\(selectedPlant.dayToNextWater)"
         updateTagSelection(tag: plantTag)
         notifcationDateLabel.text = selectedPlant.needsWateredFireDate?.stringValue()
+        imageButton.imageView?.image = plantImage
+        imageButton.imageView?.contentMode = .scaleAspectFill
     }
     
     /// Updates the selected tag label and color view.
@@ -204,3 +238,59 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
 }
 
+extension PlantDetailTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func getImage() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        
+        let actionSheet = UIAlertController(title: "Photo", message: "Choose Source", preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                imagePicker.sourceType = .camera
+                imagePicker.allowsEditing = false
+                self.present(imagePicker, animated: true, completion: nil)
+            } else {
+                print("Camera not available")
+                let alertController = UIAlertController(title: "Camera not available", message: "You have not given permission to use the camera or there is not available camera to use.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                alertController.addAction(okAction)
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action) in
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.allowsEditing = false
+            self.present(imagePicker, animated: true, completion: nil)
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(_) in
+        }))
+        
+        if let popoverController = actionSheet.popoverPresentationController {
+            let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: { (_) in
+                actionSheet.dismiss(animated: true, completion: nil)
+            })
+            actionSheet.addAction(cancelButton)
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            return
+        }
+        imageButton.imageView?.contentMode = .scaleAspectFill
+        imageButton.setImage(originalImage, for: .normal)
+        image = originalImage
+        picker.dismiss(animated: true, completion: nil)
+        
+    }
+    
+}

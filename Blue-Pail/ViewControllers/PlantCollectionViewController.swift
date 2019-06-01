@@ -72,6 +72,8 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
                 daysToNextWater = DayHelper.daysUntil(fireDate: fireDate)
                 if daysToNextWater == "Today" {
                      cell.waterNotificationStatusImageView.image = UIImage(named: "waterPlantIcon")
+                     let fireTime = fireDate.timeStringValue()
+                     daysToNextWater.append("(\(fireTime))")
                 } else {
                      cell.waterNotificationStatusImageView.image = UIImage(named: "notTimeToWaterPlantIcon")
                 }
@@ -91,6 +93,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
         cell.tagTitleLabel.text = selectedPlant.tag?.title
         cell.tagTitleLabel.textColor = selectedPlantTagColor
         cell.plantImageView.image = selectedPlant.photo
+        cell.plantImageView.contentMode = .scaleAspectFill
         cell.tagColorView.backgroundColor = selectedPlantTagColor
         cell.waterNotificationStatusLabel.text = daysToNextWater
         cell.backgroundColor = plantWateredStateColor
