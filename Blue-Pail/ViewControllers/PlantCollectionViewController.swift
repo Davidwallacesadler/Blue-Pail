@@ -154,6 +154,8 @@ extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
             guard let detailVC = segue.destination as? PlantDetailTableViewController else { return }
             detailVC.plant = selectedPlant
             detailVC.navigationItem.title = selectedPlant?.name
+            guard let photo = selectedPlant?.photo else { return }
+            detailVC.image = photo
             }
         }
 }

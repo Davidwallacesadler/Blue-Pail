@@ -67,6 +67,8 @@ class PlantController : AlarmScheduler {
     }
     
     /// Deletes the target plant from the moc, and saves to persistent storage.
+    // THIS DELETES THE WHOLE TAG COLLECTION -- CANT DO THIS CALL. WHEN THIS GETS CALLED IT WILL DELETE THE PLANT AND ALL OTHER PLANTS THAT SHARE THE SAME TAG.
+    // HAVE TO REMOVE THE PLANT FROM THE TAG COLLECTION - THEN CALL THIS METHOD
     func deletePlant(plant: Plant) {
         let moc = plant.managedObjectContext
         moc?.delete(plant)

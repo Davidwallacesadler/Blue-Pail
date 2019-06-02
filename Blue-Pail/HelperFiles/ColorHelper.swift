@@ -24,6 +24,28 @@ struct ColorHelper {
             return UIColor.lilacPurple
         case 6.0:
             return UIColor.brightRed
+        case 7.0:
+            return UIColor.redOrange
+        case 8.0:
+            return UIColor.yellowOrange
+        case 9.0:
+            return UIColor.yellow
+        case 10.0:
+            return UIColor.yellowGreen
+        case 11.0:
+            return UIColor.green
+        case 12.0:
+            return UIColor.teal
+        case 13.0:
+            return UIColor.skyBlue
+        case 14.0:
+            return UIColor.darkBlue
+        case 15.0:
+            return UIColor.violet
+        case 16.0:
+            return UIColor.redViolet
+        case 17.0:
+            return UIColor.pink
         default:
             return UIColor.black
         }

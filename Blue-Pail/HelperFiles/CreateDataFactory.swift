@@ -12,9 +12,5 @@ class CreateDataFactory {
     static func createData() {
         TagController.shared.createTag(tagTitle: "Houseplants", colorNumber: 1.0)
         TagController.shared.createTag(tagTitle: "Ourdoor Plants", colorNumber: 2.0)
-        TagController.shared.createTag(tagTitle: "Herbs", colorNumber: 3.0)
-        TagController.shared.createTag(tagTitle: "Succulents", colorNumber: 4.0)
-        TagController.shared.createTag(tagTitle: "Ferns", colorNumber: 5.0)
-        TagController.shared.createTag(tagTitle: "Cactus", colorNumber: 6.0)
     }
 }

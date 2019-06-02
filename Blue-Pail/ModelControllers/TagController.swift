@@ -46,6 +46,22 @@ class TagController {
         saveToPersistentStorage()
     }
     
+    func removePlantFrom(targetTag: Tag, desiredPlant: Plant) {
+        targetTag.removeFromPlants(desiredPlant)
+        saveToPersistentStorage()
+    }
+    
+    func getSelectedTag(givenTagTitle title: String) -> Tag {
+        var selectedTag = Tag()
+        for tag in tags {
+            guard let tagTitle = tag.title else { return tags[0] }
+            if tagTitle == title {
+                selectedTag = tag
+            }
+        }
+        return selectedTag
+    }
+    
     // MARK: - Persistence
     
     func saveToPersistentStorage() {

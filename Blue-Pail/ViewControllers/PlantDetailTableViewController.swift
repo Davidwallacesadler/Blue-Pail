@@ -16,32 +16,50 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     // Columns in picker:
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return pickerData.count
+        if pickerView == dayPickerView {
+            return pickerData.count
+        } else {
+            return 1
+        }
     }
     
     // Rows in picker:
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData[component].count
+        if pickerView == dayPickerView {
+            return pickerData[component].count
+        } else {
+            return tagPickerTitles.count
+        }
+
     }
     
     // Titles of Rows:
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
-        return String(pickerData[component][row])
+        if pickerView == dayPickerView {
+            return String(pickerData[component][row])
+        } else {
+            return tagPickerTitles[row]
+        }
+  
     }
     
-    // TODO: - Get the picker to work with multiple components --
-    // Want to check if each one has changed individually:
+    // DidSelectRow:
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let day = pickerDays[pickerView.selectedRow(inComponent: 0)]
-        let hour = pickerHours[pickerView.selectedRow(inComponent: 1)]
-        let minute = pickerMinutes[pickerView.selectedRow(inComponent: 2)]
-        dayInteger = day
-        let desiredNotificationTimeToday = DayHelper.getCorrectTimeToday(desiredHourMinute: (hour, minute))
-        let notificationDate = DayHelper.futureDateFromADate(givenDate: desiredNotificationTimeToday, numberOfDays: day)
-        print("\(notificationDate)")
-        needsWateringDateValue = notificationDate
-        self.notifcationDateLabel.text = notificationDate.stringValue()
+        if pickerView == dayPickerView {
+            let day = pickerDays[pickerView.selectedRow(inComponent: 0)]
+            let hour = pickerHours[pickerView.selectedRow(inComponent: 1)]
+            let minute = pickerMinutes[pickerView.selectedRow(inComponent: 2)]
+            dayInteger = day
+            let desiredNotificationTimeToday = DayHelper.getCorrectTimeToday(desiredHourMinute: (hour, minute))
+            let notificationDate = DayHelper.futureDateFromADate(givenDate: desiredNotificationTimeToday, numberOfDays: day)
+            print("\(notificationDate)")
+            needsWateringDateValue = notificationDate
+            self.notifcationDateLabel.text = notificationDate.stringValue()
+        } else {
+            let selectedTagTitle = tagPickerTitles[row]
+            let selectedTag = TagController.shared.getSelectedTag(givenTagTitle: selectedTagTitle)
+            updateTag(selectedTag: selectedTag)
+        }
     }
     
     // MARK: - View Lifecycle
@@ -58,6 +76,12 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         // Picker Setup:
         self.dayPickerView.delegate = self
         self.dayPickerView.dataSource = self
+        
+        self.tagPickerView.delegate = self
+        self.tagPickerView.dataSource = self
+        
+        // Day Picker Data:
+        
         pickerDays = [
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
             11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -89,6 +113,8 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             2 : minuteLabel
         ]
         
+        // Tag Picker Data:
+        
         
         // View Setup:
         self.notificationIconImageView.image = UIImage(named: "waterPlantIcon")
@@ -98,6 +124,9 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             deletePlantButton.backgroundColor = UIColor.gray
         }
         
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        tagPickerView.reloadAllComponents()
     }
     
     // MARK: - Properties
@@ -112,18 +141,23 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     var pickerMinutes = [Int]()
     var pickerData = [[Int]]()
     var pickerLabels = [Int:UILabel]()
+    var tagPickerTitles: [String] {
+        get {
+            let tags = TagController.shared.tags
+            var tagTitles = [String]()
+            for tag in tags {
+                guard let tagTitle = tag.title else { return [] }
+                tagTitles.append(tagTitle)
+            }
+            return tagTitles
+        }
+    }
     
     
     // MARK: - Outlets
     
     @IBOutlet var dayPickerView: UIPickerView!
     @IBOutlet weak var plantNameTextField: UITextField!
-    @IBOutlet weak var orangeButton: UIButton!
-    @IBOutlet weak var greenButton: UIButton!
-    @IBOutlet weak var blueButton: UIButton!
-    @IBOutlet weak var crimsonButton: UIButton!
-    @IBOutlet weak var purpleButton: UIButton!
-    @IBOutlet weak var redButton: UIButton!
     @IBOutlet weak var selectedTagColorView: UIView!
     @IBOutlet weak var selectedTagLabel: UILabel!
     @IBOutlet weak var notifcationDateLabel: UILabel!
@@ -131,6 +165,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     @IBOutlet weak var tagIconImageView: UIImageView!
     @IBOutlet weak var deletePlantButton: UIButton!
     @IBOutlet weak var imageButton: UIButton!
+    @IBOutlet weak var tagPickerView: UIPickerView!
     
     
     
@@ -151,62 +186,19 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         getImage()
     }
     
-    
-    
-    // Color Buttons
-    @IBAction func orangeButtonPressed(_ sender: Any) {
-        let selectedTag = TagController.shared.tags[0]
-        tag = selectedTag
-        updateTagSelection(tag: selectedTag)
-        orangeButton.showsTouchWhenHighlighted = true
-    }
-    
-    @IBAction func greenButtonPressed(_ sender: Any) {
-        let selectedTag = TagController.shared.tags[1]
-        tag = selectedTag
-        updateTagSelection(tag: selectedTag)
-        greenButton.showsTouchWhenHighlighted = true
-    }
-    
-    @IBAction func blueButtonPressed(_ sender: Any) {
-        let selectedTag = TagController.shared.tags[2]
-        tag = selectedTag
-        updateTagSelection(tag: selectedTag)
-        blueButton.showsTouchWhenHighlighted = true
-    }
-    
-    @IBAction func crimsonButtonPressed(_ sender: Any) {
-        let selectedTag = TagController.shared.tags[3]
-        tag = selectedTag
-        updateTagSelection(tag: selectedTag)
-        crimsonButton.showsTouchWhenHighlighted = true
-    }
-    
-    @IBAction func purpleButtonPressed(_ sender: Any) {
-        let selectedTag = TagController.shared.tags[4]
-        tag = selectedTag
-        updateTagSelection(tag: selectedTag)
-        purpleButton.showsTouchWhenHighlighted = true
-    }
-    
-    @IBAction func redButtonPressed(_ sender: Any) {
-        let selectedTag = TagController.shared.tags[5]
-        tag = selectedTag
-        updateTagSelection(tag: selectedTag)
-        redButton.showsTouchWhenHighlighted = true
-    }
-    
     // CRUD
     
+    /// Note: Remember to remove the plant from the tag collection before calling PlantController...deletePlant(plant:)
     @IBAction func deleteButtonPressed(_ sender: Any) {
-        guard let selectedPlant = plant else { return }
+        guard let selectedPlant = plant, let plantTag = plant?.tag else { return }
+        TagController.shared.removePlantFrom(targetTag: plantTag, desiredPlant: selectedPlant)
         PlantController.shared.deletePlant(plant: selectedPlant)
         self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Internal Methods
     
-    // TODO: - Work on getting image set up to see if PlantController.update is being called properly
+  
     
     /// Updates the plant object if there was one passed in, otherwise creates a new plant object with the components from the view.
     private func updatePlant() {
@@ -236,7 +228,15 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         selectedTagColorView.backgroundColor = ColorHelper.colorFrom(colorNumber: tag.colorNumber)
     }
     
+    /// Updates the selectedTag
+    private func updateTag(selectedTag: Tag) {
+        tag = selectedTag
+        selectedTagLabel.text = selectedTag.title
+        selectedTagColorView.backgroundColor = ColorHelper.colorFrom(colorNumber: selectedTag.colorNumber)
+    }
 }
+
+// MARK: - UIImagePickerControllerDelegate Extension
 
 extension PlantDetailTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
