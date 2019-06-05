@@ -214,9 +214,13 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     /// Updates the components of the view with the properties of the passed in plant.
     private func updateViews() {
-        guard let selectedPlant = plant, let plantTag = plant?.tag, let plantImage = plant?.photo else { return }
+        guard let selectedPlant = plant, let plantTag = plant?.tag, let plantImage = plant?.photo, let fireDate = plant?.needsWateredFireDate, let plantDay = plant?.dayToNextWater else { return }
         plantNameTextField.text = selectedPlant.name
         updateTagSelection(tag: plantTag)
+        tag = plantTag
+        image = plantImage
+        dayInteger = Int(plantDay)
+        needsWateringDateValue = fireDate
         notifcationDateLabel.text = selectedPlant.needsWateredFireDate?.stringValue()
         imageButton.imageView?.image = plantImage
         imageButton.imageView?.contentMode = .scaleAspectFill
@@ -286,7 +290,7 @@ extension PlantDetailTableViewController: UIImagePickerControllerDelegate, UINav
         guard let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
             return
         }
-        imageButton.imageView?.contentMode = .scaleAspectFill
+        imageButton.imageView?.contentMode = .scaleAspectFit
         imageButton.setImage(originalImage, for: .normal)
         image = originalImage
         picker.dismiss(animated: true, completion: nil)

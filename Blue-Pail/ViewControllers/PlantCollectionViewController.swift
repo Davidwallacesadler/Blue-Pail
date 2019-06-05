@@ -10,7 +10,37 @@ import UIKit
 
 private let reuseIdentifier = "plantCell"
 
-class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
+class PlantCollectionViewController: UICollectionViewController, PopupDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return filterTitles.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return filterTitles[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let selectedTagTitle = filterTitles[row]
+        plantCollection = []
+        if selectedTagTitle == "All" {
+            plantCollection = getAllPlants()
+        } else {
+            let selectedTag = TagController.shared.getSelectedTag(givenTagTitle: selectedTagTitle)
+            guard let tagPlants = selectedTag.plants?.array as? [Plant] else { return }
+            for plant in tagPlants {
+                plantCollection.append(plant)
+            }
+        }
+        self.collectionView.reloadData()
+        dismissFilter()
+    }
+    
     
     // MARK: - PopupDelegate Methods
     
@@ -19,22 +49,42 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
     }
     
     func waterPlant() {
-        guard let targetPlant = selectedPlant else { return }
+        guard let targetPlant = selectedPlant, let targetIndex = collectionView.indexPathsForSelectedItems else { return }
         if targetPlant.isWatered == false {
             PlantController.shared.waterPlant(plant: targetPlant)
         }
-        self.collectionView.reloadData()
+        // TODO: - Want to just reload a single item not the whole collectionVieqw
+        self.collectionView.reloadItems(at: targetIndex)
+       // self.collectionView.reloadData()
     }
     
-    // MARK: - Properties
+    // MARK: - Stored Properties
     
+    var tempInput: UITextField?
+    var plantCollection: [Plant] = []
     var selectedPlant: Plant?
+    
+    // MARK: - Computed Properties
+    
+    var filterTitles: [String] {
+        var titles = ["All"]
+        let tagCollection = TagController.shared.tags
+        for tag in tagCollection {
+            guard let tagTitle = tag.title else { return titles }
+            titles.append(tagTitle)
+        }
+        return titles
+    }
     
     // MARK: - View LifeCycle
 
+    // TODO: - Have the collectionView Refresh when the app is re-opened from the background
     override func viewDidLoad() {
         super.viewDidLoad()
+        plantCollection = getAllPlants()
         self.collectionView.reloadData()
+        self.tagFilterPickerView.delegate = self
+        self.tagFilterPickerView.dataSource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,15 +94,33 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
     override func viewDidAppear(_ animated: Bool) {
         self.collectionView.reloadData()
     }
-
-    // MARK: UICollectionView DataSource Methods
+    
+    // MARK: - Outlets
+    
+    @IBOutlet var tagFilterPickerView: UIPickerView!
+    
+    // MARK: - Actions
+    
+    @IBAction func filterButtonPressed(_ sender: Any) {
+        if tagFilterPickerView.superview != nil {
+            return
+        }
+        // Using an 'invisible' textField here so I can use it as an input view for the tagFilter:
+        let temporaryInput = UITextField(frame:CGRect.zero)
+        temporaryInput.inputView = self.tagFilterPickerView
+        self.view.addSubview(temporaryInput)
+        temporaryInput.becomeFirstResponder()
+        tempInput = temporaryInput
+    }
+    
+    // MARK: CollectionView DataSource Methods
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return PlantController.shared.plants.count
+        return plantCollection.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -60,15 +128,10 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
             print("ERROR: The collectionViewCell is not an instance of PlantCollectionViewCell!")
             return UICollectionViewCell()
         }
-        // Grab the selcted plant:
-        let selectedPlant = PlantController.shared.plants[indexPath.row]
-        // set up the daysToNextWater label:
+        let selectedPlant = plantCollection[indexPath.row]
         var daysToNextWater = String()
-        // Check if the selectedPlant has a fireDate (it always should!):
         if let fireDate = selectedPlant.needsWateredFireDate {
-            // Check if the current date is less than the notificationFireDate OR if the current date is in the same day as the fireDate:
-            if Date() <= fireDate || DayHelper.twoDatesAreOnTheSameDay(dateOne: Date(), dateTwo: fireDate){
-                // If so, get the amount of days until that day to display it:
+            if Date() <= fireDate || DayHelper.twoDatesAreOnTheSameDay(dateOne: Date(), dateTwo: fireDate) {
                 daysToNextWater = DayHelper.daysUntil(fireDate: fireDate)
                 if daysToNextWater == "Today" {
                      cell.waterNotificationStatusImageView.image = UIImage(named: "waterPlantIcon")
@@ -78,17 +141,14 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
                      cell.waterNotificationStatusImageView.image = UIImage(named: "notTimeToWaterPlantIcon")
                 }
             } else {
-                // The current date is greater than the fireDate, and its the next day or greater:
-                // Get the notificationFireDate to display on the cell:
                 daysToNextWater = DayHelper.formatMonthAndDay(givenDate: fireDate)
                 cell.waterNotificationStatusImageView.image = UIImage(named: "waterPlantIcon")
             }
         }
+        // Cell Setup:
         PlantController.shared.checkIfDry(plant: selectedPlant)
         let selectedPlantTagColor = ColorHelper.colorFrom(colorNumber: selectedPlant.tag?.colorNumber ?? Double(Int.random(in: 1...6)))
         let plantWateredStateColor = PlantController.shared.colorBasedOnWateredState(plant: selectedPlant)
-        
-        // Update the cell elements
         cell.plantNameLabel.text = selectedPlant.name
         cell.tagTitleLabel.text = selectedPlant.tag?.title
         cell.tagTitleLabel.textColor = selectedPlantTagColor
@@ -97,18 +157,15 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
         cell.tagColorView.backgroundColor = selectedPlantTagColor
         cell.waterNotificationStatusLabel.text = daysToNextWater
         cell.backgroundColor = plantWateredStateColor
-        
         cell.plantNameIconImageView.image = UIImage(named: "plantNameIcon")
         cell.tagNameIconImageView.image = UIImage(named: "tagNameIcon")
-    
-        
         return cell
     }
 
-    // MARK: UICollectionView Delegate Methods
+    // MARK: CollectionView Delegate Methods
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let plant = PlantController.shared.plants[indexPath.row]
+        let plant = plantCollection[indexPath.row]
         selectedPlant = plant
         let plantPopupViewController = PlantPopupViewController(nibName: "PlantPopupViewController", bundle: nil)
         plantPopupViewController.delegate = self
@@ -118,27 +175,31 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate {
         plantPopupViewController.didMove(toParent: self)
         plantPopupViewController.plantNameLabel.text = plant.name
     }
-    /*
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
+    // MARK: - Internal Methods
+    
+    /// Returns an array that is populated with every Plant object.
+    func getAllPlants() -> [Plant] {
+        var collection = [Plant]()
+        let allTags = TagController.shared.tags
+        for tag in allTags {
+            guard let tagPlants = tag.plants?.array as? [Plant] else { return []}
+            for plant in tagPlants {
+                collection.append(plant)
+            }
+        }
+        return collection
     }
-*/
+    
+    /// Removes the tagPickerView from it's superview, and resigns the first responder for the tempInput.
+    private func dismissFilter() {
+        tagFilterPickerView.removeFromSuperview()
+        tempInput?.resignFirstResponder()
+    }
+    
 }
 
-// MARK: - Delegate Flow Layout
+// MARK: - Delegate Flow Layout Extension
 
 extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -154,8 +215,6 @@ extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
             guard let detailVC = segue.destination as? PlantDetailTableViewController else { return }
             detailVC.plant = selectedPlant
             detailVC.navigationItem.title = selectedPlant?.name
-            guard let photo = selectedPlant?.photo else { return }
-            detailVC.image = photo
             }
         }
 }

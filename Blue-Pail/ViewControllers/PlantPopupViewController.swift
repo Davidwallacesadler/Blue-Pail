@@ -31,7 +31,6 @@ class PlantPopupViewController: UIViewController {
     @IBOutlet weak var waterButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     
-    
     // MARK: - Actions
     
     @IBAction func waterButtonTapped(_ sender: Any) {
