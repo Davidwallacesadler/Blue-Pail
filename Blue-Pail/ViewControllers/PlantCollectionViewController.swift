@@ -12,6 +12,7 @@ private let reuseIdentifier = "plantCell"
 
 class PlantCollectionViewController: UICollectionViewController, PopupDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    // MARK: - PickerView Delegate Methods
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -41,9 +42,9 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         dismissFilter()
     }
     
-    
     // MARK: - PopupDelegate Methods
-    
+    // TODO: - Want to just reload a single item in waterPlant() -- not the whole collectionView.
+    // TODO: - Want the collectionview to load new elements in when the user has finished creating their new plant.
     func editPlant() {
         performSegue(withIdentifier: "toEditPlant", sender: self)
     }
@@ -53,7 +54,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         if targetPlant.isWatered == false {
             PlantController.shared.waterPlant(plant: targetPlant)
         }
-        // TODO: - Want to just reload a single item not the whole collectionVieqw
+       
         self.collectionView.reloadItems(at: targetIndex)
        // self.collectionView.reloadData()
     }
@@ -77,8 +78,9 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     }
     
     // MARK: - View LifeCycle
-
     // TODO: - Have the collectionView Refresh when the app is re-opened from the background
+    // TODO: - Find a better way of refreshing the collection view
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         plantCollection = getAllPlants()
@@ -88,6 +90,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        plantCollection = getAllPlants()
         self.collectionView.reloadData()
     }
     
@@ -113,7 +116,8 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         tempInput = temporaryInput
     }
     
-    // MARK: CollectionView DataSource Methods
+    // MARK: - CollectionView DataSource Methods
+    // TODO: - clean up cell setup - remove logic from the cellForItemAt method probably
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -162,7 +166,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         return cell
     }
 
-    // MARK: CollectionView Delegate Methods
+    // MARK: - CollectionView Delegate Methods
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let plant = plantCollection[indexPath.row]
@@ -200,10 +204,11 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
 }
 
 // MARK: - Delegate Flow Layout Extension
+// TODO: - Make the layout of cells depend on the view rather than just being hard coded
 
 extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // TODO: - Make this depended on the view rather than just being hard coded
+      
         return CGSize(width: 150, height: 200)
     }
     

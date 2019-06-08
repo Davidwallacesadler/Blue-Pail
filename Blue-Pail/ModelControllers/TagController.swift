@@ -30,27 +30,35 @@ class TagController {
     
     // MARK: - CRUD
     
+    /// Creates a new Tag object with the passed in title and colorNumber.
     func createTag(tagTitle: String, colorNumber: Double) {
         _ = Tag(title: tagTitle, colorNumber: colorNumber)
         saveToPersistentStorage()
     }
     
+    /// Appends the selected Plant object to a target Tag's plant collection.
     func appendPlantTo(targetTag: Tag, desiredPlant: Plant) {
         targetTag.addToPlants(desiredPlant)
         saveToPersistentStorage()
     }
     
+    //TODO: - Write a better update function
+    /// Updates the selected Tag Object....
     func updateTag(withPlant plant: Plant, title: String?, colorNumber: Double) {
         plant.tag?.title = title
         plant.tag?.colorNumber = colorNumber
         saveToPersistentStorage()
     }
     
+    /// Removes the selected Plant object to a target Tag's plant collection.
     func removePlantFrom(targetTag: Tag, desiredPlant: Plant) {
         targetTag.removeFromPlants(desiredPlant)
         saveToPersistentStorage()
     }
     
+    // MARK: - Helper Methods
+    
+    /// Returns the tag with the same title as the argument tag.
     func getSelectedTag(givenTagTitle title: String) -> Tag {
         var selectedTag = Tag()
         for tag in tags {
@@ -60,6 +68,19 @@ class TagController {
             }
         }
         return selectedTag
+    }
+    
+    /// Returns true if the given Tag has a unique title.
+    func IsTagUnique(givenTagTitle: String) -> Bool {
+        var truthValue = true
+        for tag in TagController.shared.tags {
+            guard let tagTitle = tag.title else { return truthValue }
+            if tagTitle == givenTagTitle {
+                truthValue = false
+                break
+            }
+        }
+        return truthValue
     }
     
     // MARK: - Persistence
@@ -72,46 +93,3 @@ class TagController {
         }
     }
 }
-
-class TagsController2 {
-    var tags = [Tag]()// Contains Red, Blue, Green...
-    func createPlant(tag: Tag) {
-        // create the plant here
-        //tag.append(plant)
-    }
-}
-
-/*
- In a setup
- 
- Create all tags when the app is first run -- so that we can access the tag in the tags array and append the selected plant when we want to save.
- 
- Tag creation factory -- must create on first run in the app - in app delegate
- 
- onFirstLaucnch -- check shotTrest
- 
- Tagconroller.shared.createTag -- create all the tags
- 
- 
- 
- */
-
-/*
- You go to make a plant
- You go throught the process (naming, picture, date....)
- If they select a tag
-    when you call your createplant method
-        you pass in everything including the tag
-        after you've initialized the plant
-        tag.append(plant)
- 
- */
-/*
- What if:
- 
- 
- 
- 
- 
- */
-

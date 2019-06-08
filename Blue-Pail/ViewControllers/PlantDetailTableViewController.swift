@@ -10,11 +10,8 @@ import UIKit
 
 class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    // TODO: 
+    // MARK: - PickerView Delegate Methods
     
-    // MARK: - Picker Protocol Stubs
-    
-    // Columns in picker:
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         if pickerView == dayPickerView {
             return pickerData.count
@@ -23,7 +20,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         }
     }
     
-    // Rows in picker:
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView == dayPickerView {
             return pickerData[component].count
@@ -32,8 +28,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         }
 
     }
-    
-    // Titles of Rows:
+ 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == dayPickerView {
             return String(pickerData[component][row])
@@ -42,8 +37,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         }
   
     }
-    
-    // DidSelectRow:
+
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == dayPickerView {
             let day = pickerDays[pickerView.selectedRow(inComponent: 0)]
@@ -77,11 +71,9 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         self.dayPickerView.delegate = self
         self.dayPickerView.dataSource = self
         
+        // Day Picker Setup:
         self.tagPickerView.delegate = self
         self.tagPickerView.dataSource = self
-        
-        // Day Picker Data:
-        
         pickerDays = [
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
             11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -100,7 +92,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             pickerHours,
             pickerMinutes
         ]
-        
+        // Day Picker Label Setup:
         let dayLabel = UILabel()
         dayLabel.text = "day"
         let hourLabel = UILabel()
@@ -113,9 +105,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             2 : minuteLabel
         ]
         
-        // Tag Picker Data:
-        
-        
         // View Setup:
         self.notificationIconImageView.image = UIImage(named: "waterPlantIcon")
         self.tagIconImageView.image = UIImage(named: "tagNameIcon")
@@ -123,19 +112,21 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         if plant == nil {
             deletePlantButton.backgroundColor = UIColor.gray
         }
-        
     }
     override func viewDidAppear(_ animated: Bool) {
+        // TODO: - Is there a better way of refreshing the data?
         tagPickerView.reloadAllComponents()
     }
     
     // MARK: - Properties
     
+    // Plant Properties:
     var plant: Plant?
     var needsWateringDateValue: Date?
     var dayInteger: Int?
     var image: UIImage?
     var tag: Tag?
+    // Picker Properties:
     var pickerDays = [Int]()
     var pickerHours = [Int]()
     var pickerMinutes = [Int]()
@@ -153,7 +144,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         }
     }
     
-    
     // MARK: - Outlets
     
     @IBOutlet var dayPickerView: UIPickerView!
@@ -167,28 +157,23 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     @IBOutlet weak var imageButton: UIButton!
     @IBOutlet weak var tagPickerView: UIPickerView!
     
-    
-    
     // MARK: - Actions
     // TODO: - Make the text field for the tag title to be a picker with the names
     
-    // Navigation Controller Buttons
+    // Navigation Controller Buttons:
     @IBAction func cancelButtonPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        updatePlant()
+        updatePlantObject()
     }
     
-    //Photo
     @IBAction func imageButtonPressed(_ sender: Any) {
         getImage()
     }
     
-    // CRUD
-    
-    /// Note: Remember to remove the plant from the tag collection before calling PlantController...deletePlant(plant:)
+    /// Note: - Remember to remove the plant from the tag collection before calling deletePlant(plant:) - Otherwise the Tag gets deleted along with it.
     @IBAction func deleteButtonPressed(_ sender: Any) {
         guard let selectedPlant = plant, let plantTag = plant?.tag else { return }
         TagController.shared.removePlantFrom(targetTag: plantTag, desiredPlant: selectedPlant)
@@ -198,26 +183,57 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     // MARK: - Internal Methods
     
-  
-    
     /// Updates the plant object if there was one passed in, otherwise creates a new plant object with the components from the view.
     private func updatePlant() {
-        guard let selectedPlant = plant, let plantName = plantNameTextField.text, let needsWateringDate = needsWateringDateValue, let selectedTag = tag, let plantImage = image, let selectedDay = dayInteger else {
-            PlantController.shared.createPlant(name: plantNameTextField.text ?? "Plant", image: image ?? UIImage(named: "defualt"), needsWaterFireDate: needsWateringDateValue ?? DayHelper.futrueDateFrom(givenNumberOfDays: 1), tag: tag ?? TagController.shared.tags[0], dayInteger: dayInteger ?? 1)
+        guard let selectedPlant = plant, let plantName = plantNameTextField.text.nilIfEmpty, let needsWateringDate = needsWateringDateValue, let selectedTag = tag, let plantImage = image, let selectedDay = dayInteger else {
+            if plantNameTextField.text == "" {
+                plantNameTextField.text = "Plant"
+            }
+            PlantController.shared.createPlant(name: plantNameTextField.text, image: image ?? UIImage(named: "defualt"), needsWaterFireDate: needsWateringDateValue ?? DayHelper.futrueDateFrom(givenNumberOfDays: 1), tag: tag ?? TagController.shared.tags[0], dayInteger: dayInteger ?? 1)
             self.navigationController?.popViewController(animated: true)
             return
         }
         PlantController.shared.updatePlant(plant: selectedPlant, newName: plantName, newImage: plantImage, newFireDate: needsWateringDate, newTag: selectedTag, dayInteger: selectedDay)
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func updatePlantObject() {
+        guard let plantName = plantNameTextField.text.nilIfEmpty else {
+            let noNameAlert = UIAlertController(title: "No Title Entered", message: "Please enter a title for your plant.", preferredStyle: .alert)
+            noNameAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self.present(noNameAlert, animated: true)
+            return
+        }
+        guard let selectedTag = tag else {
+            let noTagAlert = UIAlertController(title: "No Tag Selected", message: "Please choose a tag for your plant.", preferredStyle: .alert)
+            noTagAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self.present(noTagAlert, animated: true)
+            return
+        }
+        guard let wateringDate = needsWateringDateValue, let dayInt = dayInteger else {
+            let noDateAlert = UIAlertController(title: "No Day or Time Selected", message: "Please select a notifcation day & time for your plant.", preferredStyle: .alert)
+            noDateAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self.present(noDateAlert, animated: true)
+            return
+        }
+        guard let selectedPlant = plant, let plantImage = image else {
+            // CREATE
+            PlantController.shared.createPlant(name: plantName, image: image ?? UIImage(named: "Default"), needsWaterFireDate: wateringDate, tag: selectedTag, dayInteger: dayInt)
+            self.navigationController?.popViewController(animated: true)
+            return
+        }
+        //UPDATE
+        PlantController.shared.updatePlant(plant: selectedPlant, newName: plantName, newImage: plantImage, newFireDate: wateringDate, newTag: selectedTag, dayInteger: dayInt)
+        self.navigationController?.popViewController(animated: true)
         
     }
     
+    // TODO: - Update the Pickerview to the last selected values --- can get from fireDate and DaysTillNext
     /// Updates the components of the view with the properties of the passed in plant.
     private func updateViews() {
         guard let selectedPlant = plant, let plantTag = plant?.tag, let plantImage = plant?.photo, let fireDate = plant?.needsWateredFireDate, let plantDay = plant?.dayToNextWater else { return }
         plantNameTextField.text = selectedPlant.name
-        updateTagSelection(tag: plantTag)
-        tag = plantTag
+        updateTag(selectedTag: plantTag)
         image = plantImage
         dayInteger = Int(plantDay)
         needsWateringDateValue = fireDate
@@ -226,13 +242,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         imageButton.imageView?.contentMode = .scaleAspectFill
     }
     
-    /// Updates the selected tag label and color view.
-    private func updateTagSelection(tag: Tag) {
-        selectedTagLabel.text = tag.title
-        selectedTagColorView.backgroundColor = ColorHelper.colorFrom(colorNumber: tag.colorNumber)
-    }
-    
-    /// Updates the selectedTag
+    /// Updates the selected Tag reference, and related label and color view elements:
     private func updateTag(selectedTag: Tag) {
         tag = selectedTag
         selectedTagLabel.text = selectedTag.title
@@ -241,14 +251,16 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
 }
 
 // MARK: - UIImagePickerControllerDelegate Extension
+// TODO: - Make it so the image fits into the button properly and isn't resizing it:
 
 extension PlantDetailTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    /// Brings up an action sheet for image selection, and displays the selected image on the imageButton.
     func getImage() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         
-        let actionSheet = UIAlertController(title: "Photo", message: "Choose Source", preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
@@ -257,7 +269,7 @@ extension PlantDetailTableViewController: UIImagePickerControllerDelegate, UINav
                 self.present(imagePicker, animated: true, completion: nil)
             } else {
                 print("Camera not available")
-                let alertController = UIAlertController(title: "Camera not available", message: "You have not given permission to use the camera or there is not available camera to use.", preferredStyle: .alert)
+                let alertController = UIAlertController(title: "Camera not available", message: "You have not given permission to use the camera or there is not an available camera to use.", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
                 alertController.addAction(okAction)
                 self.present(alertController, animated: true, completion: nil)
@@ -294,7 +306,5 @@ extension PlantDetailTableViewController: UIImagePickerControllerDelegate, UINav
         imageButton.setImage(originalImage, for: .normal)
         image = originalImage
         picker.dismiss(animated: true, completion: nil)
-        
     }
-    
 }

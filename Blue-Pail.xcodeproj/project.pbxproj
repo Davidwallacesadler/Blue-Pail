@@ -29,6 +29,7 @@
 		635AEFEF229B198100A9026F /* PlantPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635AEFED229B198100A9026F /* PlantPopupViewController.swift */; };
 		635AEFF0229B198100A9026F /* PlantPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635AEFEE229B198100A9026F /* PlantPopupViewController.xib */; };
 		635AEFF2229C3DAB00A9026F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635AEFF1229C3DAB00A9026F /* Date.swift */; };
+		639E39B122A87926005A8407 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639E39B022A87926005A8407 /* Optional.swift */; };
 		63BD334B22A1F0880008D41C /* pickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD334A22A1F0880008D41C /* pickerView.swift */; };
 		63BD334D22A381C20008D41C /* TagCreationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD334C22A381C20008D41C /* TagCreationTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,7 @@
 		635AEFED229B198100A9026F /* PlantPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantPopupViewController.swift; sourceTree = "<group>"; };
 		635AEFEE229B198100A9026F /* PlantPopupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlantPopupViewController.xib; sourceTree = "<group>"; };
 		635AEFF1229C3DAB00A9026F /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		639E39B022A87926005A8407 /* Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
 		63BD334A22A1F0880008D41C /* pickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pickerView.swift; sourceTree = "<group>"; };
 		63BD334C22A381C20008D41C /* TagCreationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCreationTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,6 +158,7 @@
 				63265038228F2A180025E10C /* Keys.swift */,
 				635AEFF1229C3DAB00A9026F /* Date.swift */,
 				63BD334A22A1F0880008D41C /* pickerView.swift */,
+				639E39B022A87926005A8407 /* Optional.swift */,
 			);
 			path = HelperFiles;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				6326501F228118240025E10C /* Blue-Pail.xcdatamodeld in Sources */,
 				6326502F228216F60025E10C /* ColorHelper.swift in Sources */,
 				63265031228217710025E10C /* PlantDetailTableViewController.swift in Sources */,
+				639E39B122A87926005A8407 /* Optional.swift in Sources */,
 				6326502522813BE30025E10C /* PlantController.swift in Sources */,
 				63265027228141D70025E10C /* TagController.swift in Sources */,
 				6326500422810CFE0025E10C /* AppDelegate.swift in Sources */,

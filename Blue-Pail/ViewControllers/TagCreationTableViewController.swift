@@ -26,12 +26,29 @@ class TagCreationTableViewController: UITableViewController {
     
     // MARK: - Actions
     
-    // CRUD Buttons
+    // Save Button
     @IBAction func saveButtonPressed(_ sender: Any) {
-        guard let newTagTitle = tagTextField.text, let newTagColorNumber = tagColorNumber else { return }
-        //have a way of making sure the user is entering a unique tag
-        TagController.shared.createTag(tagTitle: newTagTitle, colorNumber: newTagColorNumber)
-        self.navigationController?.popViewController(animated: true)
+        guard let newTagTitle = tagTextField.text.nilIfEmpty else {
+            let noTitleAlert = UIAlertController(title: "No Title Entered", message: "Please enter a title for your new tag.", preferredStyle: .alert)
+            noTitleAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self.present(noTitleAlert, animated: true)
+            return
+        }
+        guard let newTagColorNumber = tagColorNumber else {
+            let noColorAlert = UIAlertController(title: "No Color Selected", message: "Please tap a color that you want to use for your new tag.", preferredStyle: .alert)
+            noColorAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self.present(noColorAlert, animated: true)
+            return
+        }
+        if TagController.shared.IsTagUnique(givenTagTitle: newTagTitle) {
+            TagController.shared.createTag(tagTitle: newTagTitle, colorNumber: newTagColorNumber)
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            let nonUniqueCreationAlert = UIAlertController(title: "Tag Already Exists", message: "A tag already exists with the title you entered. Please enter a different title.", preferredStyle: .alert)
+            nonUniqueCreationAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self.present(nonUniqueCreationAlert, animated: true)
+        }
+
     }
     
     // Color Buttons
