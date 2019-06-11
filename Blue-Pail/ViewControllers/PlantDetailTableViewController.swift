@@ -8,7 +8,14 @@
 
 import UIKit
 
-class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+    
+    // MARK: - TextField Delegate Methods
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
     // MARK: - PickerView Delegate Methods
     
@@ -61,6 +68,11 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // NavigationBar Setup:
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.foregroundColor: UIColor.pailBlue,
+             NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: 18)!]
+        
         // Gesture recognizer Setup:
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         tap.cancelsTouchesInView = false
@@ -84,6 +96,13 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
             21, 22, 23
         ]
+        pickerHourTitles = [
+            "12:00 AM","1:00 AM","2:00 AM","3:00 AM","4:00 AM",
+            "5:00 AM","6:00 AM","7:00 AM","8:00 AM","9:00 AM",
+            "10:00 AM","11:00 AM","12:00 PM","1:00 PM","2:00 PM",
+            "3:00 PM","4:00 PM","5:00 PM","6:00 PM","7:00 PM",
+            "8:00 PM","9:00 PM","10:00 PM","11:00 PM"
+        ]
         pickerMinutes = [
             0, 15, 30, 45
         ]
@@ -105,9 +124,10 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             2 : minuteLabel
         ]
         
+        // TextField Setup:
+        self.plantNameTextField.delegate = self
+        
         // View Setup:
-        self.notificationIconImageView.image = UIImage(named: "waterPlantIcon")
-        self.tagIconImageView.image = UIImage(named: "tagNameIcon")
         self.dayPickerView.setPickerLabels(labels: pickerLabels, containedView: dayPickerView.superview ?? self.view)
         if plant == nil {
             deletePlantButton.backgroundColor = UIColor.gray
@@ -129,6 +149,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     // Picker Properties:
     var pickerDays = [Int]()
     var pickerHours = [Int]()
+    var pickerHourTitles = [String]()
     var pickerMinutes = [Int]()
     var pickerData = [[Int]]()
     var pickerLabels = [Int:UILabel]()
@@ -151,8 +172,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     @IBOutlet weak var selectedTagColorView: UIView!
     @IBOutlet weak var selectedTagLabel: UILabel!
     @IBOutlet weak var notifcationDateLabel: UILabel!
-    @IBOutlet weak var notificationIconImageView: UIImageView!
-    @IBOutlet weak var tagIconImageView: UIImageView!
     @IBOutlet weak var deletePlantButton: UIButton!
     @IBOutlet weak var imageButton: UIButton!
     @IBOutlet weak var tagPickerView: UIPickerView!
@@ -183,20 +202,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     // MARK: - Internal Methods
     
-    /// Updates the plant object if there was one passed in, otherwise creates a new plant object with the components from the view.
-    private func updatePlant() {
-        guard let selectedPlant = plant, let plantName = plantNameTextField.text.nilIfEmpty, let needsWateringDate = needsWateringDateValue, let selectedTag = tag, let plantImage = image, let selectedDay = dayInteger else {
-            if plantNameTextField.text == "" {
-                plantNameTextField.text = "Plant"
-            }
-            PlantController.shared.createPlant(name: plantNameTextField.text, image: image ?? UIImage(named: "defualt"), needsWaterFireDate: needsWateringDateValue ?? DayHelper.futrueDateFrom(givenNumberOfDays: 1), tag: tag ?? TagController.shared.tags[0], dayInteger: dayInteger ?? 1)
-            self.navigationController?.popViewController(animated: true)
-            return
-        }
-        PlantController.shared.updatePlant(plant: selectedPlant, newName: plantName, newImage: plantImage, newFireDate: needsWateringDate, newTag: selectedTag, dayInteger: selectedDay)
-        self.navigationController?.popViewController(animated: true)
-    }
-    
+     /// Updates the plant object if there was one passed in, otherwise creates a new plant object with the components from the view.
     private func updatePlantObject() {
         guard let plantName = plantNameTextField.text.nilIfEmpty else {
             let noNameAlert = UIAlertController(title: "No Title Entered", message: "Please enter a title for your plant.", preferredStyle: .alert)

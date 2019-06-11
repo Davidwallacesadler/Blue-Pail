@@ -8,10 +8,30 @@
 
 import UIKit
 
-class TagCreationTableViewController: UITableViewController {
+class TagCreationTableViewController: UITableViewController, UITextFieldDelegate {
+    
+    // MARK: - TextField Delegate Methods
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // NavigationBar Setup:
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.foregroundColor: UIColor.pailBlue,
+             NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: 18)!]
+        
+        // Gesture recognizer Setup:
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
+        
+        // TextField Setup:
+        tagTextField.delegate = self
     }
     
     // MARK: - Properties
@@ -23,6 +43,7 @@ class TagCreationTableViewController: UITableViewController {
     
     @IBOutlet weak var tagTextField: UITextField!
     @IBOutlet weak var selectedColorView: UIView!
+    
     
     // MARK: - Actions
     
@@ -51,7 +72,12 @@ class TagCreationTableViewController: UITableViewController {
 
     }
     
-    // Color Buttons
+    // Cancel Button
+    @IBAction func cancelButtonPressed(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    // Color Buttons:
     @IBAction func redButtonPressed(_ sender: Any) {
         updateColorChoice(colorID: 6.0)
     }

@@ -106,32 +106,32 @@ struct DayHelper {
         }
         switch currentMonthNumber {
         case 01:
-            formattedDate.append("Jan ")
+            formattedDate.append("JAN ")
         case 02:
-            formattedDate.append("Feb ")
+            formattedDate.append("FEB ")
         case 03:
-            formattedDate.append("Mar ")
+            formattedDate.append("MAR ")
         case 04:
-            formattedDate.append("Apr ")
+            formattedDate.append("APR ")
         case 05:
-            formattedDate.append("May ")
+            formattedDate.append("MAY ")
         case 06:
-            formattedDate.append("Jun ")
+            formattedDate.append("JUN ")
         case 07:
-            formattedDate.append("Jul ")
+            formattedDate.append("JUL ")
         case 08:
-            formattedDate.append("Aug ")
+            formattedDate.append("AUG ")
         case 09:
-            formattedDate.append("Sep ")
+            formattedDate.append("SEP ")
         case 10:
-            formattedDate.append("Oct ")
+            formattedDate.append("OCT ")
         case 11:
-            formattedDate.append("Nov ")
+            formattedDate.append("NOV ")
         case 12:
-            formattedDate.append("Dec ")
+            formattedDate.append("DEC ")
         default:
             print("ERROR: FormatDayAndMonth method switch statment failed - defualting to January")
-            formattedDate.append("Jan ")
+            formattedDate.append("JAN ")
         }
         let formattedDay = formatDayDigit(givenDay: currentDayNumber)
         formattedDate.append(formattedDay)

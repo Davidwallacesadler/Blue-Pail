@@ -83,10 +83,18 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        // CollectionView Setup:
         plantCollection = getAllPlants()
         self.collectionView.reloadData()
+        
+        // PickerView Setup:
         self.tagFilterPickerView.delegate = self
         self.tagFilterPickerView.dataSource = self
+        
+        // NavigationBar Setup:
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.foregroundColor: UIColor.pailBlue,
+             NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: 18)!]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -138,15 +146,15 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             if Date() <= fireDate || DayHelper.twoDatesAreOnTheSameDay(dateOne: Date(), dateTwo: fireDate) {
                 daysToNextWater = DayHelper.daysUntil(fireDate: fireDate)
                 if daysToNextWater == "Today" {
-                     cell.waterNotificationStatusImageView.image = UIImage(named: "waterPlantIcon")
+                     cell.waterNotificationStatusImageView.image = UIImage(named: "waterPlantIcon-1")
                      let fireTime = fireDate.timeStringValue()
                      daysToNextWater.append("(\(fireTime))")
                 } else {
-                     cell.waterNotificationStatusImageView.image = UIImage(named: "notTimeToWaterPlantIcon")
+                     cell.waterNotificationStatusImageView.image = UIImage(named: "notTimeToWaterIcon")
                 }
             } else {
                 daysToNextWater = DayHelper.formatMonthAndDay(givenDate: fireDate)
-                cell.waterNotificationStatusImageView.image = UIImage(named: "waterPlantIcon")
+                cell.waterNotificationStatusImageView.image = UIImage(named: "waterPlantIcon-1")
             }
         }
         // Cell Setup:
@@ -161,8 +169,8 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         cell.tagColorView.backgroundColor = selectedPlantTagColor
         cell.waterNotificationStatusLabel.text = daysToNextWater
         cell.backgroundColor = plantWateredStateColor
-        cell.plantNameIconImageView.image = UIImage(named: "plantNameIcon")
-        cell.tagNameIconImageView.image = UIImage(named: "tagNameIcon")
+        cell.plantNameIconImageView.image = UIImage(named: "plantNameIcon-1")
+        cell.tagNameIconImageView.image = UIImage(named: "tagNameIcon-1")
         return cell
     }
 
@@ -179,6 +187,8 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         plantPopupViewController.didMove(toParent: self)
         plantPopupViewController.plantNameLabel.text = plant.name
     }
+    
+    
     
     // MARK: - Internal Methods
     
@@ -208,6 +218,12 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
 
 extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = view.frame.size.width
+        let height = view.frame.size.height
+        let spacing = CGFloat(width / 10.0)
+        
+        // Want to fit 4 on the
+        let size = CGSize(width: ((width / 2.0) - spacing), height: ((height / 4.0)) - spacing)
       
         return CGSize(width: 150, height: 200)
     }

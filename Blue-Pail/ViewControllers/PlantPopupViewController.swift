@@ -23,6 +23,7 @@ class PlantPopupViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
     // MARK: - Outlets
@@ -41,6 +42,10 @@ class PlantPopupViewController: UIViewController {
     
     @IBAction func editButtonTapped(_ sender: Any) {
         delegate?.editPlant()
+        self.view.isHidden = true
+        self.removeFromParent()
+    }
+    @IBAction func backButtonPressed(_ sender: Any) {
         self.view.isHidden = true
         self.removeFromParent()
     }

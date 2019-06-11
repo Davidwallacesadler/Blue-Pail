@@ -87,4 +87,8 @@ extension UIColor {
     static var pink: UIColor {
         return UIColor(red: 229/255, green: 9/255, blue: 191/255, alpha: 1.0)
     }
+    
+    static var pailBlue: UIColor {
+        return UIColor(red: 0/255, green: 69/255, blue: 229/255, alpha: 1.0)
+    }
 }
