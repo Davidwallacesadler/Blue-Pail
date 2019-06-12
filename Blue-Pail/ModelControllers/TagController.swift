@@ -50,9 +50,31 @@ class TagController {
         saveToPersistentStorage()
     }
     
+    func updateTag(selectedTag: Tag, withNewTitle title: String,withNewColorNumber colorNumber: Double) {
+        selectedTag.title = title
+        selectedTag.colorNumber = colorNumber
+        saveToPersistentStorage()
+    }
+    
+    
     /// Removes the selected Plant object to a target Tag's plant collection.
     func removePlantFrom(targetTag: Tag, desiredPlant: Plant) {
         targetTag.removeFromPlants(desiredPlant)
+        saveToPersistentStorage()
+    }
+    
+    /// Deletes the selected Tag from the Tag Collection:
+    func deleteTag(selectedTag: Tag) {
+        // Remove Notifications for plants
+        guard let plants = selectedTag.plants?.array else {
+            return
+        }
+        for plant in plants {
+            PlantController.shared.cancelUserNotifications(for: plant as! Plant)
+        }
+        // Delete the tag
+        let moc = selectedTag.managedObjectContext
+        moc?.delete(selectedTag)
         saveToPersistentStorage()
     }
     

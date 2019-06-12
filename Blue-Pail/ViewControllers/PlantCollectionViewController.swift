@@ -83,6 +83,11 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        // AppWillEnterForegroundNotification Setup:
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationWillEnterForeground(_:)),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
         // CollectionView Setup:
         plantCollection = getAllPlants()
         self.collectionView.reloadData()
@@ -104,6 +109,11 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     
     override func viewDidAppear(_ animated: Bool) {
         self.collectionView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Outlets
@@ -205,11 +215,16 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         return collection
     }
     
+    @objc func applicationWillEnterForeground(_ notification: NSNotification) {
+        self.collectionView.reloadData()
+    }
+    
     /// Removes the tagPickerView from it's superview, and resigns the first responder for the tempInput.
     private func dismissFilter() {
         tagFilterPickerView.removeFromSuperview()
         tempInput?.resignFirstResponder()
     }
+    
     
 }
 

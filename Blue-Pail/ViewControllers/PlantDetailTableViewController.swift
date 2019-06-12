@@ -48,8 +48,14 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == dayPickerView {
             let day = pickerDays[pickerView.selectedRow(inComponent: 0)]
-            let hour = pickerHours[pickerView.selectedRow(inComponent: 1)]
-            let minute = pickerMinutes[pickerView.selectedRow(inComponent: 2)]
+            var hour = 0
+            var minute = 0
+            if selectedHour != nil {
+                hour = selectedHour ?? 0
+            }
+            if selectedMinute != nil {
+                minute = selectedMinute ?? 0
+            }
             dayInteger = day
             let desiredNotificationTimeToday = DayHelper.getCorrectTimeToday(desiredHourMinute: (hour, minute))
             let notificationDate = DayHelper.futureDateFromADate(givenDate: desiredNotificationTimeToday, numberOfDays: day)
@@ -91,37 +97,14 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
             21, 22, 24, 25, 26, 27, 28, 29, 30, 31
         ]
-        pickerHours = [
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-            11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-            21, 22, 23
-        ]
-        pickerHourTitles = [
-            "12:00 AM","1:00 AM","2:00 AM","3:00 AM","4:00 AM",
-            "5:00 AM","6:00 AM","7:00 AM","8:00 AM","9:00 AM",
-            "10:00 AM","11:00 AM","12:00 PM","1:00 PM","2:00 PM",
-            "3:00 PM","4:00 PM","5:00 PM","6:00 PM","7:00 PM",
-            "8:00 PM","9:00 PM","10:00 PM","11:00 PM"
-        ]
-        pickerMinutes = [
-            0, 15, 30, 45
-        ]
         pickerData = [
-            pickerDays,
-            pickerHours,
-            pickerMinutes
+            pickerDays
         ]
         // Day Picker Label Setup:
         let dayLabel = UILabel()
-        dayLabel.text = "day"
-        let hourLabel = UILabel()
-        hourLabel.text = "hour"
-        let minuteLabel = UILabel()
-        minuteLabel.text = "min"
+        dayLabel.text = "day(s)"
         pickerLabels = [
-            0 : dayLabel,
-            1 : hourLabel,
-            2 : minuteLabel
+            0 : dayLabel
         ]
         
         // TextField Setup:
@@ -146,11 +129,9 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     var dayInteger: Int?
     var image: UIImage?
     var tag: Tag?
+    
     // Picker Properties:
     var pickerDays = [Int]()
-    var pickerHours = [Int]()
-    var pickerHourTitles = [String]()
-    var pickerMinutes = [Int]()
     var pickerData = [[Int]]()
     var pickerLabels = [Int:UILabel]()
     var tagPickerTitles: [String] {
@@ -164,6 +145,8 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             return tagTitles
         }
     }
+    var selectedHour: Int?
+    var selectedMinute: Int?
     
     // MARK: - Outlets
     
@@ -175,11 +158,33 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     @IBOutlet weak var deletePlantButton: UIButton!
     @IBOutlet weak var imageButton: UIButton!
     @IBOutlet weak var tagPickerView: UIPickerView!
+    @IBOutlet weak var timeDatePicker: UIDatePicker!
+    @IBOutlet weak var photoImageView: UIImageView!
     
     // MARK: - Actions
     // TODO: - Make the text field for the tag title to be a picker with the names
-    
     // Navigation Controller Buttons:
+    
+    @IBAction func timeDatePickerChanged(_ sender: Any) {
+        let selectedDate = timeDatePicker.date
+        let calendar = Calendar.current
+        let desiredComponents = calendar.dateComponents([.hour, .minute], from: selectedDate)
+        guard let hour = desiredComponents.hour, let minute = desiredComponents.minute else {
+            return
+        }
+        selectedHour = hour
+        selectedMinute = minute
+        var day = 0
+        if dayInteger != nil {
+            day = dayInteger ?? 0
+        }
+        let desiredNotificationTimeToday = DayHelper.getCorrectTimeToday(desiredHourMinute: (hour, minute))
+        let notificationDate = DayHelper.futureDateFromADate(givenDate: desiredNotificationTimeToday, numberOfDays: day)
+        needsWateringDateValue = notificationDate
+        self.notifcationDateLabel.text = notificationDate.stringValue()
+    }
+    
+    
     @IBAction func cancelButtonPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -244,8 +249,8 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         dayInteger = Int(plantDay)
         needsWateringDateValue = fireDate
         notifcationDateLabel.text = selectedPlant.needsWateredFireDate?.stringValue()
-        imageButton.imageView?.image = plantImage
-        imageButton.imageView?.contentMode = .scaleAspectFill
+        photoImageView.image = plantImage
+        photoImageView.contentMode = .scaleAspectFill
     }
     
     /// Updates the selected Tag reference, and related label and color view elements:
@@ -265,9 +270,7 @@ extension PlantDetailTableViewController: UIImagePickerControllerDelegate, UINav
     func getImage() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = .camera
@@ -308,8 +311,10 @@ extension PlantDetailTableViewController: UIImagePickerControllerDelegate, UINav
         guard let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
             return
         }
-        imageButton.imageView?.contentMode = .scaleAspectFit
-        imageButton.setImage(originalImage, for: .normal)
+        photoImageView.image = originalImage
+        photoImageView.contentMode = .scaleAspectFill
+//        imageButton.setImage(originalImage, for: .normal)
+//        imageButton.imageView?.contentMode = .scaleAspectFit
         image = originalImage
         picker.dismiss(animated: true, completion: nil)
     }

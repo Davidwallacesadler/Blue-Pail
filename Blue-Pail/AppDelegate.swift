@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UNUserNotificationCenter.current().delegate = self
         
         // MARK: - For First Launch Testing Tag data
-        alwaysFirstLaunch()
+        //alwaysFirstLaunch()
         onFirstLaunch()
         
         return true
@@ -45,9 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     // CHECK WITH COLTON ABOUT THIS
-    private func alwaysFirstLaunch() {
-        let alwaysFirstLaunch = FirstLaunch.alwaysFirst()
-    }
+//    private func alwaysFirstLaunch() {
+//        let alwaysFirstLaunch = FirstLaunch.alwaysFirst()
+//    }
     
     // MARK: NotifcationCenter willPresentNotification
     
@@ -56,5 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
 
+    func applicationWillEnterForeground(_ application: UIApplication) {
+    }
 }
 
