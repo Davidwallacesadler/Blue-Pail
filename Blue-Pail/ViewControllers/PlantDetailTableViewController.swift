@@ -31,7 +31,11 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         if pickerView == dayPickerView {
             return pickerData[component].count
         } else {
-            return tagPickerTitles.count
+            if tagPickerTitles.isEmpty {
+                return 1
+            } else {
+                return tagPickerTitles.count
+            }
         }
 
     }
@@ -40,9 +44,12 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         if pickerView == dayPickerView {
             return String(pickerData[component][row])
         } else {
-            return tagPickerTitles[row]
+            if tagPickerTitles.isEmpty {
+                return "Please Create A Tag"
+            } else {
+                return tagPickerTitles[row]
+            }
         }
-  
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -63,9 +70,13 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             needsWateringDateValue = notificationDate
             self.notifcationDateLabel.text = notificationDate.stringValue()
         } else {
-            let selectedTagTitle = tagPickerTitles[row]
-            let selectedTag = TagController.shared.getSelectedTag(givenTagTitle: selectedTagTitle)
-            updateTag(selectedTag: selectedTag)
+            if tagPickerTitles.isEmpty {
+                return
+            } else {
+                let selectedTagTitle = tagPickerTitles[row]
+                let selectedTag = TagController.shared.getSelectedTag(givenTagTitle: selectedTagTitle)
+                updateTag(selectedTag: selectedTag)
+            }
         }
     }
     
@@ -73,6 +84,10 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Check if There is only one group:
+        if tagPickerTitles.count == 1 {
+            updateTag(selectedTag: TagController.shared.getSelectedTag(givenTagTitle: tagPickerTitles[0]))
+        }
         
         // NavigationBar Setup:
         self.navigationController?.navigationBar.titleTextAttributes =

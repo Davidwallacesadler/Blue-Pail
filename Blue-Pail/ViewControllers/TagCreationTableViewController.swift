@@ -170,5 +170,7 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
         guard let selectedTag = tag else { return }
         updateColorChoice(colorID: selectedTag.colorNumber)
         tagTextField.text = selectedTag.title
+        self.navigationItem.title = selectedTag.title
     }
 }
+

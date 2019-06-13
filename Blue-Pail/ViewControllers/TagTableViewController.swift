@@ -15,18 +15,30 @@ class TagTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return tagPickerTitles.count
+        if tagPickerTitles.isEmpty {
+            return 1
+        } else {
+            return tagPickerTitles.count
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return tagPickerTitles[row]
+        if tagPickerTitles.isEmpty {
+            return "Please Create A Tag"
+        } else {
+            return tagPickerTitles[row]
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let selectedTagTitle = tagPickerTitles[row]
-        let tag = TagController.shared.getSelectedTag(givenTagTitle: selectedTagTitle)
-        selectedTag = tag
-        updateImageViewAndLabel()
+        if tagPickerTitles.isEmpty {
+            return
+        } else {
+            let selectedTagTitle = tagPickerTitles[row]
+            let tag = TagController.shared.getSelectedTag(givenTagTitle: selectedTagTitle)
+            selectedTag = tag
+            updateImageViewAndLabel()
+        }
     }
     
     
@@ -47,6 +59,7 @@ class TagTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
         
         selectedTag = nil
         updateImageViewAndLabel()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
