@@ -26,7 +26,7 @@ extension UIPickerView {
                     label.removeFromSuperview()
                 }
                 // NEED TO FIX THE OFFSET THAT IS HAPPENING HERE
-                label.frame = CGRect(x: x + labelWidth * CGFloat(i) - CGFloat(i + 28), y: y, width: labelWidth, height: fontSize)
+                label.frame = CGRect(x: x + labelWidth * CGFloat(i) - 30, y: y, width: labelWidth, height: fontSize)
                 label.font = UIFont.systemFont(ofSize: fontSize)
                 label.backgroundColor = .clear
                 label.textAlignment = NSTextAlignment.center

@@ -49,14 +49,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //        let alwaysFirstLaunch = FirstLaunch.alwaysFirst()
 //    }
     
-    // MARK: NotifcationCenter willPresentNotification
+    // MARK: userNotifcationCenter willPresentNotification
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.alert, .sound])
+        completionHandler([.alert, .sound, .badge])
     }
-
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
     }
+    
 }
 

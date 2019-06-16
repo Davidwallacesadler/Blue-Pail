@@ -132,6 +132,7 @@ extension AlarmScheduler {
         content.title = "Time To Water!"
         content.body = "Water your \(plant.name ?? "plant")!"
         content.sound = UNNotificationSound.default
+        content.badge =  NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
         
         let calendar = Calendar.current
     

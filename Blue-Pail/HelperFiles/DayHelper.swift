@@ -48,22 +48,45 @@ struct DayHelper {
     
     // TODO: - Fix Today and 1 Day disrepencies
     /// Returns a string representing how many days there are until the desired fireDate. Note: Call this only when the current date is less than the fireDate.
-    static func daysUntil(fireDate: Date) -> String {
-        let currentDate = Date()
-        let currentDateTimeInterval = currentDate.timeIntervalSinceReferenceDate
-        let futureDateTimeInterval = fireDate.timeIntervalSinceReferenceDate
-        let difference = futureDateTimeInterval - currentDateTimeInterval
-        let secondsInADay = 86400.0
-        let daysLeft = difference / secondsInADay
-        var daysLeftText = String(Int(daysLeft.rounded(.up)))
-        if twoDatesAreOnTheSameDay(dateOne: currentDate, dateTwo: fireDate) {
-            daysLeftText = "Today"
-        } else if daysLeft < 1.5 {
-            daysLeftText = "1 Day"
-        } else {
-            daysLeftText.append(" Days")
+//    static func daysUntil(fireDate: Date) -> String {
+//        let currentDate = Date()
+//        let currentDateTimeInterval = currentDate.timeIntervalSinceReferenceDate
+//        let futureDateTimeInterval = fireDate.timeIntervalSinceReferenceDate
+//        let difference = futureDateTimeInterval - currentDateTimeInterval
+//        let secondsInADay = 86400.0
+//        let daysLeft = difference / secondsInADay
+//        var daysLeftText = String(Int(daysLeft.rounded(.up)))
+//        if twoDatesAreOnTheSameDay(dateOne: currentDate, dateTwo: fireDate) {
+//            daysLeftText = "Today"
+//        } else if daysLeft < 1.5 {
+//            daysLeftText = "1 Day"
+//        } else {
+//            daysLeftText.append(" Days")
+//        }
+//        return daysLeftText
+//    }
+    
+    static func amountOfDaysBetween(previousDate dateOne: Date, futureDate dateTwo: Date) -> String {
+        var amountOfDaysBetween = Int()
+        let calendar = Calendar.current
+        let previousDateComponents = calendar.dateComponents([.year, .month, .day], from: dateOne)
+        let futureDateComponents = calendar.dateComponents([.year, .month, .day], from: dateTwo)
+        guard let previousDateYear = previousDateComponents.year, let previousDateMonth = previousDateComponents.month, let previousDateDay = previousDateComponents.day, let futureDateYear = futureDateComponents.year, let futureDateMonth = futureDateComponents.month, let futureDateDay = futureDateComponents.day else { return dateOne.dayMonthYearValue() }
+        if previousDateYear == futureDateYear {
+            if previousDateMonth == futureDateMonth {
+                if previousDateDay == futureDateDay {
+                    let timeOfFutureDate = dateTwo.timeStringValue()
+                    return "Today(\(timeOfFutureDate))"
+                } else {
+                    amountOfDaysBetween = futureDateDay - previousDateDay
+                    if amountOfDaysBetween == 1 {
+                        return "1 Day"
+                    }
+                    return "\(amountOfDaysBetween) Days"
+                }
+            }
         }
-        return daysLeftText
+        return dateTwo.dayMonthYearValue()
     }
     
     /// Returns a "month day" abbreviation of the argument date. I.E If the argument date is in january 10 2019, then the return string will be "Jan 10th".

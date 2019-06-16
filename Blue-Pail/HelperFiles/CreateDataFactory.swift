@@ -11,6 +11,6 @@ import Foundation
 class CreateDataFactory {
     static func createData() {
         TagController.shared.createTag(tagTitle: "Houseplants", colorNumber: 1.0)
-        TagController.shared.createTag(tagTitle: "Ourdoor Plants", colorNumber: 2.0)
+        TagController.shared.createTag(tagTitle: "Ourdoor Plants", colorNumber: 5.0)
     }
 }

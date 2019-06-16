@@ -22,4 +22,11 @@ extension Date {
         formatter.dateStyle = .none
         return formatter.string(from: self)
     }
+    
+    func dayMonthYearValue() -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .short    
+        return formatter.string(from: self)
+    }
 }

@@ -107,14 +107,10 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         // Day Picker Setup:
         self.tagPickerView.delegate = self
         self.tagPickerView.dataSource = self
-        pickerDays = [
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-            11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-            21, 22, 24, 25, 26, 27, 28, 29, 30, 31
-        ]
         pickerData = [
             pickerDays
         ]
+        updateDayPickerValue()
         // Day Picker Label Setup:
         let dayLabel = UILabel()
         dayLabel.text = "day(s)"
@@ -146,7 +142,11 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     var tag: Tag?
     
     // Picker Properties:
-    var pickerDays = [Int]()
+    var pickerDays = [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+        11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        21, 22, 24, 25, 26, 27, 28, 29, 30, 31
+    ]
     var pickerData = [[Int]]()
     var pickerLabels = [Int:UILabel]()
     var tagPickerTitles: [String] {
@@ -266,6 +266,11 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         notifcationDateLabel.text = selectedPlant.needsWateredFireDate?.stringValue()
         photoImageView.image = plantImage
         photoImageView.contentMode = .scaleAspectFill
+        // UPDATE THE DAY PICKER TO DISPLAY THE DAY
+        //dayPickerView.selec
+        //updateDayPickerValue()
+        // UPDATE THE TIME PICKER TO DISPLAY THE TIME
+        updateDatePickerValue()
     }
     
     /// Updates the selected Tag reference, and related label and color view elements:
@@ -273,6 +278,25 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         tag = selectedTag
         selectedTagLabel.text = selectedTag.title
         selectedTagColorView.backgroundColor = ColorHelper.colorFrom(colorNumber: selectedTag.colorNumber)
+    }
+    
+    /// Updates the DayPickerView selected row if there is a dayInteger passed in:
+    private func updateDayPickerValue() {
+        guard let day = dayInteger else { return }
+        var index = 0
+        for integer in pickerDays {
+            if integer == day {
+                break
+            }
+            index += 1
+        }
+        dayPickerView.selectRow(index, inComponent: 0, animated: false)
+    }
+    
+     /// Updates the timeDatePickerView selected row if there is a notification date passed in:
+    private func updateDatePickerValue() {
+        guard let fireDate = needsWateringDateValue else { return }
+        timeDatePicker.setDate(fireDate, animated: false)
     }
 }
 
