@@ -67,6 +67,43 @@ struct DayHelper {
 //    }
     
     static func amountOfDaysBetween(previousDate dateOne: Date, futureDate dateTwo: Date) -> String {
+        // Helper:
+        func getAmountOfDaysInCurrentMonth(givenMonthNumber month: Int, givenYearNumber year: Int) -> Int {
+            let isLeapYear = ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0))
+            var februraryDays = 28
+            if isLeapYear == true {
+                februraryDays = 29
+            }
+            switch month {
+            case 1:
+                return 31
+            case 2:
+                return februraryDays
+            case 3:
+                return 31
+            case 4:
+                return 30
+            case 5:
+                return 31
+            case 6:
+                return 30
+            case 7:
+                return 31
+            case 8:
+                return 30
+            case 9:
+                return 31
+            case 10:
+                return 31
+            case 11:
+                return 30
+            case 12:
+                return 31
+            default:
+                print("Defualting to 30 days this month -- dayHelper switch error")
+                return 30
+            }
+        }
         var amountOfDaysBetween = Int()
         let calendar = Calendar.current
         let previousDateComponents = calendar.dateComponents([.year, .month, .day], from: dateOne)
@@ -75,18 +112,37 @@ struct DayHelper {
         if previousDateYear == futureDateYear {
             if previousDateMonth == futureDateMonth {
                 if previousDateDay == futureDateDay {
+                    // Day, Month, Year are the same:
                     let timeOfFutureDate = dateTwo.timeStringValue()
                     return "Today(\(timeOfFutureDate))"
                 } else {
+                    // Month, Year are the same. day is different:
                     amountOfDaysBetween = futureDateDay - previousDateDay
                     if amountOfDaysBetween == 1 {
                         return "1 Day"
                     }
                     return "\(amountOfDaysBetween) Days"
                 }
+            } else {
+                // Year is the same. Month, Day is different:
+                let amountOfDaysInPreviousMonth = getAmountOfDaysInCurrentMonth(givenMonthNumber: previousDateMonth, givenYearNumber: previousDateYear)
+                let daysUntilTheEndOfTheMonth = amountOfDaysInPreviousMonth - previousDateDay
+                amountOfDaysBetween = futureDateDay + daysUntilTheEndOfTheMonth
+                if amountOfDaysBetween == 1 {
+                    return "1 Day"
+                }
+                return "\(amountOfDaysBetween) Days"
             }
+        } else {
+            // Year, Month, Day are different:
+            let amountOfDaysInPreviousMonth = getAmountOfDaysInCurrentMonth(givenMonthNumber: previousDateMonth, givenYearNumber: previousDateYear)
+            let daysUntilTheEndOfTheMonth = amountOfDaysInPreviousMonth - previousDateDay
+            amountOfDaysBetween = futureDateDay + daysUntilTheEndOfTheMonth
+            if amountOfDaysBetween == 1 {
+                return "1 Day"
+            }
+            return "\(amountOfDaysBetween) Days"
         }
-        return dateTwo.dayMonthYearValue()
     }
     
     /// Returns a "month day" abbreviation of the argument date. I.E If the argument date is in january 10 2019, then the return string will be "Jan 10th".
@@ -195,5 +251,9 @@ struct DayHelper {
         }
         return todayAtCorrectTime
     }
+    
+    /// MARK: Internal Methods
+    
+    
     
 }

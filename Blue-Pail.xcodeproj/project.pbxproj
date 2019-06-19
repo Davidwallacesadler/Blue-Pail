@@ -30,9 +30,14 @@
 		635AEFF0229B198100A9026F /* PlantPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635AEFEE229B198100A9026F /* PlantPopupViewController.xib */; };
 		635AEFF2229C3DAB00A9026F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635AEFF1229C3DAB00A9026F /* Date.swift */; };
 		639E39B122A87926005A8407 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639E39B022A87926005A8407 /* Optional.swift */; };
-		639E39B322AF75F4005A8407 /* TagTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639E39B222AF75F4005A8407 /* TagTableViewController.swift */; };
 		63BD334B22A1F0880008D41C /* pickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD334A22A1F0880008D41C /* pickerView.swift */; };
 		63BD334D22A381C20008D41C /* TagCreationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD334C22A381C20008D41C /* TagCreationTableViewController.swift */; };
+		63D4547C22B9966000E74B1B /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4547B22B9966000E74B1B /* OnboardingPageViewController.swift */; };
+		63D4547F22B9986F00E74B1B /* WelcomeOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4547E22B9986F00E74B1B /* WelcomeOnboardingViewController.swift */; };
+		63D4548122B9989400E74B1B /* SetupOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4548022B9989400E74B1B /* SetupOnboardingViewController.swift */; };
+		63D4548322B998AC00E74B1B /* NotificationOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4548222B998AC00E74B1B /* NotificationOnboardingViewController.swift */; };
+		63D4548522B998C200E74B1B /* GetStartedOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4548422B998C200E74B1B /* GetStartedOnboardingViewController.swift */; };
+		63D4548722B9B28300E74B1B /* TagCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4548622B9B28300E74B1B /* TagCreationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,9 +66,14 @@
 		635AEFEE229B198100A9026F /* PlantPopupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlantPopupViewController.xib; sourceTree = "<group>"; };
 		635AEFF1229C3DAB00A9026F /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		639E39B022A87926005A8407 /* Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
-		639E39B222AF75F4005A8407 /* TagTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTableViewController.swift; sourceTree = "<group>"; };
 		63BD334A22A1F0880008D41C /* pickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pickerView.swift; sourceTree = "<group>"; };
 		63BD334C22A381C20008D41C /* TagCreationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCreationTableViewController.swift; sourceTree = "<group>"; };
+		63D4547B22B9966000E74B1B /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
+		63D4547E22B9986F00E74B1B /* WelcomeOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeOnboardingViewController.swift; sourceTree = "<group>"; };
+		63D4548022B9989400E74B1B /* SetupOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupOnboardingViewController.swift; sourceTree = "<group>"; };
+		63D4548222B998AC00E74B1B /* NotificationOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationOnboardingViewController.swift; sourceTree = "<group>"; };
+		63D4548422B998C200E74B1B /* GetStartedOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartedOnboardingViewController.swift; sourceTree = "<group>"; };
+		63D4548622B9B28300E74B1B /* TagCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCreationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,12 +150,13 @@
 		6326501822810DCE0025E10C /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				63D4547D22B9983B00E74B1B /* Onboarding */,
 				63265028228204E10025E10C /* PlantCollectionViewController.swift */,
 				63265030228217710025E10C /* PlantDetailTableViewController.swift */,
 				635AEFED229B198100A9026F /* PlantPopupViewController.swift */,
 				635AEFEE229B198100A9026F /* PlantPopupViewController.xib */,
 				63BD334C22A381C20008D41C /* TagCreationTableViewController.swift */,
-				639E39B222AF75F4005A8407 /* TagTableViewController.swift */,
+				63D4548622B9B28300E74B1B /* TagCreationViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -173,6 +184,18 @@
 				6326500C22810D050025E10C /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		63D4547D22B9983B00E74B1B /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				63D4547B22B9966000E74B1B /* OnboardingPageViewController.swift */,
+				63D4547E22B9986F00E74B1B /* WelcomeOnboardingViewController.swift */,
+				63D4548022B9989400E74B1B /* SetupOnboardingViewController.swift */,
+				63D4548222B998AC00E74B1B /* NotificationOnboardingViewController.swift */,
+				63D4548422B998C200E74B1B /* GetStartedOnboardingViewController.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,21 +281,26 @@
 				6326502322812F060025E10C /* Tag+Convenience.swift in Sources */,
 				635AEFEF229B198100A9026F /* PlantPopupViewController.swift in Sources */,
 				63265039228F2A190025E10C /* Keys.swift in Sources */,
+				63D4547C22B9966000E74B1B /* OnboardingPageViewController.swift in Sources */,
 				6326502122811CDA0025E10C /* Plant+Convenience.swift in Sources */,
+				63D4548322B998AC00E74B1B /* NotificationOnboardingViewController.swift in Sources */,
 				63BD334D22A381C20008D41C /* TagCreationTableViewController.swift in Sources */,
-				639E39B322AF75F4005A8407 /* TagTableViewController.swift in Sources */,
 				635AEFF2229C3DAB00A9026F /* Date.swift in Sources */,
 				6326502D2282165B0025E10C /* Color.swift in Sources */,
 				6326501C228117950025E10C /* CoreDataStack.swift in Sources */,
+				63D4548522B998C200E74B1B /* GetStartedOnboardingViewController.swift in Sources */,
 				63BD334B22A1F0880008D41C /* pickerView.swift in Sources */,
 				6326503B228F34900025E10C /* DayHelper.swift in Sources */,
 				6326502B228205B40025E10C /* PlantCollectionViewCell.swift in Sources */,
+				63D4548122B9989400E74B1B /* SetupOnboardingViewController.swift in Sources */,
 				6326501F228118240025E10C /* Blue-Pail.xcdatamodeld in Sources */,
 				6326502F228216F60025E10C /* ColorHelper.swift in Sources */,
 				63265031228217710025E10C /* PlantDetailTableViewController.swift in Sources */,
 				639E39B122A87926005A8407 /* Optional.swift in Sources */,
 				6326502522813BE30025E10C /* PlantController.swift in Sources */,
 				63265027228141D70025E10C /* TagController.swift in Sources */,
+				63D4547F22B9986F00E74B1B /* WelcomeOnboardingViewController.swift in Sources */,
+				63D4548722B9B28300E74B1B /* TagCreationViewController.swift in Sources */,
 				6326500422810CFE0025E10C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

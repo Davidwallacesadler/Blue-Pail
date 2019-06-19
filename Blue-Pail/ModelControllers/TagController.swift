@@ -32,6 +32,7 @@ class TagController {
     
     /// Creates a new Tag object with the passed in title and colorNumber.
     func createTag(tagTitle: String, colorNumber: Double) {
+        //_ = Tag.init(title: tagTitle, colorNumber: colorNumber)
         _ = Tag(title: tagTitle, colorNumber: colorNumber)
         saveToPersistentStorage()
     }
@@ -82,7 +83,7 @@ class TagController {
     
     /// Returns the tag with the same title as the argument tag.
     func getSelectedTag(givenTagTitle title: String) -> Tag {
-        var selectedTag = Tag()
+        var selectedTag = Tag.init()
         for tag in tags {
             guard let tagTitle = tag.title else { return tags[0] }
             if tagTitle == title {

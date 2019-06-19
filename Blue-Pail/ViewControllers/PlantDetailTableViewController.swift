@@ -51,6 +51,26 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             }
         }
     }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        if pickerView == dayPickerView {
+            return 32.0
+        }
+        return 36.0
+    }
+
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        if pickerView == tagPickerView {
+            if tagPickerTitles.isEmpty == false {
+            let tagTitle = tagPickerTitles[row]
+            let tag = TagController.shared.getSelectedTag(givenTagTitle: tagTitle)
+            let title = NSAttributedString(string: tagTitle, attributes: [NSAttributedString.Key.foregroundColor: ColorHelper.colorFrom(colorNumber: tag.colorNumber)])
+            return title
+            }
+        }
+            return nil
+    }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == dayPickerView {
@@ -61,7 +81,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
                 hour = selectedHour ?? 0
             }
             if selectedMinute != nil {
-                minute = selectedMinute ?? 0
+                minute = selectedMinute ?? 0 
             }
             dayInteger = day
             let desiredNotificationTimeToday = DayHelper.getCorrectTimeToday(desiredHourMinute: (hour, minute))
@@ -84,14 +104,20 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Check if There is only one group:
-        if tagPickerTitles.count == 1 {
+        // Select the first Tag by default, if there is one:
+        if tagPickerTitles.isEmpty == false {
             updateTag(selectedTag: TagController.shared.getSelectedTag(givenTagTitle: tagPickerTitles[0]))
         }
         
+        // Rounding Corners:
+        deletePlantButton.layer.cornerRadius = 6.0
+        deletePlantButton.layer.borderWidth = 1.0
+        deletePlantButton.layer.borderColor = UIColor.clear.cgColor
+        deletePlantButton.layer.masksToBounds = true
+        
         // NavigationBar Setup:
         self.navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.foregroundColor: UIColor.pailBlue,
+            [NSAttributedString.Key.foregroundColor: UIColor.darkGrayBlue,
              NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: 18)!]
         
         // Gesture recognizer Setup:
@@ -100,32 +126,25 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         self.view.addGestureRecognizer(tap)
         updateViews()
         
-        // Picker Setup:
+        // DayPicker Setup:
         self.dayPickerView.delegate = self
         self.dayPickerView.dataSource = self
-        
-        // Day Picker Setup:
-        self.tagPickerView.delegate = self
-        self.tagPickerView.dataSource = self
         pickerData = [
             pickerDays
         ]
-        updateDayPickerValue()
-        // Day Picker Label Setup:
-        let dayLabel = UILabel()
-        dayLabel.text = "day(s)"
-        pickerLabels = [
-            0 : dayLabel
-        ]
+        self.dayPickerView.selectRow(0, inComponent: 0, animated: false)
+        
+        // TagPicker Setup:
+        self.tagPickerView.delegate = self
+        self.tagPickerView.dataSource = self
         
         // TextField Setup:
         self.plantNameTextField.delegate = self
         
-        // View Setup:
-        self.dayPickerView.setPickerLabels(labels: pickerLabels, containedView: dayPickerView.superview ?? self.view)
-        if plant == nil {
-            deletePlantButton.backgroundColor = UIColor.gray
-        }
+        // UpdatePicker Setup:
+        updateDayPickerValue()
+        updateTagPickerValue()
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         // TODO: - Is there a better way of refreshing the data?
@@ -148,7 +167,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         21, 22, 24, 25, 26, 27, 28, 29, 30, 31
     ]
     var pickerData = [[Int]]()
-    var pickerLabels = [Int:UILabel]()
     var tagPickerTitles: [String] {
         get {
             let tags = TagController.shared.tags
@@ -167,8 +185,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     @IBOutlet var dayPickerView: UIPickerView!
     @IBOutlet weak var plantNameTextField: UITextField!
-    @IBOutlet weak var selectedTagColorView: UIView!
-    @IBOutlet weak var selectedTagLabel: UILabel!
     @IBOutlet weak var notifcationDateLabel: UILabel!
     @IBOutlet weak var deletePlantButton: UIButton!
     @IBOutlet weak var imageButton: UIButton!
@@ -214,7 +230,10 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     /// Note: - Remember to remove the plant from the tag collection before calling deletePlant(plant:) - Otherwise the Tag gets deleted along with it.
     @IBAction func deleteButtonPressed(_ sender: Any) {
-        guard let selectedPlant = plant, let plantTag = plant?.tag else { return }
+        guard let selectedPlant = plant, let plantTag = plant?.tag else {
+            self.navigationController?.popViewController(animated: true)
+            return
+        }
         TagController.shared.removePlantFrom(targetTag: plantTag, desiredPlant: selectedPlant)
         PlantController.shared.deletePlant(plant: selectedPlant)
         self.navigationController?.popViewController(animated: true)
@@ -266,21 +285,15 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         notifcationDateLabel.text = selectedPlant.needsWateredFireDate?.stringValue()
         photoImageView.image = plantImage
         photoImageView.contentMode = .scaleAspectFill
-        // UPDATE THE DAY PICKER TO DISPLAY THE DAY
-        //dayPickerView.selec
-        //updateDayPickerValue()
-        // UPDATE THE TIME PICKER TO DISPLAY THE TIME
         updateDatePickerValue()
     }
     
-    /// Updates the selected Tag reference, and related label and color view elements:
+    /// Updates the selected Tag reference, and related label and color view elements.
     private func updateTag(selectedTag: Tag) {
         tag = selectedTag
-        selectedTagLabel.text = selectedTag.title
-        selectedTagColorView.backgroundColor = ColorHelper.colorFrom(colorNumber: selectedTag.colorNumber)
     }
     
-    /// Updates the DayPickerView selected row if there is a dayInteger passed in:
+    /// Updates the DayPickerView selected row if there is a dayInteger passed in.
     private func updateDayPickerValue() {
         guard let day = dayInteger else { return }
         var index = 0
@@ -293,12 +306,27 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         dayPickerView.selectRow(index, inComponent: 0, animated: false)
     }
     
-     /// Updates the timeDatePickerView selected row if there is a notification date passed in:
+    /// Updates the tagPickerView selected row if there is a tag passed in.
+    private func updateTagPickerValue() {
+        guard let selectedTagTitle = tag?.title else { return }
+        var index = 0
+        for title in tagPickerTitles {
+            if title == selectedTagTitle {
+                break
+            }
+            index += 1
+        }
+        tagPickerView.selectRow(index, inComponent: 0, animated: false)
+    }
+    
+     /// Updates the timeDatePickerView selected row if there is a notification date passed in.
     private func updateDatePickerValue() {
         guard let fireDate = needsWateringDateValue else { return }
         timeDatePicker.setDate(fireDate, animated: false)
     }
 }
+
+
 
 // MARK: - UIImagePickerControllerDelegate Extension
 // TODO: - Make it so the image fits into the button properly and isn't resizing it:

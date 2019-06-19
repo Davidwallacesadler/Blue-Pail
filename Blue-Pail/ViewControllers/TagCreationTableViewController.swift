@@ -19,10 +19,16 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        // Rounding corners:
+        deleteTagButton.layer.cornerRadius = 6.0
+        deleteTagButton.layer.borderWidth = 1.0
+        deleteTagButton.layer.borderColor = UIColor.clear.cgColor
+        deleteTagButton.layer.masksToBounds = true
         
         // NavigationBar Setup:
         self.navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.foregroundColor: UIColor.pailBlue,
+            [NSAttributedString.Key.foregroundColor: UIColor.darkGrayBlue,
              NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: 18)!]
         
         // Gesture recognizer Setup:
@@ -139,9 +145,11 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
     }
     @IBAction func deleteTagButtonPressed(_ sender: Any) {
         guard let tagTitle = tag?.title else {
-            let noTagSelectedAlert = UIAlertController(title: "No Tag Selected", message: "Please select the tag you wish to delete in the previous screen.", preferredStyle: .alert)
-            noTagSelectedAlert.addAction(UIAlertAction(title: "Ok", style: .cancel))
-            self.present(noTagSelectedAlert, animated: true)
+//            let noTagSelectedAlert = UIAlertController(title: "No Tag Selected", message: "Please select the tag you wish to delete in the previous screen.", preferredStyle: .alert)
+//            noTagSelectedAlert.addAction(UIAlertAction(title: "Ok", style: .cancel))
+//            self.present(noTagSelectedAlert, animated: true)
+//            return
+            self.navigationController?.popViewController(animated: true)
             return
         }
         let confirmDeletionAlert = UIAlertController(title: "Confirm Deletion", message: "Are you sure you want to delete your '\(tagTitle)' tag? This will delete all the plants associated with this tag as well.", preferredStyle: .alert)

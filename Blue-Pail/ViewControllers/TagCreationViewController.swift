@@ -1,14 +1,14 @@
 //
-//  TagTableViewController.swift
+//  TagCreationViewController.swift
 //  Blue-Pail
 //
-//  Created by David Sadler on 6/10/19.
+//  Created by David Sadler on 6/18/19.
 //  Copyright © 2019 David Sadler. All rights reserved.
 //
 
 import UIKit
 
-class TagTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class TagCreationViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -30,6 +30,16 @@ class TagTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
         }
     }
     
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        if tagPickerTitles.isEmpty == false {
+            let tagTitle = tagPickerTitles[row]
+            let tag = TagController.shared.getSelectedTag(givenTagTitle: tagTitle)
+            let title = NSAttributedString(string: tagTitle, attributes: [NSAttributedString.Key.foregroundColor: ColorHelper.colorFrom(colorNumber: tag.colorNumber)])
+            return title
+        }
+        return nil
+    }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if tagPickerTitles.isEmpty {
             return
@@ -37,13 +47,11 @@ class TagTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
             let selectedTagTitle = tagPickerTitles[row]
             let tag = TagController.shared.getSelectedTag(givenTagTitle: selectedTagTitle)
             selectedTag = tag
-            updateImageViewAndLabel()
         }
     }
     
-    
     // MARK: - View Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,19 +62,20 @@ class TagTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
         
         // NavigationBar Setup:
         self.navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.foregroundColor: UIColor.pailBlue,
+            [NSAttributedString.Key.foregroundColor: UIColor.darkGrayBlue,
              NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: 18)!]
         
-        selectedTag = nil
-        updateImageViewAndLabel()
+        
+        if tagPickerTitles.isEmpty == false {
+            selectedTag = TagController.shared.getSelectedTag(givenTagTitle: tagPickerTitles[0])
+            tagCollectionPickerView.selectRow(0, inComponent: 0, animated: false)
+        }
+        
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.tagCollectionPickerView.reloadComponent(0)
-        selectedTag = nil
-        updateImageViewAndLabel()
-        
     }
     
     // MARK - Properties
@@ -84,25 +93,9 @@ class TagTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
         }
     }
     
+    
     // MARK: - Outlets
-    
-    @IBOutlet weak var selectedTagColorView: UIView!
-    @IBOutlet weak var selectedTagLabel: UILabel!
     @IBOutlet weak var tagCollectionPickerView: UIPickerView!
-   
-    // MARK: - Internal Methods
-    
-    private func updateImageViewAndLabel() {
-        guard let tag = selectedTag else {
-            selectedTagLabel.text = "Please select a tag"
-            selectedTagColorView.backgroundColor = UIColor.gray
-            return
-        }
-        selectedTagLabel.text = tag.title
-        selectedTagColorView.backgroundColor = ColorHelper.colorFrom(colorNumber: tag.colorNumber)
-    }
-    
-    
     
     // MARK: - Navigation
     
@@ -110,7 +103,7 @@ class TagTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
         if segue.identifier == "toEditTag" {
             guard let detailVC = segue.destination as? TagCreationTableViewController else { return }
             guard let tagToPass = selectedTag else {
-                let noTagSelectedAlert = UIAlertController(title: "No Tag Selected", message: "Please select the tag you wish to delete.", preferredStyle: .alert)
+                let noTagSelectedAlert = UIAlertController(title: "No Tag Selected", message: "Please select the tag you wish to edit.", preferredStyle: .alert)
                 noTagSelectedAlert.addAction(UIAlertAction(title: "Ok", style: .cancel))
                 self.present(noTagSelectedAlert, animated: true)
                 return
@@ -118,4 +111,5 @@ class TagTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
             detailVC.tag = tagToPass
         }
     }
+
 }

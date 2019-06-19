@@ -29,4 +29,18 @@ extension Date {
         formatter.dateStyle = .short    
         return formatter.string(from: self)
     }
+    
+    func hourOfCurrentDate() -> Int {
+        let calendar = Calendar.current
+        let component = calendar.dateComponents([.hour], from: self)
+        guard let hour = component.hour else { return 0  }
+        return hour
+    }
+    
+    func minuteOfCurrentDate() -> Int {
+        let calendar = Calendar.current
+        let component = calendar.dateComponents([.minute], from: self)
+        guard let minute = component.minute else { return 0  }
+        return minute
+    }
 }

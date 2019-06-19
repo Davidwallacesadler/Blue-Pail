@@ -106,6 +106,15 @@ class PlantController : AlarmScheduler {
         }
     }
     
+    /// Returns true if the plant passed in is dry.
+    func isPlantDry(plant:Plant) -> Bool {
+        if plant.isWatered == false {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     // MARK: - Persistence
     
     func saveToPersistentStorage() {
@@ -126,13 +135,12 @@ protocol AlarmScheduler {
 
 extension AlarmScheduler {
     // IDEA: maybe have a 'delay' action that will set the notification a desired time interval away from the current time - wont affect day integer - Just a way of one time putting off the notification to a time that better suits the user - in hours.
-    // IDEA: maybe have an 'water' action that will run the code required to update the watered property and schedule the next notification
     func scheduleUserNotifications(for plant: Plant) {
         let content  = UNMutableNotificationContent()
         content.title = "Time To Water!"
         content.body = "Water your \(plant.name ?? "plant")!"
         content.sound = UNNotificationSound.default
-        content.badge =  NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
+        content.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
         
         let calendar = Calendar.current
     

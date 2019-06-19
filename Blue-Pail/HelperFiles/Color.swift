@@ -36,10 +36,10 @@ extension UIColor {
     // MARK: - Cell Colors (Water status indicator)
     
     static var wateredBlue: UIColor {
-        return UIColor(red: 190/255, green: 226/255, blue: 253/255, alpha: 1.0)
+        return UIColor(red: 119/255, green: 157/255, blue: 192/255, alpha: 1.0)
     }
     static var dryYellow: UIColor {
-        return UIColor(red: 211/255, green: 207/255, blue: 143/255, alpha: 1.0)
+        return UIColor(red: 232/255, green: 154/255, blue: 157/255, alpha: 1.0)
     }
     
     // MARK: - New Tag Colors
@@ -90,5 +90,9 @@ extension UIColor {
     
     static var pailBlue: UIColor {
         return UIColor(red: 0/255, green: 69/255, blue: 229/255, alpha: 1.0)
+    }
+    
+    static var darkGrayBlue: UIColor {
+        return UIColor(red: 58/255, green: 62/255, blue: 85/255, alpha: 1.0)
     }
 }

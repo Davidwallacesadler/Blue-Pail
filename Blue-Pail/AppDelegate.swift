@@ -42,6 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let firstLaunch = FirstLaunch(userDefaults: .standard, key: Keys.FirstLaunchKey)
         if firstLaunch.isFirstLaunch {
             CreateDataFactory.createData()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let onboardingViewController = storyboard.instantiateViewController(withIdentifier: "OnboardingPageViewController") as! OnboardingPageViewController
+            self.window?.rootViewController = onboardingViewController
+            self.window?.makeKeyAndVisible()
         }
     }
     // CHECK WITH COLTON ABOUT THIS
@@ -57,6 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func applicationWillResignActive(_ application: UIApplication) {
          UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        // IF ALL PLANTS ARE WATERED AND THERE ARE BADGES REMAINING REMOVE THEM
     }
     
 }

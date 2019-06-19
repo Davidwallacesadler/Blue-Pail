@@ -18,10 +18,10 @@ class PlantCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var plantNameLabel: UILabel!
     @IBOutlet weak var tagTitleLabel: UILabel!
     @IBOutlet weak var waterNotificationStatusLabel: UILabel!
-    
-    @IBOutlet weak var plantNameIconImageView: UIImageView!
     @IBOutlet weak var waterNotificationStatusImageView: UIImageView!
     @IBOutlet weak var tagNameIconImageView: UIImageView!
+    @IBOutlet weak var imageBackgroundView: UIView!
+    @IBOutlet weak var detailsBackgroundView: UIView!
     
     
     

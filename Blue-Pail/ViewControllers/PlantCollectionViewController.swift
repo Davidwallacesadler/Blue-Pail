@@ -51,17 +51,28 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     }
     
     func waterPlant() {
-        guard let targetPlant = selectedPlant, let targetIndex = collectionView.indexPathsForSelectedItems else { return }
+        guard let targetPlant = selectedPlant, let targetPlantFireDate = selectedPlant?.needsWateredFireDate, let targetIndex = collectionView.indexPathsForSelectedItems else { return }
         if targetPlant.isWatered == false {
             PlantController.shared.waterPlant(plant: targetPlant)
+            if UIApplication.shared.applicationIconBadgeNumber > 0 {
+                UIApplication.shared.applicationIconBadgeNumber -= 1
+            }
+        } else {
+            selectedIndex = targetIndex
+            let todayAtFireHourMinute = DayHelper.getSameTimeAsDateToday(targetDate: targetPlantFireDate)
+            let nextWateringDay = DayHelper.futureDateFromADate(givenDate: todayAtFireHourMinute, numberOfDays: Int(targetPlant.dayToNextWater))
+            let earlyWateringAlert = UIAlertController(title: "Early Watering", message: "Are you sure you want to water your plant before the scheduled watering date? If so you can select Confirm and your plant will have its water notification moved \(targetPlant.dayToNextWater) day(s) away (on \(nextWateringDay.dayMonthYearValue()) at \(nextWateringDay.timeStringValue()).", preferredStyle: .alert)
+            earlyWateringAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            earlyWateringAlert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: waterPlantEarly(action:)))
+            self.present(earlyWateringAlert, animated: true, completion: nil)
+            // Not getting called!!
+            self.collectionView.reloadItems(at: targetIndex)
         }
         self.collectionView.reloadItems(at: targetIndex)
-        if UIApplication.shared.applicationIconBadgeNumber > 0 {
-            UIApplication.shared.applicationIconBadgeNumber -= 1
-        }
     }
     // MARK: - Stored Properties
     
+    private let spacing: CGFloat = 16.0
     var tempInput: UITextField?
     var plantCollection: [Plant] = []
     var selectedPlant: Plant?
@@ -70,6 +81,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             cleanIfNeeded()
         }
     }
+    var selectedIndex: [IndexPath]?
     
     // MARK: - Computed Properties
     
@@ -102,8 +114,15 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         
         // NavigationBar Setup:
         self.navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.foregroundColor: UIColor.pailBlue,
+            [NSAttributedString.Key.foregroundColor: UIColor.darkGrayBlue,
              NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: 18)!]
+        
+        // CollectionViewLayout Setup:
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        layout.minimumLineSpacing = spacing
+        layout.minimumInteritemSpacing = spacing
+        self.collectionView?.collectionViewLayout = layout
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -147,6 +166,14 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         }
         let selectedPlant = plantCollection[indexPath.row]
         setupCell(cell: cell, selectedPlant: selectedPlant)
+        cell.contentView.layer.cornerRadius = 6.0
+        cell.contentView.layer.borderWidth = 1.0
+        cell.contentView.layer.borderColor = UIColor.clear.cgColor
+        cell.contentView.layer.masksToBounds = true
+        cell.layer.cornerRadius = 6.0
+        cell.layer.borderWidth = 1.0
+        cell.layer.borderColor = UIColor.clear.cgColor
+        cell.layer.masksToBounds = true
         return cell
     }
 
@@ -204,11 +231,10 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             if Date() <= fireDate || DayHelper.twoDatesAreOnTheSameDay(dateOne: Date(), dateTwo: fireDate) {
                 // The current Date is less than or on the same day as the notification:
                 daysToNextWater = DayHelper.amountOfDaysBetween(previousDate: Date(), futureDate: fireDate)
-                if daysToNextWater == "Today" {
-                    cell.waterNotificationStatusImageView.image = UIImage(named: "waterPlantIcon-1")
-                } else {
-                    cell.waterNotificationStatusImageView.image = UIImage(named: "notTimeToWaterIcon")
-                }
+                cell.waterNotificationStatusImageView.image = UIImage(named: "notTimeToWaterIcon")
+            } else if PlantController.shared.isPlantDry(plant: selectedPlant) {
+                // Right at notification time -- until the end of the fire day:
+                cell.waterNotificationStatusImageView.image = UIImage(named: "waterPlantIcon-1")
             } else {
                 // The current Date has passed the notification date:
                 daysToNextWater = DayHelper.formatMonthAndDay(givenDate: fireDate)
@@ -220,14 +246,21 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         let plantWateredStateColor = PlantController.shared.colorBasedOnWateredState(plant: selectedPlant)
         cell.plantNameLabel.text = selectedPlant.name
         cell.tagTitleLabel.text = selectedPlant.tag?.title
-        cell.tagTitleLabel.textColor = selectedPlantTagColor
+        //cell.tagTitleLabel.textColor = selectedPlantTagColor
         cell.plantImageView.image = selectedPlant.photo
         cell.plantImageView.contentMode = .scaleAspectFill
         cell.tagColorView.backgroundColor = selectedPlantTagColor
         cell.waterNotificationStatusLabel.text = daysToNextWater
         cell.backgroundColor = plantWateredStateColor
-        cell.plantNameIconImageView.image = UIImage(named: "plantNameIcon-1")
         cell.tagNameIconImageView.image = UIImage(named: "tagNameIcon-1")
+        cell.imageBackgroundView.layer.cornerRadius = 6.0
+        cell.imageBackgroundView.layer.borderWidth = 1.0
+        cell.imageBackgroundView.layer.borderColor = UIColor.clear.cgColor
+        cell.detailsBackgroundView.layer.masksToBounds = true
+        cell.detailsBackgroundView.layer.cornerRadius = 6.0
+        cell.detailsBackgroundView.layer.borderWidth = 1.0
+        cell.detailsBackgroundView.layer.borderColor = UIColor.clear.cgColor
+        cell.detailsBackgroundView.layer.masksToBounds = true
     }
     
     /// Displays the watering and editing Popup for the selected plant object.
@@ -235,7 +268,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         let plantPopupViewController = PlantPopupViewController(nibName: "PlantPopupViewController", bundle: nil)
         plantPopupViewController.delegate = self
         self.addChild(plantPopupViewController)
-        plantPopupViewController.view.frame = self.view.frame
+        plantPopupViewController.view.frame = self.view.bounds
         self.view.addSubview(plantPopupViewController.view)
         plantPopupViewController.didMove(toParent: self)
         plantPopupViewController.plantNameLabel.text = plant.name
@@ -247,6 +280,13 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         tempInput?.resignFirstResponder()
     }
     
+    func waterPlantEarly(action: UIAlertAction) {
+        guard let targetPlant = selectedPlant else { return }
+        PlantController.shared.waterPlant(plant: targetPlant)
+        guard let targetIndex = selectedIndex else { return }
+        self.collectionView.reloadItems(at: targetIndex)
+    }
+    
 }
 
 // MARK: - Delegate Flow Layout Extension
@@ -254,14 +294,18 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
 
 extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //let width = view.frame.size.width
-        //let height = view.frame.size.height
-        //let spacing = CGFloat(width / 10.0)
         
-        // Want to fit 4 on the
-        //let size = CGSize(width: ((width / 2.0) - spacing), height: ((height / 4.0)) - spacing)
-      
-        return CGSize(width: 150, height: 200)
+        let numberOfItemsPerRow: CGFloat = 2
+        let spacingBetweenCells: CGFloat = 16
+
+        let totalSpacing = (2 * self.spacing) + ((numberOfItemsPerRow - 1) * spacingBetweenCells) //Amount of total spacing in a row
+
+        if let collection = self.collectionView {
+            let width = (collection.bounds.width - totalSpacing)/numberOfItemsPerRow
+            return CGSize(width: width, height: width)
+        } else {
+            return CGSize(width: 0, height: 0)
+        }
     }
     
      // MARK: - Navigation
