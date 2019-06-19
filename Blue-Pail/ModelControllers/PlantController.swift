@@ -78,10 +78,13 @@ class PlantController : AlarmScheduler {
     
     // MARK: - Additional Helper Methods
     
-    /// Sets the target plant's isWatered property to true, and schedules a notification for the argument number of days away from the current date at the correct time.
+    /// Sets the target plant's isWatered property to true, and schedules a notification for the argument number of days away from the current date at the correct time. If the current date is less than the fire date the previous firedate will have its notifications removed.
     func waterPlant(plant: Plant) {
         plant.isWatered = true
         guard let fireDate = plant.needsWateredFireDate else { return }
+        if Date() < fireDate {
+            cancelUserNotifications(for: plant)
+        }
         let todayAtCorrectTime = DayHelper.getSameTimeAsDateToday(targetDate: fireDate)
         plant.needsWateredFireDate = DayHelper.futureDateFromADate(givenDate: todayAtCorrectTime, numberOfDays: Int(plant.dayToNextWater))
         scheduleUserNotifications(for: plant)
@@ -134,13 +137,12 @@ protocol AlarmScheduler {
 }
 
 extension AlarmScheduler {
-    // IDEA: maybe have a 'delay' action that will set the notification a desired time interval away from the current time - wont affect day integer - Just a way of one time putting off the notification to a time that better suits the user - in hours.
     func scheduleUserNotifications(for plant: Plant) {
         let content  = UNMutableNotificationContent()
         content.title = "Time To Water!"
         content.body = "Water your \(plant.name ?? "plant")!"
         content.sound = UNNotificationSound.default
-        content.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
+        content.badge = NSNumber(value: 1)
         
         let calendar = Calendar.current
     

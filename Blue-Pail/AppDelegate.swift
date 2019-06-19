@@ -18,15 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // MARK: - Notifications
         
-        let center = UNUserNotificationCenter.current()
-        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
-        center.requestAuthorization(options: options) {
-            (accepted, error) in
-            if !accepted {
-                print("Notification access has been denied")
-            }
-        }
-        UNUserNotificationCenter.current().delegate = self
+//        let center = UNUserNotificationCenter.current()
+//        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
+//        center.requestAuthorization(options: options) {
+//            (accepted, error) in
+//            if !accepted {
+//                print("Notification access has been denied")
+//            }
+//        }
+//        UNUserNotificationCenter.current().delegate = self
         
         // MARK: - For First Launch Testing Tag data
         //alwaysFirstLaunch()
@@ -61,7 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func applicationWillResignActive(_ application: UIApplication) {
          UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-        // IF ALL PLANTS ARE WATERED AND THERE ARE BADGES REMAINING REMOVE THEM
     }
     
 }

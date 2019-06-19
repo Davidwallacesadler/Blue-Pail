@@ -230,13 +230,14 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     /// Note: - Remember to remove the plant from the tag collection before calling deletePlant(plant:) - Otherwise the Tag gets deleted along with it.
     @IBAction func deleteButtonPressed(_ sender: Any) {
-        guard let selectedPlant = plant, let plantTag = plant?.tag else {
+        guard let selectedPlant = plant, let plantTag = plant?.tag, let plantName = plant?.name else {
             self.navigationController?.popViewController(animated: true)
             return
         }
-        TagController.shared.removePlantFrom(targetTag: plantTag, desiredPlant: selectedPlant)
-        PlantController.shared.deletePlant(plant: selectedPlant)
-        self.navigationController?.popViewController(animated: true)
+        let deletePlantAlert = UIAlertController(title: "Confirm Deletion", message: "Are you sure you want to delete your \(plantName) plant?", preferredStyle: .alert)
+        deletePlantAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        deletePlantAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: deletePlant(action:)))
+        self.present(deletePlantAlert, animated: true, completion: nil)
     }
     
     // MARK: - Internal Methods
@@ -323,6 +324,13 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     private func updateDatePickerValue() {
         guard let fireDate = needsWateringDateValue else { return }
         timeDatePicker.setDate(fireDate, animated: false)
+    }
+    
+    private func deletePlant(action: UIAlertAction) {
+        guard let selectedPlant = plant, let plantTag = plant?.tag else { return }
+        TagController.shared.removePlantFrom(targetTag: plantTag, desiredPlant: selectedPlant)
+        PlantController.shared.deletePlant(plant: selectedPlant)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

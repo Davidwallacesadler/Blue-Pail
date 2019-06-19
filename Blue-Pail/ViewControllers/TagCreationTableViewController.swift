@@ -41,7 +41,6 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
         
         // Edit Setup:
         if tag != nil {
-            deleteTagButton.backgroundColor = UIColor.red
             updateElements()
         }
     

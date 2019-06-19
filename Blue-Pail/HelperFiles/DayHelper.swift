@@ -180,37 +180,37 @@ struct DayHelper {
         let components = calendar.dateComponents([.month, .day], from: givenDate)
         guard let currentMonthNumber = components.month, let currentDayNumber = components.day else {
             print("ERROR: formatMonthAndDay failed to get month and day components - Default date returned")
-            return "Jan 1st"
+            return "Jan. 1st"
             
         }
         switch currentMonthNumber {
         case 01:
-            formattedDate.append("JAN ")
+            formattedDate.append("Jan. ")
         case 02:
-            formattedDate.append("FEB ")
+            formattedDate.append("Feb. ")
         case 03:
-            formattedDate.append("MAR ")
+            formattedDate.append("Mar. ")
         case 04:
-            formattedDate.append("APR ")
+            formattedDate.append("Apr. ")
         case 05:
-            formattedDate.append("MAY ")
+            formattedDate.append("May ")
         case 06:
-            formattedDate.append("JUN ")
+            formattedDate.append("Jun. ")
         case 07:
-            formattedDate.append("JUL ")
+            formattedDate.append("Jul. ")
         case 08:
-            formattedDate.append("AUG ")
+            formattedDate.append("Aug. ")
         case 09:
-            formattedDate.append("SEP ")
+            formattedDate.append("Sep. ")
         case 10:
-            formattedDate.append("OCT ")
+            formattedDate.append("Oct. ")
         case 11:
-            formattedDate.append("NOV ")
+            formattedDate.append("Nov. ")
         case 12:
-            formattedDate.append("DEC ")
+            formattedDate.append("Dec. ")
         default:
             print("ERROR: FormatDayAndMonth method switch statment failed - defualting to January")
-            formattedDate.append("JAN ")
+            formattedDate.append("Jan. ")
         }
         let formattedDay = formatDayDigit(givenDay: currentDayNumber)
         formattedDate.append(formattedDay)

@@ -11,7 +11,7 @@ import UserNotifications
 
 private let reuseIdentifier = "plantCell"
 
-class PlantCollectionViewController: UICollectionViewController, PopupDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class PlantCollectionViewController: UICollectionViewController, PopupDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UNUserNotificationCenterDelegate {
     
     // MARK: - PickerView Delegate Methods
     
@@ -51,7 +51,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     }
     
     func waterPlant() {
-        guard let targetPlant = selectedPlant, let targetPlantFireDate = selectedPlant?.needsWateredFireDate, let targetIndex = collectionView.indexPathsForSelectedItems else { return }
+        guard let targetPlant = selectedPlant, let targetPlantName = selectedPlant?.name, let targetPlantFireDate = selectedPlant?.needsWateredFireDate, let targetIndex = collectionView.indexPathsForSelectedItems else { return }
         if targetPlant.isWatered == false {
             PlantController.shared.waterPlant(plant: targetPlant)
             if UIApplication.shared.applicationIconBadgeNumber > 0 {
@@ -61,7 +61,14 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             selectedIndex = targetIndex
             let todayAtFireHourMinute = DayHelper.getSameTimeAsDateToday(targetDate: targetPlantFireDate)
             let nextWateringDay = DayHelper.futureDateFromADate(givenDate: todayAtFireHourMinute, numberOfDays: Int(targetPlant.dayToNextWater))
-            let earlyWateringAlert = UIAlertController(title: "Early Watering", message: "Are you sure you want to water your plant before the scheduled watering date? If so you can select Confirm and your plant will have its water notification moved \(targetPlant.dayToNextWater) day(s) away (on \(nextWateringDay.dayMonthYearValue()) at \(nextWateringDay.timeStringValue()).", preferredStyle: .alert)
+            var alarmMessage = String()
+            switch targetPlant.dayToNextWater {
+            case 1:
+                alarmMessage = "Your \(targetPlantName) will have its watering notification moved to tomorrow: \(DayHelper.formatMonthAndDay(givenDate: nextWateringDay)) at \(nextWateringDay.timeStringValue())"
+            default:
+                alarmMessage = "Your \(targetPlantName) will have its watering notification moved \(targetPlant.dayToNextWater) days from today: \(DayHelper.formatMonthAndDay(givenDate: nextWateringDay)) at \(nextWateringDay.timeStringValue())"
+            }
+            let earlyWateringAlert = UIAlertController(title: "Early Watering", message: alarmMessage, preferredStyle: .alert)
             earlyWateringAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
             earlyWateringAlert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: waterPlantEarly(action:)))
             self.present(earlyWateringAlert, animated: true, completion: nil)
@@ -101,6 +108,9 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Notification Access Check:
+        askForNotificationAccessIfNecessary()
+    
         // CollectionView Setup:
         plantCollection = getAllPlants()
         self.collectionView.reloadData()
@@ -287,6 +297,25 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         self.collectionView.reloadItems(at: targetIndex)
     }
     
+    /// Generates the notification access request alert if access has not been given:
+    private func askForNotificationAccessIfNecessary() {
+        let center = UNUserNotificationCenter.current()
+        center.getNotificationSettings(completionHandler: checkNotificationStatus(settings:))
+    }
+    
+    func checkNotificationStatus(settings: UNNotificationSettings) {
+        if settings.authorizationStatus != .authorized {
+            let center = UNUserNotificationCenter.current()
+            let options: UNAuthorizationOptions = [.alert, .badge, .sound]
+            center.requestAuthorization(options: options) {
+                (accepted, error) in
+                if !accepted {
+                    print("Notification access has been denied")
+                }
+            }
+            UNUserNotificationCenter.current().delegate = self
+        }
+    }
 }
 
 // MARK: - Delegate Flow Layout Extension
