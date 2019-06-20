@@ -263,14 +263,18 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         cell.waterNotificationStatusLabel.text = daysToNextWater
         cell.backgroundColor = plantWateredStateColor
         cell.tagNameIconImageView.image = UIImage(named: "tagNameIcon-1")
-        cell.imageBackgroundView.layer.cornerRadius = 6.0
+        cell.imageBackgroundView.layer.cornerRadius = 9.0
         cell.imageBackgroundView.layer.borderWidth = 1.0
         cell.imageBackgroundView.layer.borderColor = UIColor.clear.cgColor
         cell.detailsBackgroundView.layer.masksToBounds = true
-        cell.detailsBackgroundView.layer.cornerRadius = 6.0
+        cell.detailsBackgroundView.layer.cornerRadius = 9.0
         cell.detailsBackgroundView.layer.borderWidth = 1.0
         cell.detailsBackgroundView.layer.borderColor = UIColor.clear.cgColor
         cell.detailsBackgroundView.layer.masksToBounds = true
+        cell.plantImageView.layer.cornerRadius = 9.0
+        cell.plantImageView.layer.borderWidth = 1.0
+        cell.plantImageView.layer.borderColor = UIColor.clear.cgColor
+        cell.plantImageView.layer.masksToBounds = true
     }
     
     /// Displays the watering and editing Popup for the selected plant object.
