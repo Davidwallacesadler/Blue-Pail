@@ -54,29 +54,26 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         guard let targetPlant = selectedPlant, let targetPlantName = selectedPlant?.name, let targetPlantFireDate = selectedPlant?.needsWateredFireDate, let targetIndex = collectionView.indexPathsForSelectedItems else { return }
         if targetPlant.isWatered == false {
             PlantController.shared.waterPlant(plant: targetPlant)
-            if UIApplication.shared.applicationIconBadgeNumber > 0 {
-                UIApplication.shared.applicationIconBadgeNumber -= 1
-            }
         } else {
             selectedIndex = targetIndex
-            let todayAtFireHourMinute = DayHelper.getSameTimeAsDateToday(targetDate: targetPlantFireDate)
-            let nextWateringDay = DayHelper.futureDateFromADate(givenDate: todayAtFireHourMinute, numberOfDays: Int(targetPlant.dayToNextWater))
+            let todayAtFireHourMinute = DayHelper.shared.getSameTimeAsDateToday(targetDate: targetPlantFireDate)
+            let nextWateringDay = DayHelper.shared.futureDateFromADate(givenDate: todayAtFireHourMinute, numberOfDays: Int(targetPlant.dayToNextWater))
             var alarmMessage = String()
             switch targetPlant.dayToNextWater {
             case 1:
-                alarmMessage = "Your \(targetPlantName) will have its watering notification moved to tomorrow: \(DayHelper.formatMonthAndDay(givenDate: nextWateringDay)) at \(nextWateringDay.timeStringValue())"
+                alarmMessage = "Your \(targetPlantName) will have its watering notification moved to tomorrow: \(DayHelper.shared.formatMonthAndDay(givenDate: nextWateringDay)) at \(nextWateringDay.timeStringValue())"
             default:
-                alarmMessage = "Your \(targetPlantName) will have its watering notification moved \(targetPlant.dayToNextWater) days from today: \(DayHelper.formatMonthAndDay(givenDate: nextWateringDay)) at \(nextWateringDay.timeStringValue())"
+                alarmMessage = "Your \(targetPlantName) will have its watering notification moved \(targetPlant.dayToNextWater) days from today: \(DayHelper.shared.formatMonthAndDay(givenDate: nextWateringDay)) at \(nextWateringDay.timeStringValue())"
             }
             let earlyWateringAlert = UIAlertController(title: "Early Watering", message: alarmMessage, preferredStyle: .alert)
             earlyWateringAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
             earlyWateringAlert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: waterPlantEarly(action:)))
             self.present(earlyWateringAlert, animated: true, completion: nil)
-            // Not getting called!!
             self.collectionView.reloadItems(at: targetIndex)
         }
         self.collectionView.reloadItems(at: targetIndex)
     }
+    
     // MARK: - Stored Properties
     
     private let spacing: CGFloat = 16.0
@@ -133,6 +130,11 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         self.collectionView?.collectionViewLayout = layout
+        
+        // TapToDismissFirstResponder Setup:
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -238,20 +240,21 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     private func setupCell(cell: PlantCollectionViewCell, selectedPlant: Plant) {
         var daysToNextWater = String()
         if let fireDate = selectedPlant.needsWateredFireDate {
-            if Date() <= fireDate || DayHelper.twoDatesAreOnTheSameDay(dateOne: Date(), dateTwo: fireDate) {
+            if Date() <= fireDate || DayHelper.shared.twoDatesAreOnTheSameDay(dateOne: Date(), dateTwo: fireDate) {
                 // The current Date is less than or on the same day as the notification:
-                daysToNextWater = DayHelper.amountOfDaysBetween(previousDate: Date(), futureDate: fireDate)
-                cell.waterNotificationStatusImageView.image = UIImage(named: "notTimeToWaterIcon")
-            } else if PlantController.shared.isPlantDry(plant: selectedPlant) {
-                // Right at notification time -- until the end of the fire day:
-                cell.waterNotificationStatusImageView.image = UIImage(named: "waterPlantIcon-1")
+                daysToNextWater = DayHelper.shared.amountOfDaysBetween(previousDate: Date(), futureDate: fireDate)
+                PlantController.shared.checkIfDry(plant: selectedPlant)
+                if PlantController.shared.isPlantDry(plant: selectedPlant) {
+                    cell.waterNotificationStatusImageView.image = UIImage(named: Keys.wateringPailIcon )
+                } else {
+                    cell.waterNotificationStatusImageView.image = UIImage(named: Keys.clockIcon)
+                }
             } else {
                 // The current Date has passed the notification date:
-                daysToNextWater = DayHelper.formatMonthAndDay(givenDate: fireDate)
-                cell.waterNotificationStatusImageView.image = UIImage(named: "waterPlantIcon-1")
+                daysToNextWater = DayHelper.shared.formatMonthAndDay(givenDate: fireDate)
+                cell.waterNotificationStatusImageView.image = UIImage(named: Keys.wateringPailIcon)
             }
         }
-        PlantController.shared.checkIfDry(plant: selectedPlant)
         let selectedPlantTagColor = ColorHelper.colorFrom(colorNumber: selectedPlant.tag?.colorNumber ?? Double(Int.random(in: 1...6)))
         let plantWateredStateColor = PlantController.shared.colorBasedOnWateredState(plant: selectedPlant)
         cell.plantNameLabel.text = selectedPlant.name
@@ -262,7 +265,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         cell.tagColorView.backgroundColor = selectedPlantTagColor
         cell.waterNotificationStatusLabel.text = daysToNextWater
         cell.backgroundColor = plantWateredStateColor
-        cell.tagNameIconImageView.image = UIImage(named: "tagNameIcon-1")
+        cell.tagNameIconImageView.image = UIImage(named: Keys.tagIcon)
         cell.imageBackgroundView.layer.cornerRadius = 9.0
         cell.imageBackgroundView.layer.borderWidth = 1.0
         cell.imageBackgroundView.layer.borderColor = UIColor.clear.cgColor
@@ -294,6 +297,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         tempInput?.resignFirstResponder()
     }
     
+    /// Handler for watering plants early: Grabs the selected plant and waters it (resets the notification fireDate) and reloads the collectionView.
     func waterPlantEarly(action: UIAlertAction) {
         guard let targetPlant = selectedPlant else { return }
         PlantController.shared.waterPlant(plant: targetPlant)
@@ -301,12 +305,13 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         self.collectionView.reloadItems(at: targetIndex)
     }
     
-    /// Generates the notification access request alert if access has not been given:
+    /// Generates the notification access request alert if access has not been given.
     private func askForNotificationAccessIfNecessary() {
         let center = UNUserNotificationCenter.current()
         center.getNotificationSettings(completionHandler: checkNotificationStatus(settings:))
     }
     
+    /// Asks for notificaiton access if the authorization was not authorized.
     func checkNotificationStatus(settings: UNNotificationSettings) {
         if settings.authorizationStatus != .authorized {
             let center = UNUserNotificationCenter.current()
@@ -320,19 +325,34 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             UNUserNotificationCenter.current().delegate = self
         }
     }
+    
+    /// Returns true if every plant is watered, false if there is still at least one plant that is dry.
+    func areAllPlantsWatered() -> Bool {
+        var truthValue = true
+            for tag in TagController.shared.tags {
+                guard let plantCollection = tag.plants?.array else {
+                    print("Error casting tag plants (NSOrderedSet) as an Array - Returning true in areAllPlantsWatered().")
+                    return truthValue }
+            for plant in plantCollection {
+                let plantObject = plant as! Plant
+                if plantObject.isWatered == false {
+                    truthValue = false
+                    break
+                }
+            }
+        }
+        return truthValue
+    }
+
 }
 
 // MARK: - Delegate Flow Layout Extension
-// TODO: - Make the layout of cells depend on the view rather than just being hard coded
 
 extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         let numberOfItemsPerRow: CGFloat = 2
         let spacingBetweenCells: CGFloat = 16
-
-        let totalSpacing = (2 * self.spacing) + ((numberOfItemsPerRow - 1) * spacingBetweenCells) //Amount of total spacing in a row
-
+        let totalSpacing = (2 * self.spacing) + ((numberOfItemsPerRow - 1) * spacingBetweenCells)
         if let collection = self.collectionView {
             let width = (collection.bounds.width - totalSpacing)/numberOfItemsPerRow
             return CGSize(width: width, height: width)
@@ -343,7 +363,6 @@ extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
     
      // MARK: - Navigation
      
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toEditPlant" {
             guard let detailVC = segue.destination as? PlantDetailTableViewController else { return }

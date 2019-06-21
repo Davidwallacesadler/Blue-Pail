@@ -9,6 +9,8 @@
 import Foundation
 
 extension Date {
+    
+    /// Returns a String with a short time and date style (i.e "MM/DD/YYYY, HH:MM AM/PM").
     func stringValue() -> String {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
@@ -16,6 +18,7 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    /// Returns a String with just the short time style (i.e "HH:MM AM/PM").
     func timeStringValue() -> String {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
@@ -23,6 +26,7 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    /// Returns a string with just the short date style (i.e "MM/DD/YYYY").
     func dayMonthYearValue() -> String {
         let formatter = DateFormatter()
         formatter.timeStyle = .none
@@ -30,6 +34,7 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    /// Returns an Integer representing the hour value of the date.
     func hourOfCurrentDate() -> Int {
         let calendar = Calendar.current
         let component = calendar.dateComponents([.hour], from: self)
@@ -37,6 +42,7 @@ extension Date {
         return hour
     }
     
+    /// Returns an Integer representing the minute value of the date.
     func minuteOfCurrentDate() -> Int {
         let calendar = Calendar.current
         let component = calendar.dateComponents([.minute], from: self)

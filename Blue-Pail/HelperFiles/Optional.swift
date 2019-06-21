@@ -8,9 +8,9 @@
 
 import Foundation
 
-// This extension adds functionallity on optional Strings
+
 extension Optional where Wrapped == String {
-    /// Returns nil if the string is empty.
+    /// Returns nil if the String is empty.
     var nilIfEmpty: String? {
         guard let strongSelf = self else {
             return nil

@@ -9,6 +9,31 @@
 import Foundation
 
 enum Keys {
+    
     // MARK: - FirstLaunchKey
+    
     static let FirstLaunchKey = "FirstLaunch"
+    
+    // MARK: - Image Names
+    
+    // For Collection View Cell Icons:
+    static let plantIcon = "plantNameIcon-1"
+    static let clockIcon = "notTimeToWaterIcon"
+    static let tagIcon = "tagNameIcon-1"
+    static let wateringPailIcon = "waterPlantIcon-1"
+    // For Buttons:
+    static let filterButton = "filterButton"
+    static let boxedMinusButton = "minusButton"
+    static let boxedPlusButton = "plusButton"
+    static let thinPlusButton = "thinPlusButton"
+    static let boxedXButton = "xButton"
+    static let cameraButton = "photoButton-1"
+    // For Views:
+    static let whiteShapeWithRoundedBottomCorners = "editButtonBackground"
+    static let noImage = "default"
+    
+    
+    
+   
+    
 }

@@ -43,20 +43,12 @@ class TagController {
         saveToPersistentStorage()
     }
     
-    //TODO: - Write a better update function
-    /// Updates the selected Tag Object....
-    func updateTag(withPlant plant: Plant, title: String?, colorNumber: Double) {
-        plant.tag?.title = title
-        plant.tag?.colorNumber = colorNumber
-        saveToPersistentStorage()
-    }
-    
+    /// Updates the selected Tag Object with a new title and a new color number.
     func updateTag(selectedTag: Tag, withNewTitle title: String,withNewColorNumber colorNumber: Double) {
         selectedTag.title = title
         selectedTag.colorNumber = colorNumber
         saveToPersistentStorage()
     }
-    
     
     /// Removes the selected Plant object to a target Tag's plant collection.
     func removePlantFrom(targetTag: Tag, desiredPlant: Plant) {
@@ -64,7 +56,7 @@ class TagController {
         saveToPersistentStorage()
     }
     
-    /// Deletes the selected Tag from the Tag Collection:
+    /// Deletes the selected Tag from the Tag Collection and removes all notifications for its plants.
     func deleteTag(selectedTag: Tag) {
         // Remove Notifications for plants
         guard let plants = selectedTag.plants?.array else {

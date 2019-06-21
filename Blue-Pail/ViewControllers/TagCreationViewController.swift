@@ -10,6 +10,8 @@ import UIKit
 
 class TagCreationViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    // MARK: - PickerView DataSource
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -40,6 +42,8 @@ class TagCreationViewController: UIViewController, UIPickerViewDelegate, UIPicke
         return nil
     }
     
+    // MARK: - PickerView Delegate Methods
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if tagPickerTitles.isEmpty {
             return
@@ -65,22 +69,23 @@ class TagCreationViewController: UIViewController, UIPickerViewDelegate, UIPicke
             [NSAttributedString.Key.foregroundColor: UIColor.darkGrayBlue,
              NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: 18)!]
         
-        
+        // Check if Tag Collection is empty:
         if tagPickerTitles.isEmpty == false {
             selectedTag = TagController.shared.getSelectedTag(givenTagTitle: tagPickerTitles[0])
             tagCollectionPickerView.selectRow(0, inComponent: 0, animated: false)
         }
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.tagCollectionPickerView.reloadComponent(0)
     }
     
-    // MARK - Properties
+    // MARK: - Stored Properties
     
     var selectedTag: Tag?
+    
+    // MARK: - Computed Properties
+    
     var tagPickerTitles: [String] {
         get {
             let tags = TagController.shared.tags
@@ -93,8 +98,8 @@ class TagCreationViewController: UIViewController, UIPickerViewDelegate, UIPicke
         }
     }
     
-    
     // MARK: - Outlets
+    
     @IBOutlet weak var tagCollectionPickerView: UIPickerView!
     
     // MARK: - Navigation

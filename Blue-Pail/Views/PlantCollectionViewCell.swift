@@ -9,8 +9,7 @@
 import UIKit
 
 class PlantCollectionViewCell: UICollectionViewCell {
-    
-    
+
     // MARK: - Outlets
     
     @IBOutlet weak var tagColorView: UIView!
@@ -22,9 +21,4 @@ class PlantCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var tagNameIconImageView: UIImageView!
     @IBOutlet weak var imageBackgroundView: UIView!
     @IBOutlet weak var detailsBackgroundView: UIView!
-    
-    
-    
-    
-    
 }

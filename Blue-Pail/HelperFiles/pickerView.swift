@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 extension UIPickerView {
-    
-    // labels: [componentNumber: label]
+    // TODO: - Tweak this extension - not getting desirable results.
+    // labels => [componentNumber: label]
     func setPickerLabels(labels: [Int: UILabel], containedView: UIView) {
         
         let fontSize: CGFloat = 17

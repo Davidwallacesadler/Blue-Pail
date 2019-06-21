@@ -13,8 +13,6 @@ import UserNotifications
 
 class PlantController : AlarmScheduler {
     
-    //TODO: - when the app is opened or when that plant is viewed or whatever you could check how many days have passed since it was last watered and if it's more than the desired amount than change the bool.
-    
     // MARK: - Shared Instance / Singelton
     
     static let shared = PlantController()
@@ -66,9 +64,7 @@ class PlantController : AlarmScheduler {
         saveToPersistentStorage()
     }
     
-    /// Deletes the target plant from the moc, and saves to persistent storage.
-    // THIS DELETES THE WHOLE TAG COLLECTION -- CANT DO THIS CALL. WHEN THIS GETS CALLED IT WILL DELETE THE PLANT AND ALL OTHER PLANTS THAT SHARE THE SAME TAG.
-    // HAVE TO REMOVE THE PLANT FROM THE TAG COLLECTION - THEN CALL THIS METHOD
+    /// Deletes the target plant from the moc, and saves to persistent storage. Important: Make sure to remove the plant from its tag collection before calling this method.
     func deletePlant(plant: Plant) {
         let moc = plant.managedObjectContext
         moc?.delete(plant)
@@ -85,13 +81,13 @@ class PlantController : AlarmScheduler {
         if Date() < fireDate {
             cancelUserNotifications(for: plant)
         }
-        let todayAtCorrectTime = DayHelper.getSameTimeAsDateToday(targetDate: fireDate)
-        plant.needsWateredFireDate = DayHelper.futureDateFromADate(givenDate: todayAtCorrectTime, numberOfDays: Int(plant.dayToNextWater))
+        let todayAtCorrectTime = DayHelper.shared.getSameTimeAsDateToday(targetDate: fireDate)
+        plant.needsWateredFireDate = DayHelper.shared.futureDateFromADate(givenDate: todayAtCorrectTime, numberOfDays: Int(plant.dayToNextWater))
         scheduleUserNotifications(for: plant)
         saveToPersistentStorage()
     }
     
-    /// Returns a UIColor reflecting the target Plants isWatered property (blue for true, yellow for false):
+    /// Returns a UIColor reflecting the target Plants isWatered property (blue for true, yellow for false).
     func colorBasedOnWateredState(plant: Plant) -> UIColor {
         if plant.isWatered == true {
             return UIColor.wateredBlue
@@ -142,10 +138,8 @@ extension AlarmScheduler {
         content.title = "Time To Water!"
         content.body = "Water your \(plant.name ?? "plant")!"
         content.sound = UNNotificationSound.default
-        content.badge = NSNumber(value: 1)
         
         let calendar = Calendar.current
-    
         let dateCompoenents = calendar.dateComponents([.day, .hour, .minute], from: plant.needsWateredFireDate ?? Date())
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateCompoenents, repeats: true)
         let request = UNNotificationRequest(identifier: plant.uuid!.uuidString, content: content, trigger: trigger)
@@ -155,7 +149,7 @@ extension AlarmScheduler {
                 print("Unable to add notification request. \(error.localizedDescription)")
             }
         }
-        print("NotificationCenter added the notification for alarm: \(String(describing: plant.name)) with uuid: \(String(describing: plant.uuid?.uuidString)) to go off: \(String(describing: plant.needsWateredFireDate)).")
+        print("NotificationCenter added the notification for alarm: \(String(describing: plant.name)) to go off: \(String(describing: plant.needsWateredFireDate)).")
     }
     
     func cancelUserNotifications(for plant: Plant) {

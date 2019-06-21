@@ -16,19 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // MARK: - Notifications
-        
-//        let center = UNUserNotificationCenter.current()
-//        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
-//        center.requestAuthorization(options: options) {
-//            (accepted, error) in
-//            if !accepted {
-//                print("Notification access has been denied")
-//            }
-//        }
-//        UNUserNotificationCenter.current().delegate = self
-        
-        // MARK: - For First Launch Testing Tag data
         //alwaysFirstLaunch()
         onFirstLaunch()
         
@@ -48,20 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.window?.makeKeyAndVisible()
         }
     }
-    // CHECK WITH COLTON ABOUT THIS
-//    private func alwaysFirstLaunch() {
-//        let alwaysFirstLaunch = FirstLaunch.alwaysFirst()
-//    }
     
     // MARK: userNotifcationCenter willPresentNotification
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.alert, .sound, .badge])
+        completionHandler([.alert, .sound])
     }
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-    }
-    
 }
 

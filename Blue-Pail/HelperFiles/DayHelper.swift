@@ -9,11 +9,15 @@
 import Foundation
 
 struct DayHelper {
+    
+    // MARK: - Shared Instance (singleton)
+    
+    static let shared = DayHelper()
 
     // MARK: - Methods
     
     /// Returns a date that is equivalent to today's date plus the argument number of days.
-    static func futrueDateFrom(givenNumberOfDays days: Int) -> Date {
+    func futrueDateFrom(givenNumberOfDays days: Int) -> Date {
         // => 60 sec/min  * 60 min/hour * 24 hour/day = 86400 sec/day
         let secondsInADay = 86400
         let selectedDaysInSeconds = Double(days * secondsInADay)
@@ -25,7 +29,7 @@ struct DayHelper {
     }
     
     /// Returns a date that is equivalent to an argument date plus an arguemnt number of days.
-    static func futureDateFromADate(givenDate: Date, numberOfDays: Int) -> Date {
+    func futureDateFromADate(givenDate: Date, numberOfDays: Int) -> Date {
         let secondsInADay = 86400
         let selectedDaysInSeconds = Double(numberOfDays * secondsInADay)
         guard let timeIntervalFromSeconds = TimeInterval(exactly: selectedDaysInSeconds) else {
@@ -35,7 +39,7 @@ struct DayHelper {
     }
     
     /// Returns true if the two passed in dates are on the same day:
-    static func twoDatesAreOnTheSameDay(dateOne: Date, dateTwo: Date) -> Bool {
+    func twoDatesAreOnTheSameDay(dateOne: Date, dateTwo: Date) -> Bool {
         let calendar = Calendar.current
         let dateOneComponent = calendar.dateComponents([.day], from: dateOne)
         let dateTwoComponent = calendar.dateComponents([.day], from: dateTwo)
@@ -46,39 +50,22 @@ struct DayHelper {
         }
     }
     
-    // TODO: - Fix Today and 1 Day disrepencies
-    /// Returns a string representing how many days there are until the desired fireDate. Note: Call this only when the current date is less than the fireDate.
-//    static func daysUntil(fireDate: Date) -> String {
-//        let currentDate = Date()
-//        let currentDateTimeInterval = currentDate.timeIntervalSinceReferenceDate
-//        let futureDateTimeInterval = fireDate.timeIntervalSinceReferenceDate
-//        let difference = futureDateTimeInterval - currentDateTimeInterval
-//        let secondsInADay = 86400.0
-//        let daysLeft = difference / secondsInADay
-//        var daysLeftText = String(Int(daysLeft.rounded(.up)))
-//        if twoDatesAreOnTheSameDay(dateOne: currentDate, dateTwo: fireDate) {
-//            daysLeftText = "Today"
-//        } else if daysLeft < 1.5 {
-//            daysLeftText = "1 Day"
-//        } else {
-//            daysLeftText.append(" Days")
-//        }
-//        return daysLeftText
-//    }
-    
-    static func amountOfDaysBetween(previousDate dateOne: Date, futureDate dateTwo: Date) -> String {
-        // Helper:
+    /// Returns a string representing how many days there are until the desired fireDate. Note: This makes the most sense to only call when dateOne <= dateTwo.
+    func amountOfDaysBetween(previousDate dateOne: Date, futureDate dateTwo: Date) -> String {
+        
+        // Helper Method:
+        /// Returns the amount of days in the arguemnt month. Takes leap years into account.
         func getAmountOfDaysInCurrentMonth(givenMonthNumber month: Int, givenYearNumber year: Int) -> Int {
             let isLeapYear = ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0))
-            var februraryDays = 28
+            var februaryDays = 28
             if isLeapYear == true {
-                februraryDays = 29
+                februaryDays = 29
             }
             switch month {
             case 1:
                 return 31
             case 2:
-                return februraryDays
+                return februaryDays
             case 3:
                 return 31
             case 4:
@@ -146,8 +133,9 @@ struct DayHelper {
     }
     
     /// Returns a "month day" abbreviation of the argument date. I.E If the argument date is in january 10 2019, then the return string will be "Jan 10th".
-    static func formatMonthAndDay(givenDate: Date) -> String {
+    func formatMonthAndDay(givenDate: Date) -> String {
      
+        // FormatMonthAndDay Helper:
         /// Returns the proper suffix for a day. I.E 11 => "11th", 21 => "21st".
         func formatDayDigit(givenDay day: Int) -> String {
             var formatted = String()
@@ -218,7 +206,7 @@ struct DayHelper {
     }
     
     ///Returns the desired hour/minute on todays date given the hour and minute values.
-    static func getCorrectTimeToday(desiredHourMinute: (Int, Int)) -> Date {
+    func getCorrectTimeToday(desiredHourMinute: (Int, Int)) -> Date {
         let calendar = Calendar.current
         var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
         let correctHour = desiredHourMinute.0
@@ -232,9 +220,8 @@ struct DayHelper {
         return todayAtTheCorrectTime
     }
     
-    // TODO: - Replace getCorrectTimeToday with getSameTimeAsDateToday
     ///Returns the desired hour/minute on todays date that matches the target dates hour/minute.
-    static func getSameTimeAsDateToday(targetDate date: Date) -> Date {
+    func getSameTimeAsDateToday(targetDate date: Date) -> Date {
         let calendar = Calendar.current
         let desiredComponents = calendar.dateComponents([.hour, .minute], from: date)
         var todaysComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date())
@@ -251,9 +238,4 @@ struct DayHelper {
         }
         return todayAtCorrectTime
     }
-    
-    /// MARK: Internal Methods
-    
-    
-    
 }

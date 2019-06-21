@@ -16,6 +16,8 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
         textField.resignFirstResponder()
         return true
     }
+    
+    // MARK: - View LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,10 +60,9 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
     @IBOutlet weak var selectedColorView: UIView!
     @IBOutlet weak var deleteTagButton: UIButton!
     
-    
     // MARK: - Actions
     
-    // Save Button
+    // Save Button:
     @IBAction func saveButtonPressed(_ sender: Any) {
         guard let newTagTitle = tagTextField.text.nilIfEmpty else {
             let noTitleAlert = UIAlertController(title: "No Title Entered", message: "Please enter a title for your new tag.", preferredStyle: .alert)
@@ -92,7 +93,7 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
        
     }
     
-    // Cancel Button
+    // Cancel Button:
     @IBAction func cancelButtonPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -133,21 +134,21 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
     @IBAction func darkBlueButtonPressed(_ sender: Any) {
          updateColorChoice(colorID: 14.0)
     }
+    
     @IBAction func purpleButtonPressed(_ sender: Any) {
          updateColorChoice(colorID: 15.0)
     }
+    
     @IBAction func magentaButtonPressed(_ sender: Any) {
          updateColorChoice(colorID: 16.0)
     }
+    
     @IBAction func pinkButtonPressed(_ sender: Any) {
          updateColorChoice(colorID: 17.0)
     }
+    
     @IBAction func deleteTagButtonPressed(_ sender: Any) {
         guard let tagTitle = tag?.title else {
-//            let noTagSelectedAlert = UIAlertController(title: "No Tag Selected", message: "Please select the tag you wish to delete in the previous screen.", preferredStyle: .alert)
-//            noTagSelectedAlert.addAction(UIAlertAction(title: "Ok", style: .cancel))
-//            self.present(noTagSelectedAlert, animated: true)
-//            return
             self.navigationController?.popViewController(animated: true)
             return
         }
@@ -157,9 +158,9 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
         self.present(confirmDeletionAlert, animated: true)
     }
     
-    
     // MARK: - Internal Methods
     
+    /// Deletes the selected tag if there was one passed in, and pops the viewController.
     func deleteTagPressed(action: UIAlertAction) {
         guard let tagToDelete = tag else {
             return
@@ -168,11 +169,13 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
         self.navigationController?.popViewController(animated: true)
     }
     
+    /// Updates the tagColorNumber property and updates the selectedColorView to reflect the selected color.
     private func updateColorChoice(colorID: Double) {
         tagColorNumber = colorID
         selectedColorView.backgroundColor = ColorHelper.colorFrom(colorNumber: colorID)
     }
    
+    /// Updates the titleTextField, and the color view if there was a Tag passed in.
     private func updateElements() {
         guard let selectedTag = tag else { return }
         updateColorChoice(colorID: selectedTag.colorNumber)

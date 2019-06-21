@@ -84,8 +84,8 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
                 minute = selectedMinute ?? 0 
             }
             dayInteger = day
-            let desiredNotificationTimeToday = DayHelper.getCorrectTimeToday(desiredHourMinute: (hour, minute))
-            let notificationDate = DayHelper.futureDateFromADate(givenDate: desiredNotificationTimeToday, numberOfDays: day)
+            let desiredNotificationTimeToday = DayHelper.shared.getCorrectTimeToday(desiredHourMinute: (hour, minute))
+            let notificationDate = DayHelper.shared.futureDateFromADate(givenDate: desiredNotificationTimeToday, numberOfDays: day)
             print("\(notificationDate)")
             needsWateringDateValue = notificationDate
             self.notifcationDateLabel.text = notificationDate.stringValue()
@@ -104,7 +104,8 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Select the first Tag by default, if there is one:
+        
+        // Selecting the first Tag by default, if there is one:
         if tagPickerTitles.isEmpty == false {
             updateTag(selectedTag: TagController.shared.getSelectedTag(givenTagTitle: tagPickerTitles[0]))
         }
@@ -133,6 +134,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             pickerDays
         ]
         self.dayPickerView.selectRow(0, inComponent: 0, animated: false)
+        dayInteger = 1
         
         // TagPicker Setup:
         self.tagPickerView.delegate = self
@@ -151,22 +153,24 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         tagPickerView.reloadAllComponents()
     }
     
-    // MARK: - Properties
+    // MARK: - Stored Properties
     
-    // Plant Properties:
     var plant: Plant?
     var needsWateringDateValue: Date?
     var dayInteger: Int?
     var image: UIImage?
     var tag: Tag?
-    
-    // Picker Properties:
     var pickerDays = [
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
         11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
         21, 22, 24, 25, 26, 27, 28, 29, 30, 31
     ]
     var pickerData = [[Int]]()
+    var selectedHour: Int?
+    var selectedMinute: Int?
+    
+    // MARK: - Computed Properties
+    
     var tagPickerTitles: [String] {
         get {
             let tags = TagController.shared.tags
@@ -178,9 +182,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             return tagTitles
         }
     }
-    var selectedHour: Int?
-    var selectedMinute: Int?
-    
+
     // MARK: - Outlets
     
     @IBOutlet var dayPickerView: UIPickerView!
@@ -193,9 +195,8 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     @IBOutlet weak var photoImageView: UIImageView!
     
     // MARK: - Actions
-    // TODO: - Make the text field for the tag title to be a picker with the names
-    // Navigation Controller Buttons:
     
+    // Navigation Controller Buttons:
     @IBAction func timeDatePickerChanged(_ sender: Any) {
         let selectedDate = timeDatePicker.date
         let calendar = Calendar.current
@@ -209,8 +210,8 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         if dayInteger != nil {
             day = dayInteger ?? 0
         }
-        let desiredNotificationTimeToday = DayHelper.getCorrectTimeToday(desiredHourMinute: (hour, minute))
-        let notificationDate = DayHelper.futureDateFromADate(givenDate: desiredNotificationTimeToday, numberOfDays: day)
+        let desiredNotificationTimeToday = DayHelper.shared.getCorrectTimeToday(desiredHourMinute: (hour, minute))
+        let notificationDate = DayHelper.shared.futureDateFromADate(givenDate: desiredNotificationTimeToday, numberOfDays: day)
         needsWateringDateValue = notificationDate
         self.notifcationDateLabel.text = notificationDate.stringValue()
     }
@@ -224,13 +225,13 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         updatePlantObject()
     }
     
+    // TableView Buttons:
     @IBAction func imageButtonPressed(_ sender: Any) {
         getImage()
     }
     
-    /// Note: - Remember to remove the plant from the tag collection before calling deletePlant(plant:) - Otherwise the Tag gets deleted along with it.
     @IBAction func deleteButtonPressed(_ sender: Any) {
-        guard let selectedPlant = plant, let plantTag = plant?.tag, let plantName = plant?.name else {
+        guard let _ = plant, let _ = plant?.tag, let plantName = plant?.name else {
             self.navigationController?.popViewController(animated: true)
             return
         }
@@ -264,7 +265,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         }
         guard let selectedPlant = plant, let plantImage = image else {
             // CREATE
-            PlantController.shared.createPlant(name: plantName, image: image ?? UIImage(named: "Default"), needsWaterFireDate: wateringDate, tag: selectedTag, dayInteger: dayInt)
+            PlantController.shared.createPlant(name: plantName, image: image ?? UIImage(named: Keys.noImage), needsWaterFireDate: wateringDate, tag: selectedTag, dayInteger: dayInt)
             self.navigationController?.popViewController(animated: true)
             return
         }
@@ -274,7 +275,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         
     }
     
-    // TODO: - Update the Pickerview to the last selected values --- can get from fireDate and DaysTillNext
     /// Updates the components of the view with the properties of the passed in plant.
     private func updateViews() {
         guard let selectedPlant = plant, let plantTag = plant?.tag, let plantImage = plant?.photo, let fireDate = plant?.needsWateredFireDate, let plantDay = plant?.dayToNextWater else { return }
@@ -326,15 +326,15 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         timeDatePicker.setDate(fireDate, animated: false)
     }
     
+    /// Removes the selected plant from its tag collecton, deletes it, and pops the viewController.
     private func deletePlant(action: UIAlertAction) {
+        // Note: Remember to remove the plant from the tag collection before calling deletePlant(plant:) - Otherwise the Tag gets deleted along with it.
         guard let selectedPlant = plant, let plantTag = plant?.tag else { return }
         TagController.shared.removePlantFrom(targetTag: plantTag, desiredPlant: selectedPlant)
         PlantController.shared.deletePlant(plant: selectedPlant)
         self.navigationController?.popViewController(animated: true)
     }
 }
-
-
 
 // MARK: - UIImagePickerControllerDelegate Extension
 // TODO: - Make it so the image fits into the button properly and isn't resizing it:
@@ -359,16 +359,13 @@ extension PlantDetailTableViewController: UIImagePickerControllerDelegate, UINav
                 self.present(alertController, animated: true, completion: nil)
             }
         }))
-        
         actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action) in
             imagePicker.sourceType = .photoLibrary
             imagePicker.allowsEditing = false
             self.present(imagePicker, animated: true, completion: nil)
         }))
-        
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(_) in
         }))
-        
         if let popoverController = actionSheet.popoverPresentationController {
             let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: { (_) in
                 actionSheet.dismiss(animated: true, completion: nil)
@@ -378,7 +375,6 @@ extension PlantDetailTableViewController: UIImagePickerControllerDelegate, UINav
             popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
             popoverController.permittedArrowDirections = []
         }
-        
         self.present(actionSheet, animated: true, completion: nil)
     }
     
@@ -388,8 +384,6 @@ extension PlantDetailTableViewController: UIImagePickerControllerDelegate, UINav
         }
         photoImageView.image = originalImage
         photoImageView.contentMode = .scaleAspectFill
-//        imageButton.setImage(originalImage, for: .normal)
-//        imageButton.imageView?.contentMode = .scaleAspectFit
         image = originalImage
         picker.dismiss(animated: true, completion: nil)
     }

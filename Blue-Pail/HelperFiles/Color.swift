@@ -12,7 +12,7 @@ import UIKit
 
 extension UIColor {
     
-    // MARK: - Shot buddy colors
+    // MARK: - Shot Buddy colors
     
     static var pumpkinOrange: UIColor {
         return UIColor(red: 247/255, green: 130/255, blue: 6/255, alpha: 1.0)
@@ -38,11 +38,12 @@ extension UIColor {
     static var wateredBlue: UIColor {
         return UIColor(red: 119/255, green: 157/255, blue: 192/255, alpha: 1.0)
     }
+    // TODO: - Rename to: dryRed
     static var dryYellow: UIColor {
         return UIColor(red: 232/255, green: 154/255, blue: 157/255, alpha: 1.0)
     }
     
-    // MARK: - New Tag Colors
+    // MARK: - Custom Tag Colors
     
     static var redOrange: UIColor {
         return UIColor(red: 229/255, green: 89/255, blue: 0/255, alpha: 1.0)

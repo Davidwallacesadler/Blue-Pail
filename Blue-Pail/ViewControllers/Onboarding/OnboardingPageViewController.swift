@@ -10,6 +10,8 @@ import UIKit
 
 class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDataSource {
     
+    // MARK: - PageViewController DataSource Methods
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         if viewController.isKind(of: GetStartedOnboardingViewController.self) {
             return getStepTwo()
@@ -42,10 +44,11 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         return 0
     }
     
-    
-    
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
+        
+        // PageCollectionView Setup:
         setViewControllers([getStepZero()], direction: .forward, animated: false, completion: nil)
         dataSource = self
         view.backgroundColor = UIColor(red: 247/255, green: 250/255, blue: 250/255, alpha: 250/255)
@@ -53,6 +56,8 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        // PageControl Color Setup:
         for view in self.view.subviews{
             if view is UIPageControl{
                 (view as! UIPageControl).currentPageIndicatorTintColor = .redOrange
@@ -61,20 +66,24 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         }
     }
     
-    // Internal Methods:
+    // MARK: - Internal Methods:
     
+    /// Instantiates the Welcome screen.
     func getStepZero() -> WelcomeOnboardingViewController {
         return storyboard!.instantiateViewController(withIdentifier: "WelcomeOnboardingViewController") as! WelcomeOnboardingViewController
     }
     
+    /// Instantiates the Simple Setup screen.
     func getStepOne() -> SetupOnboardingViewController {
         return storyboard!.instantiateViewController(withIdentifier: "SetupOnboardingViewController") as! SetupOnboardingViewController
     }
     
+    /// Instantiates the Notification Description screen.
     func getStepTwo() -> NotificationOnboardingViewController {
         return storyboard!.instantiateViewController(withIdentifier: "NotificationOnboardingViewController") as! NotificationOnboardingViewController
     }
     
+    /// Instantiates the Get Started screen.
     func getStepThree() -> GetStartedOnboardingViewController {
         return storyboard!.instantiateViewController(withIdentifier: "GetStartedOnboardingViewController") as! GetStartedOnboardingViewController
     }
