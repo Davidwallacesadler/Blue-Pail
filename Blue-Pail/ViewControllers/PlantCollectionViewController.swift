@@ -52,6 +52,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     
     func waterPlant() {
         guard let targetPlant = selectedPlant, let targetPlantName = selectedPlant?.name, let targetPlantFireDate = selectedPlant?.needsWateredFireDate, let targetIndex = collectionView.indexPathsForSelectedItems else { return }
+        PlantController.shared.checkIfDry(plant: targetPlant)
         if targetPlant.isWatered == false {
             PlantController.shared.waterPlant(plant: targetPlant)
         } else {
@@ -246,25 +247,25 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
                 PlantController.shared.checkIfDry(plant: selectedPlant)
                 if PlantController.shared.isPlantDry(plant: selectedPlant) {
                     cell.waterNotificationStatusImageView.image = UIImage(named: Keys.wateringPailIcon )
+                    cell.backgroundColor = UIColor.dryYellow
                 } else {
                     cell.waterNotificationStatusImageView.image = UIImage(named: Keys.clockIcon)
+                    cell.backgroundColor = UIColor.wateredBlue
                 }
             } else {
                 // The current Date has passed the notification date:
                 daysToNextWater = DayHelper.shared.formatMonthAndDay(givenDate: fireDate)
                 cell.waterNotificationStatusImageView.image = UIImage(named: Keys.wateringPailIcon)
+                cell.backgroundColor = UIColor.dryYellow
             }
         }
         let selectedPlantTagColor = ColorHelper.colorFrom(colorNumber: selectedPlant.tag?.colorNumber ?? Double(Int.random(in: 1...6)))
-        let plantWateredStateColor = PlantController.shared.colorBasedOnWateredState(plant: selectedPlant)
         cell.plantNameLabel.text = selectedPlant.name
         cell.tagTitleLabel.text = selectedPlant.tag?.title
-        //cell.tagTitleLabel.textColor = selectedPlantTagColor
         cell.plantImageView.image = selectedPlant.photo
         cell.plantImageView.contentMode = .scaleAspectFill
         cell.tagColorView.backgroundColor = selectedPlantTagColor
         cell.waterNotificationStatusLabel.text = daysToNextWater
-        cell.backgroundColor = plantWateredStateColor
         cell.tagNameIconImageView.image = UIImage(named: Keys.tagIcon)
         cell.imageBackgroundView.layer.cornerRadius = 9.0
         cell.imageBackgroundView.layer.borderWidth = 1.0
@@ -274,7 +275,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         cell.detailsBackgroundView.layer.borderWidth = 1.0
         cell.detailsBackgroundView.layer.borderColor = UIColor.clear.cgColor
         cell.detailsBackgroundView.layer.masksToBounds = true
-        cell.plantImageView.layer.cornerRadius = 9.0
+        cell.plantImageView.layer.cornerRadius = 11.0
         cell.plantImageView.layer.borderWidth = 1.0
         cell.plantImageView.layer.borderColor = UIColor.clear.cgColor
         cell.plantImageView.layer.masksToBounds = true

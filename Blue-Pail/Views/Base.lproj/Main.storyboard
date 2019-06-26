@@ -146,13 +146,13 @@
                                                 </mask>
                                             </variation>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plant Name Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sx-xN-8fP">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plant Name Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0sx-xN-8fP">
                                             <rect key="frame" x="5" y="5.0000000000000009" width="115" height="12.333333333333336"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="0sx-xN-8fP" secondAttribute="height" multiplier="139:15" id="Pyb-6b-RZa"/>
                                                 <constraint firstAttribute="width" secondItem="0sx-xN-8fP" secondAttribute="height" multiplier="52:3" id="jaa-Um-62P"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -206,9 +206,9 @@
                                                                 </mask>
                                                             </variation>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plant Tag Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IeW-fS-6N3">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plant Tag Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IeW-fS-6N3">
                                                             <rect key="frame" x="17" y="0.0" width="88" height="12"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -246,9 +246,9 @@
                                                                 </mask>
                                                             </variation>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PyJ-Xy-1HX">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PyJ-Xy-1HX">
                                                             <rect key="frame" x="17" y="0.0" width="88" height="12"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -785,7 +785,7 @@
                                                 </pickerView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="wfj-5P-Daq" firstAttribute="top" secondItem="Bl6-sZ-1H8" secondAttribute="topMargin" constant="5" id="NPz-kf-VCh"/>
+                                                <constraint firstItem="wfj-5P-Daq" firstAttribute="top" secondItem="Bl6-sZ-1H8" secondAttribute="topMargin" constant="5" identifier="$$" id="NPz-kf-VCh"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="wfj-5P-Daq" secondAttribute="trailing" constant="16" id="RMd-Na-CBj"/>
                                                 <constraint firstItem="wfj-5P-Daq" firstAttribute="leading" secondItem="Bl6-sZ-1H8" secondAttribute="leadingMargin" constant="16" id="Vdd-fu-IKO"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="wfj-5P-Daq" secondAttribute="bottom" constant="5" id="yID-Dn-ShB"/>

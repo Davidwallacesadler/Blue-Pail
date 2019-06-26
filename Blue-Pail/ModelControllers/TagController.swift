@@ -33,7 +33,7 @@ class TagController {
     /// Creates a new Tag object with the passed in title and colorNumber.
     func createTag(tagTitle: String, colorNumber: Double) {
         //_ = Tag.init(title: tagTitle, colorNumber: colorNumber)
-        _ = Tag(title: tagTitle, colorNumber: colorNumber)
+        _ = Tag(title: tagTitle, colorNumber: colorNumber, context: CoreDataStack.context)
         saveToPersistentStorage()
     }
     
@@ -73,16 +73,15 @@ class TagController {
     
     // MARK: - Helper Methods
     
-    /// Returns the tag with the same title as the argument tag.
+    /// Returns the tag with the same title as the argument title.
     func getSelectedTag(givenTagTitle title: String) -> Tag {
-        var selectedTag = Tag.init()
         for tag in tags {
             guard let tagTitle = tag.title else { return tags[0] }
             if tagTitle == title {
-                selectedTag = tag
+                return tag
             }
         }
-        return selectedTag
+        return tags[0]
     }
     
     /// Returns true if the given Tag has a unique title.

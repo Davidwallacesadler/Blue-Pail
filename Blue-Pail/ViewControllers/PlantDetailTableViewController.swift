@@ -134,7 +134,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             pickerDays
         ]
         self.dayPickerView.selectRow(0, inComponent: 0, animated: false)
-        dayInteger = 1
+      
         
         // TagPicker Setup:
         self.tagPickerView.delegate = self
@@ -296,7 +296,10 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     /// Updates the DayPickerView selected row if there is a dayInteger passed in.
     private func updateDayPickerValue() {
-        guard let day = dayInteger else { return }
+        guard let day = dayInteger else {
+            dayInteger = 1
+            return
+        }
         var index = 0
         for integer in pickerDays {
             if integer == day {
