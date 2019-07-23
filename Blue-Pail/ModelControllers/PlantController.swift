@@ -96,12 +96,13 @@ class PlantController : AlarmScheduler {
         }
     }
     
-    /// Checks if the current date is greater than or equal to the fireDate of the target Plant, if so it sets the plant to dry.
+    /// Checks if the current date is greater than or equal to the fireDate of the target Plant, if so it sets the plant to dry and saves the changes to persistent storage.
     func checkIfDry(plant:Plant) {
         guard let isDryDate = plant.needsWateredFireDate else { return }
         let currentDate = Date()
         if currentDate >= isDryDate {
             plant.isWatered = false
+            saveToPersistentStorage()
         }
     }
     

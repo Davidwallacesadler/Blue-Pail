@@ -246,17 +246,19 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
                 daysToNextWater = DayHelper.shared.amountOfDaysBetween(previousDate: Date(), futureDate: fireDate)
                 PlantController.shared.checkIfDry(plant: selectedPlant)
                 if PlantController.shared.isPlantDry(plant: selectedPlant) {
-                    cell.waterNotificationStatusImageView.image = UIImage(named: Keys.wateringPailIcon )
-                    cell.backgroundColor = UIColor.dryYellow
+                    cell.waterNotificationStatusImageView.image = UIImage(named: Keys.wateringPailIcon)
+                    //cell.backgroundColor = UIColor.dryYellow
+                    cell.plantNameLabel.backgroundColor = UIColor.dryYellow
                 } else {
                     cell.waterNotificationStatusImageView.image = UIImage(named: Keys.clockIcon)
-                    cell.backgroundColor = UIColor.wateredBlue
+                    //cell.backgroundColor = UIColor.wateredBlue
+                    cell.plantNameLabel.backgroundColor = UIColor.mintGreen
                 }
             } else {
                 // The current Date has passed the notification date:
                 daysToNextWater = DayHelper.shared.formatMonthAndDay(givenDate: fireDate)
                 cell.waterNotificationStatusImageView.image = UIImage(named: Keys.wateringPailIcon)
-                cell.backgroundColor = UIColor.dryYellow
+                cell.plantNameLabel.backgroundColor = UIColor.dryYellow
             }
         }
         let selectedPlantTagColor = ColorHelper.colorFrom(colorNumber: selectedPlant.tag?.colorNumber ?? Double(Int.random(in: 1...6)))
@@ -267,18 +269,11 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         cell.tagColorView.backgroundColor = selectedPlantTagColor
         cell.waterNotificationStatusLabel.text = daysToNextWater
         cell.tagNameIconImageView.image = UIImage(named: Keys.tagIcon)
-        cell.imageBackgroundView.layer.cornerRadius = 9.0
-        cell.imageBackgroundView.layer.borderWidth = 1.0
-        cell.imageBackgroundView.layer.borderColor = UIColor.clear.cgColor
         cell.detailsBackgroundView.layer.masksToBounds = true
         cell.detailsBackgroundView.layer.cornerRadius = 9.0
         cell.detailsBackgroundView.layer.borderWidth = 1.0
         cell.detailsBackgroundView.layer.borderColor = UIColor.clear.cgColor
         cell.detailsBackgroundView.layer.masksToBounds = true
-        cell.plantImageView.layer.cornerRadius = 11.0
-        cell.plantImageView.layer.borderWidth = 1.0
-        cell.plantImageView.layer.borderColor = UIColor.clear.cgColor
-        cell.plantImageView.layer.masksToBounds = true
     }
     
     /// Displays the watering and editing Popup for the selected plant object.
@@ -327,7 +322,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         }
     }
     
-    /// Returns true if every plant is watered, false if there is still at least one plant that is dry.
+    /// Returns true if every plant is watered, false if there is still at least one plant that is dry. Use this to remove all watering notifications - do this check on viewDidAppear?
     func areAllPlantsWatered() -> Bool {
         var truthValue = true
             for tag in TagController.shared.tags {

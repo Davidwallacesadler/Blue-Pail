@@ -18,14 +18,12 @@ struct DayHelper {
     
     /// Returns a date that is equivalent to today's date plus the argument number of days.
     func futrueDateFrom(givenNumberOfDays days: Int) -> Date {
-        // => 60 sec/min  * 60 min/hour * 24 hour/day = 86400 sec/day
         let secondsInADay = 86400
         let selectedDaysInSeconds = Double(days * secondsInADay)
         guard let timeIntervalFromSeconds = TimeInterval(exactly: selectedDaysInSeconds) else {
             return Date()
         }
         return Date(timeInterval: timeIntervalFromSeconds, since: Date())
-        
     }
     
     /// Returns a date that is equivalent to an argument date plus an arguemnt number of days.
@@ -106,7 +104,7 @@ struct DayHelper {
                     // Month, Year are the same. day is different:
                     amountOfDaysBetween = futureDateDay - previousDateDay
                     if amountOfDaysBetween == 1 {
-                        return "1 Day"
+                        return "Tomorrow(\(dateTwo.timeStringValue()))"
                     }
                     return "\(amountOfDaysBetween) Days"
                 }
@@ -116,7 +114,7 @@ struct DayHelper {
                 let daysUntilTheEndOfTheMonth = amountOfDaysInPreviousMonth - previousDateDay
                 amountOfDaysBetween = futureDateDay + daysUntilTheEndOfTheMonth
                 if amountOfDaysBetween == 1 {
-                    return "1 Day"
+                    return "Tomorrow"
                 }
                 return "\(amountOfDaysBetween) Days"
             }
@@ -126,13 +124,13 @@ struct DayHelper {
             let daysUntilTheEndOfTheMonth = amountOfDaysInPreviousMonth - previousDateDay
             amountOfDaysBetween = futureDateDay + daysUntilTheEndOfTheMonth
             if amountOfDaysBetween == 1 {
-                return "1 Day"
+                return "Tomorrow"
             }
             return "\(amountOfDaysBetween) Days"
         }
     }
     
-    /// Returns a "month day" abbreviation of the argument date. I.E If the argument date is in january 10 2019, then the return string will be "Jan 10th".
+    /// Returns a "month day" abbreviation of the argument date. I.E If the argument date is in january 10 2019, then the return string will be "Jan. 10th". Also if the argument date is yesterday (based on Date()) then the return string will be "Yesterday".
     func formatMonthAndDay(givenDate: Date) -> String {
      
         // FormatMonthAndDay Helper:
@@ -166,10 +164,18 @@ struct DayHelper {
         var formattedDate = String()
         let calendar = Calendar.current
         let components = calendar.dateComponents([.month, .day], from: givenDate)
-        guard let currentMonthNumber = components.month, let currentDayNumber = components.day else {
+        let todaysComponents = calendar.dateComponents([.month,.day], from: Date())
+        guard let currentMonthNumber = components.month, let currentDayNumber = components.day, let todaysMonthNumber = todaysComponents.month, let todaysDayNumber = todaysComponents.day else {
             print("ERROR: formatMonthAndDay failed to get month and day components - Default date returned")
-            return "Jan. 1st"
-            
+            return givenDate.dayMonthYearValue()
+        }
+        // Check if given date is yesterday: -- improve this check to work at the end of the month
+        if givenDate < Date() {
+            if todaysMonthNumber == currentMonthNumber {
+                if todaysDayNumber == todaysDayNumber + 1 {
+                    return "Yesterday"
+                }
+            }
         }
         switch currentMonthNumber {
         case 01:
@@ -238,4 +244,5 @@ struct DayHelper {
         }
         return todayAtCorrectTime
     }
+    
 }

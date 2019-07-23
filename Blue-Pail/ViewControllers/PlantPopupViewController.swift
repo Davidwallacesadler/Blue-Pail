@@ -26,6 +26,7 @@ class PlantPopupViewController: UIViewController {
 //        yourView.clipsToBounds = true
 //        yourView.layer.cornerRadius = 10
 //        yourView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        
     }
     override func viewDidAppear(_ animated: Bool) {
 //        self.editButton.layer.cornerRadius = 6.0
@@ -34,6 +35,7 @@ class PlantPopupViewController: UIViewController {
 //        self.editButton.clipsToBounds = true
 //        self.editButton.layer.cornerRadius = 6.0
 //        self.editButton.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner ]
+        self.xButton.tintColor = UIColor.white
     }
     
     // MARK: - Outlets
@@ -41,6 +43,7 @@ class PlantPopupViewController: UIViewController {
     @IBOutlet weak var plantNameLabel: UILabel!
     @IBOutlet weak var waterButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var xButton: UIImageView!
     
     // MARK: - Actions
     

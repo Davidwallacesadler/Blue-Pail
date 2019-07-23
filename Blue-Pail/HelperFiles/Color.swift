@@ -38,6 +38,9 @@ extension UIColor {
     static var wateredBlue: UIColor {
         return UIColor(red: 119/255, green: 157/255, blue: 192/255, alpha: 1.0)
     }
+    static var mintGreen: UIColor {
+        return UIColor(red: 221/255, green: 248/255, blue: 244/255, alpha: 1.0)
+    }
     // TODO: - Rename to: dryRed
     static var dryYellow: UIColor {
         return UIColor(red: 232/255, green: 154/255, blue: 157/255, alpha: 1.0)

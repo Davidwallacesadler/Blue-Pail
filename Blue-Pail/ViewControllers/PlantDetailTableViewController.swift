@@ -84,6 +84,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
                 minute = selectedMinute ?? 0 
             }
             dayInteger = day
+            checkDayValue()
             let desiredNotificationTimeToday = DayHelper.shared.getCorrectTimeToday(desiredHourMinute: (hour, minute))
             let notificationDate = DayHelper.shared.futureDateFromADate(givenDate: desiredNotificationTimeToday, numberOfDays: day)
             print("\(notificationDate)")
@@ -193,6 +194,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     @IBOutlet weak var tagPickerView: UIPickerView!
     @IBOutlet weak var timeDatePicker: UIDatePicker!
     @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var dayPickerLabel: UILabel!
     
     // MARK: - Actions
     
@@ -282,6 +284,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         updateTag(selectedTag: plantTag)
         image = plantImage
         dayInteger = Int(plantDay)
+        checkDayValue()
         needsWateringDateValue = fireDate
         notifcationDateLabel.text = selectedPlant.needsWateredFireDate?.stringValue()
         photoImageView.image = plantImage
@@ -336,6 +339,15 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         TagController.shared.removePlantFrom(targetTag: plantTag, desiredPlant: selectedPlant)
         PlantController.shared.deletePlant(plant: selectedPlant)
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    /// Checks if the DayInteger is greater than one - if so it will update the DayPickerLabel to "Days".
+    private func checkDayValue() {
+        if dayInteger == 1 {
+            dayPickerLabel.text = "Day"
+        } else {
+           dayPickerLabel.text = "Days"
+        }
     }
 }
 

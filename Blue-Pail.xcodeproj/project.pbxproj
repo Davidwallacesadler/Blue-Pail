@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6311C0E322D1641E009A815E /* FunctionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311C0E222D1641E009A815E /* FunctionHelper.swift */; };
 		6326500422810CFE0025E10C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6326500322810CFE0025E10C /* AppDelegate.swift */; };
 		6326500922810CFE0025E10C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6326500722810CFE0025E10C /* Main.storyboard */; };
 		6326500B22810D050025E10C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6326500A22810D050025E10C /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6311C0E222D1641E009A815E /* FunctionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionHelper.swift; sourceTree = "<group>"; };
 		6326500022810CFE0025E10C /* Blue-Pail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Blue-Pail.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6326500322810CFE0025E10C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6326500822810CFE0025E10C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				635AEFF1229C3DAB00A9026F /* Date.swift */,
 				63BD334A22A1F0880008D41C /* pickerView.swift */,
 				639E39B022A87926005A8407 /* Optional.swift */,
+				6311C0E222D1641E009A815E /* FunctionHelper.swift */,
 			);
 			path = HelperFiles;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				6326502522813BE30025E10C /* PlantController.swift in Sources */,
 				63265027228141D70025E10C /* TagController.swift in Sources */,
 				63D4547F22B9986F00E74B1B /* WelcomeOnboardingViewController.swift in Sources */,
+				6311C0E322D1641E009A815E /* FunctionHelper.swift in Sources */,
 				63D4548722B9B28300E74B1B /* TagCreationViewController.swift in Sources */,
 				6326500422810CFE0025E10C /* AppDelegate.swift in Sources */,
 			);

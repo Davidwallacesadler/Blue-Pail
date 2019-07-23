@@ -19,6 +19,5 @@ class PlantCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var waterNotificationStatusLabel: UILabel!
     @IBOutlet weak var waterNotificationStatusImageView: UIImageView!
     @IBOutlet weak var tagNameIconImageView: UIImageView!
-    @IBOutlet weak var imageBackgroundView: UIView!
     @IBOutlet weak var detailsBackgroundView: UIView!
 }
