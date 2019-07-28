@@ -31,7 +31,7 @@
 		635AEFF0229B198100A9026F /* PlantPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635AEFEE229B198100A9026F /* PlantPopupViewController.xib */; };
 		635AEFF2229C3DAB00A9026F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635AEFF1229C3DAB00A9026F /* Date.swift */; };
 		639E39B122A87926005A8407 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639E39B022A87926005A8407 /* Optional.swift */; };
-		63BD334B22A1F0880008D41C /* pickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD334A22A1F0880008D41C /* pickerView.swift */; };
+		63BD334B22A1F0880008D41C /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD334A22A1F0880008D41C /* PickerView.swift */; };
 		63BD334D22A381C20008D41C /* TagCreationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD334C22A381C20008D41C /* TagCreationTableViewController.swift */; };
 		63D4547C22B9966000E74B1B /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4547B22B9966000E74B1B /* OnboardingPageViewController.swift */; };
 		63D4547F22B9986F00E74B1B /* WelcomeOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4547E22B9986F00E74B1B /* WelcomeOnboardingViewController.swift */; };
@@ -39,6 +39,12 @@
 		63D4548322B998AC00E74B1B /* NotificationOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4548222B998AC00E74B1B /* NotificationOnboardingViewController.swift */; };
 		63D4548522B998C200E74B1B /* GetStartedOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4548422B998C200E74B1B /* GetStartedOnboardingViewController.swift */; };
 		63D4548722B9B28300E74B1B /* TagCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4548622B9B28300E74B1B /* TagCreationViewController.swift */; };
+		63DAAD9422E8BA6A009DC288 /* NavigationBarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DAAD9322E8BA6A009DC288 /* NavigationBarHelper.swift */; };
+		63DAAD9622E8C2F9009DC288 /* DisclosureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DAAD9522E8C2F9009DC288 /* DisclosureTableViewCell.swift */; };
+		63DAAD9822E8CDBA009DC288 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DAAD9722E8CDBA009DC288 /* SettingsTableViewController.swift */; };
+		63DAAD9B22E90669009DC288 /* ToggleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DAAD9922E90669009DC288 /* ToggleTableViewCell.swift */; };
+		63DAAD9C22E90669009DC288 /* ToggleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63DAAD9A22E90669009DC288 /* ToggleTableViewCell.xib */; };
+		63DAAD9E22EBD0AD009DC288 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DAAD9D22EBD0AD009DC288 /* NotificationHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,7 +74,7 @@
 		635AEFEE229B198100A9026F /* PlantPopupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlantPopupViewController.xib; sourceTree = "<group>"; };
 		635AEFF1229C3DAB00A9026F /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		639E39B022A87926005A8407 /* Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
-		63BD334A22A1F0880008D41C /* pickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pickerView.swift; sourceTree = "<group>"; };
+		63BD334A22A1F0880008D41C /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
 		63BD334C22A381C20008D41C /* TagCreationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCreationTableViewController.swift; sourceTree = "<group>"; };
 		63D4547B22B9966000E74B1B /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		63D4547E22B9986F00E74B1B /* WelcomeOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeOnboardingViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +82,12 @@
 		63D4548222B998AC00E74B1B /* NotificationOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationOnboardingViewController.swift; sourceTree = "<group>"; };
 		63D4548422B998C200E74B1B /* GetStartedOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartedOnboardingViewController.swift; sourceTree = "<group>"; };
 		63D4548622B9B28300E74B1B /* TagCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCreationViewController.swift; sourceTree = "<group>"; };
+		63DAAD9322E8BA6A009DC288 /* NavigationBarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarHelper.swift; sourceTree = "<group>"; };
+		63DAAD9522E8C2F9009DC288 /* DisclosureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureTableViewCell.swift; sourceTree = "<group>"; };
+		63DAAD9722E8CDBA009DC288 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		63DAAD9922E90669009DC288 /* ToggleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleTableViewCell.swift; sourceTree = "<group>"; };
+		63DAAD9A22E90669009DC288 /* ToggleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToggleTableViewCell.xib; sourceTree = "<group>"; };
+		63DAAD9D22EBD0AD009DC288 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,7 +156,10 @@
 			isa = PBXGroup;
 			children = (
 				6326500722810CFE0025E10C /* Main.storyboard */,
+				63DAAD9522E8C2F9009DC288 /* DisclosureTableViewCell.swift */,
 				6326502A228205B40025E10C /* PlantCollectionViewCell.swift */,
+				63DAAD9922E90669009DC288 /* ToggleTableViewCell.swift */,
+				63DAAD9A22E90669009DC288 /* ToggleTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -159,6 +174,7 @@
 				635AEFEE229B198100A9026F /* PlantPopupViewController.xib */,
 				63BD334C22A381C20008D41C /* TagCreationTableViewController.swift */,
 				63D4548622B9B28300E74B1B /* TagCreationViewController.swift */,
+				63DAAD9722E8CDBA009DC288 /* SettingsTableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -173,9 +189,11 @@
 				63265036228F28E30025E10C /* FirstLaunch.swift */,
 				63265038228F2A180025E10C /* Keys.swift */,
 				635AEFF1229C3DAB00A9026F /* Date.swift */,
-				63BD334A22A1F0880008D41C /* pickerView.swift */,
+				63BD334A22A1F0880008D41C /* PickerView.swift */,
 				639E39B022A87926005A8407 /* Optional.swift */,
 				6311C0E222D1641E009A815E /* FunctionHelper.swift */,
+				63DAAD9322E8BA6A009DC288 /* NavigationBarHelper.swift */,
+				63DAAD9D22EBD0AD009DC288 /* NotificationHelper.swift */,
 			);
 			path = HelperFiles;
 			sourceTree = "<group>";
@@ -268,6 +286,7 @@
 				6326500B22810D050025E10C /* Assets.xcassets in Resources */,
 				6326500922810CFE0025E10C /* Main.storyboard in Resources */,
 				635AEFF0229B198100A9026F /* PlantPopupViewController.xib in Resources */,
+				63DAAD9C22E90669009DC288 /* ToggleTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63DAAD9422E8BA6A009DC288 /* NavigationBarHelper.swift in Sources */,
 				63265029228204E10025E10C /* PlantCollectionViewController.swift in Sources */,
 				63265037228F28E30025E10C /* FirstLaunch.swift in Sources */,
 				63265035228E786D0025E10C /* CreateDataFactory.swift in Sources */,
@@ -292,15 +312,19 @@
 				6326502D2282165B0025E10C /* Color.swift in Sources */,
 				6326501C228117950025E10C /* CoreDataStack.swift in Sources */,
 				63D4548522B998C200E74B1B /* GetStartedOnboardingViewController.swift in Sources */,
-				63BD334B22A1F0880008D41C /* pickerView.swift in Sources */,
+				63BD334B22A1F0880008D41C /* PickerView.swift in Sources */,
 				6326503B228F34900025E10C /* DayHelper.swift in Sources */,
+				63DAAD9822E8CDBA009DC288 /* SettingsTableViewController.swift in Sources */,
 				6326502B228205B40025E10C /* PlantCollectionViewCell.swift in Sources */,
 				63D4548122B9989400E74B1B /* SetupOnboardingViewController.swift in Sources */,
 				6326501F228118240025E10C /* Blue-Pail.xcdatamodeld in Sources */,
+				63DAAD9E22EBD0AD009DC288 /* NotificationHelper.swift in Sources */,
 				6326502F228216F60025E10C /* ColorHelper.swift in Sources */,
 				63265031228217710025E10C /* PlantDetailTableViewController.swift in Sources */,
 				639E39B122A87926005A8407 /* Optional.swift in Sources */,
 				6326502522813BE30025E10C /* PlantController.swift in Sources */,
+				63DAAD9B22E90669009DC288 /* ToggleTableViewCell.swift in Sources */,
+				63DAAD9622E8C2F9009DC288 /* DisclosureTableViewCell.swift in Sources */,
 				63265027228141D70025E10C /* TagController.swift in Sources */,
 				63D4547F22B9986F00E74B1B /* WelcomeOnboardingViewController.swift in Sources */,
 				6311C0E322D1641E009A815E /* FunctionHelper.swift in Sources */,

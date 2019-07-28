@@ -65,9 +65,7 @@ class TagCreationViewController: UIViewController, UIPickerViewDelegate, UIPicke
         self.tagCollectionPickerView.reloadComponent(0)
         
         // NavigationBar Setup:
-        self.navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.foregroundColor: UIColor.darkGrayBlue,
-             NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: 18)!]
+        NavigationBarHelper.setupNativationBar(viewController: self)
         
         // Check if Tag Collection is empty:
         if tagPickerTitles.isEmpty == false {
@@ -76,8 +74,14 @@ class TagCreationViewController: UIViewController, UIPickerViewDelegate, UIPicke
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+//    override func viewDidAppear(_ animated: Bool) {
+//        self.tagCollectionPickerView.reloadComponent(0)
+//        swapToDarkIfNeeded()
+//    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         self.tagCollectionPickerView.reloadComponent(0)
+        swapColorThemeIfNeeded()
     }
     
     // MARK: - Stored Properties
@@ -101,6 +105,40 @@ class TagCreationViewController: UIViewController, UIPickerViewDelegate, UIPicke
     // MARK: - Outlets
     
     @IBOutlet weak var tagCollectionPickerView: UIPickerView!
+    
+    // MARK: - Methods
+    
+    func swapColorsToDark() {
+        // Self:
+        self.view.backgroundColor = UIColor.tableViewScetionDarkGray
+        // Navigation Bar:
+        NavigationBarHelper.setupDarkModeNavigationBar(viewController: self)
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.mintGreen
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.mintGreen
+        // Tab Bar:
+        self.tabBarController?.tabBar.tintColor = UIColor.mintGreen
+        self.tabBarController?.tabBar.barTintColor = UIColor.darkGrayBlue
+    }
+    
+    func swapColorsToLight() {
+        // Self:
+        self.view.backgroundColor = UIColor.white
+        // Navigation Bar:
+        NavigationBarHelper.setupNativationBar(viewController: self)
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.darkGrayBlue
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGrayBlue
+        // Tab Bar:
+        self.tabBarController?.tabBar.tintColor = UIColor.darkGrayBlue
+        self.tabBarController?.tabBar.barTintColor = UIColor.mintGreen
+    }
+    
+    func swapColorThemeIfNeeded() {
+        if UserDefaults.standard.bool(forKey: Keys.themeMode) {
+            swapColorsToDark()
+        } else {
+            swapColorsToLight()
+        }
+    }
     
     // MARK: - Navigation
     

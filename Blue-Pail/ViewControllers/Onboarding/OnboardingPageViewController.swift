@@ -12,6 +12,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     
     // MARK: - PageViewController DataSource Methods
     
+    // Sets up the viewController before reference (going backwards in the pageVC)
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         if viewController.isKind(of: GetStartedOnboardingViewController.self) {
             return getStepTwo()
@@ -24,6 +25,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         }
     }
     
+    // Sets up the viewController next reference (going forwards in the pageVC)
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         if viewController.isKind(of: WelcomeOnboardingViewController.self) {
             return getStepOne()
@@ -36,10 +38,11 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         }
     }
     
+    // Sets up the amount of dots (pages) for the pageVC
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return 4
     }
-    
+    // Sets up the first page to display (index 0)
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         return 0
     }
@@ -49,6 +52,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     override func viewDidLoad() {
         
         // PageCollectionView Setup:
+        // Setting the direction, dataSource protocol and background color to an off white
         setViewControllers([getStepZero()], direction: .forward, animated: false, completion: nil)
         dataSource = self
         view.backgroundColor = UIColor(red: 247/255, green: 250/255, blue: 250/255, alpha: 250/255)
@@ -68,22 +72,22 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     
     // MARK: - Internal Methods:
     
-    /// Instantiates the Welcome screen.
+    /// Instantiates the "Welcome" screen.
     func getStepZero() -> WelcomeOnboardingViewController {
         return storyboard!.instantiateViewController(withIdentifier: "WelcomeOnboardingViewController") as! WelcomeOnboardingViewController
     }
     
-    /// Instantiates the Simple Setup screen.
+    /// Instantiates the "Simple Setup" screen.
     func getStepOne() -> SetupOnboardingViewController {
         return storyboard!.instantiateViewController(withIdentifier: "SetupOnboardingViewController") as! SetupOnboardingViewController
     }
     
-    /// Instantiates the Notification Description screen.
+    /// Instantiates the "Notification Description" screen.
     func getStepTwo() -> NotificationOnboardingViewController {
         return storyboard!.instantiateViewController(withIdentifier: "NotificationOnboardingViewController") as! NotificationOnboardingViewController
     }
     
-    /// Instantiates the Get Started screen.
+    /// Instantiates the "Get Started" screen.
     func getStepThree() -> GetStartedOnboardingViewController {
         return storyboard!.instantiateViewController(withIdentifier: "GetStartedOnboardingViewController") as! GetStartedOnboardingViewController
     }

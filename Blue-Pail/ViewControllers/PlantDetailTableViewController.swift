@@ -10,6 +10,12 @@ import UIKit
 
 class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
+    // MARK: - TableViewController Delegate Methods
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
     // MARK: - TextField Delegate Methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -68,6 +74,14 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             let title = NSAttributedString(string: tagTitle, attributes: [NSAttributedString.Key.foregroundColor: ColorHelper.colorFrom(colorNumber: tag.colorNumber)])
             return title
             }
+        } else {
+            if UserDefaults.standard.bool(forKey: Keys.themeMode) {
+                if pickerView == dayPickerView {
+                    let day = "\(pickerDays[row])"
+                    let title = NSAttributedString(string: day, attributes: [NSAttributedString.Key.foregroundColor: UIColor.mintGreen])
+                    return title
+                }
+            }
         }
             return nil
     }
@@ -87,9 +101,11 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             checkDayValue()
             let desiredNotificationTimeToday = DayHelper.shared.getCorrectTimeToday(desiredHourMinute: (hour, minute))
             let notificationDate = DayHelper.shared.futureDateFromADate(givenDate: desiredNotificationTimeToday, numberOfDays: day)
-            print("\(notificationDate)")
             needsWateringDateValue = notificationDate
             self.notifcationDateLabel.text = notificationDate.stringValue()
+            if !UserDefaults.standard.bool(forKey: Keys.themeMode) {
+                self.notifcationDateLabel.textColor = UIColor.darkBlue
+            }
         } else {
             if tagPickerTitles.isEmpty {
                 return
@@ -112,15 +128,19 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         }
         
         // Rounding Corners:
+        #warning("Make this into a cornerRounding method")
         deletePlantButton.layer.cornerRadius = 6.0
         deletePlantButton.layer.borderWidth = 1.0
         deletePlantButton.layer.borderColor = UIColor.clear.cgColor
         deletePlantButton.layer.masksToBounds = true
+        imageButton.layer.cornerRadius = 75.0
+        imageButton.layer.borderWidth = 1.0
+        imageButton.layer.borderColor = UIColor.clear.cgColor
+        imageButton.layer.masksToBounds = true
+        
         
         // NavigationBar Setup:
-        self.navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.foregroundColor: UIColor.darkGrayBlue,
-             NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: 18)!]
+        //NavigationBarHelper.setupNativationBar(viewController: self)
         
         // Gesture recognizer Setup:
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
@@ -136,7 +156,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         ]
         self.dayPickerView.selectRow(0, inComponent: 0, animated: false)
       
-        
         // TagPicker Setup:
         self.tagPickerView.delegate = self
         self.tagPickerView.dataSource = self
@@ -147,7 +166,15 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         // UpdatePicker Setup:
         updateDayPickerValue()
         updateTagPickerValue()
+        updateTimeValues()
         
+        // Table Setup:
+//        tableSetup()
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        swapColorsIfNeeded()
     }
     override func viewDidAppear(_ animated: Bool) {
         // TODO: - Is there a better way of refreshing the data?
@@ -156,6 +183,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
     // MARK: - Stored Properties
     
+    var viewSizeWidth: CGFloat?
     var plant: Plant?
     var needsWateringDateValue: Date?
     var dayInteger: Int?
@@ -195,6 +223,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     @IBOutlet weak var timeDatePicker: UIDatePicker!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var dayPickerLabel: UILabel!
+    @IBOutlet weak var nextLabel: UILabel!
     
     // MARK: - Actions
     
@@ -286,9 +315,19 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         dayInteger = Int(plantDay)
         checkDayValue()
         needsWateringDateValue = fireDate
-        notifcationDateLabel.text = selectedPlant.needsWateredFireDate?.stringValue()
+        if Date() <= fireDate {
+            notifcationDateLabel.text = "\(fireDate.stringValue())"
+            notifcationDateLabel.textColor = UIColor.darkBlue
+        } else {
+            notifcationDateLabel.text = "\(fireDate.stringValue())(Past Due)"
+            notifcationDateLabel.textColor = UIColor.redOrange
+        }
         photoImageView.image = plantImage
         photoImageView.contentMode = .scaleAspectFill
+        photoImageView.layer.cornerRadius = 70.0
+        photoImageView.layer.borderWidth = 1.0
+        photoImageView.layer.borderColor = UIColor.clear.cgColor
+        photoImageView.layer.masksToBounds = true
         updateDatePickerValue()
     }
     
@@ -326,11 +365,29 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         tagPickerView.selectRow(index, inComponent: 0, animated: false)
     }
     
+    /// Sets the selectedHour and selectedMinute to the current time if there is no needsWateringDateValue passed in.
+    private func updateTimeValues() {
+        guard let wateringDate = needsWateringDateValue else {
+            needsWateringDateValue = Date()
+            selectedHour = Date().hourOfCurrentDate()
+            selectedMinute = Date().minuteOfCurrentDate()
+            return
+        }
+        selectedHour = wateringDate.hourOfCurrentDate()
+        selectedMinute = wateringDate.minuteOfCurrentDate()
+    }
+    
      /// Updates the timeDatePickerView selected row if there is a notification date passed in.
     private func updateDatePickerValue() {
         guard let fireDate = needsWateringDateValue else { return }
         timeDatePicker.setDate(fireDate, animated: false)
     }
+    
+    /// Updates the size of the imageView to corrospond with the size of the view
+//    private func tableSetup() {
+//        self.tableView.rowHeight = UITableView.automaticDimension
+//        self.tableView.estimatedRowHeight = 44.0
+//    }
     
     /// Removes the selected plant from its tag collecton, deletes it, and pops the viewController.
     private func deletePlant(action: UIAlertAction) {
@@ -349,6 +406,72 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
            dayPickerLabel.text = "Days"
         }
     }
+    
+    func swapColorsToDark() {
+        // Self:
+        self.view.backgroundColor = UIColor.tableViewScetionDarkGray
+        // NavigationBar:
+        NavigationBarHelper.setupDarkModeNavigationBar(viewController: self)
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.mintGreen
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.mintGreen
+        // TableView Cells:
+        #warning("Fix this loop => set a custom UIView with desired background color to the backgroundView property")
+        for section in 0..<tableView.numberOfSections {
+            let tableViewSection = tableView.headerView(forSection: section)
+            tableViewSection?.tintColor = UIColor.tableViewScetionDarkGray
+            tableViewSection?.textLabel?.textColor = UIColor.mintGreen
+        }
+        for view in self.tableView.subviews {
+            view.backgroundColor = UIColor.darkGrayBlue
+        }
+        //Outlets:
+        let placeholderAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.mintGreen]
+        let placeholder = NSAttributedString(string: "Please enter a title...", attributes: placeholderAttributes)
+        self.plantNameTextField.attributedPlaceholder = placeholder
+        self.plantNameTextField.backgroundColor = UIColor.textFieldBackgroundGray
+        self.plantNameTextField.textColor = UIColor.mintGreen
+        self.notifcationDateLabel.textColor = UIColor.mintGreen
+        self.dayPickerLabel.textColor = UIColor.mintGreen
+        self.nextLabel.textColor = UIColor.mintGreen
+        self.timeDatePicker.setValue(UIColor.mintGreen, forKey: "textColor")
+        if plant == nil {
+            self.photoImageView.tintColor = UIColor.mintGreen
+        }
+    }
+    
+    func swapColorsToLight() {
+        //  NavigationBar:
+        NavigationBarHelper.setupNativationBar(viewController: self)
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.darkGrayBlue
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGrayBlue
+        // TableView:
+        self.tableView.backgroundColor = UIColor.white
+        
+    }
+    
+    func swapColorsIfNeeded() {
+        if UserDefaults.standard.bool(forKey: Keys.themeMode) {
+            swapColorsToDark()
+        } else {
+            swapColorsToLight()
+        }
+    }
+    
+//    func getTableViewCells() -> [UITableViewCell] {
+//        var list = [UITableViewCell]()
+//        let sectionCount = self.tableView.numberOfSections
+//        for section in 0..<sectionCount {
+//            let rowCount = tableView.numberOfRows(inSection: section)
+//            for row in 0..<rowCount {
+//                guard let cell = tableView.cellForRow(at: IndexPath(row: row, section: section)) else {
+//                    print("No Cell Found in getTableViewCells Method - returning empty array")
+//                    return [UITableViewCell()]
+//                }
+//                list.append(cell)
+//            }
+//        }
+//        return list
+//    }
 }
 
 // MARK: - UIImagePickerControllerDelegate Extension

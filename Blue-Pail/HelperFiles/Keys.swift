@@ -10,9 +10,14 @@ import Foundation
 
 enum Keys {
     
-    // MARK: - FirstLaunchKey
+    // MARK: - UserDefaults FirstLaunchKey
     
     static let FirstLaunchKey = "FirstLaunch"
+    
+    // MARK: - UserDefaults
+    
+//    static let automaticWatering = "automaticWatering"
+    static let themeMode = "themeMode"
     
     // MARK: - Image Names
     
@@ -31,6 +36,13 @@ enum Keys {
     // For Views:
     static let whiteShapeWithRoundedBottomCorners = "editButtonBackground"
     static let noImage = "default"
+    // For Setting Icons:
+    static let wateringModelIcon = "wateringModelIcon"
+    static let darkModeIcon = "darkModeSettingIcon"
+    static let viewTutorialIcon = "tutorialIcon"
+    static let FAQIcon = "frequentlyAskedIcon"
+    static let shareIcon = "shareIcon"
+    static let rateIcon = "rateIcon"
     
     
     

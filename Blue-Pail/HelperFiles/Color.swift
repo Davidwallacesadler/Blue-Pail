@@ -37,12 +37,11 @@ extension UIColor {
     
     static var wateredBlue: UIColor {
         return UIColor(red: 119/255, green: 157/255, blue: 192/255, alpha: 1.0)
-    }
+    } // As of Version 1.02 Not using this blue as water indicator
     static var mintGreen: UIColor {
         return UIColor(red: 221/255, green: 248/255, blue: 244/255, alpha: 1.0)
     }
-    // TODO: - Rename to: dryRed
-    static var dryYellow: UIColor {
+    static var dryRed: UIColor {
         return UIColor(red: 232/255, green: 154/255, blue: 157/255, alpha: 1.0)
     }
     
@@ -92,11 +91,26 @@ extension UIColor {
         return UIColor(red: 229/255, green: 9/255, blue: 191/255, alpha: 1.0)
     }
     
+    // MARK: - Text Colors
+    
     static var pailBlue: UIColor {
         return UIColor(red: 0/255, green: 69/255, blue: 229/255, alpha: 1.0)
     }
     
     static var darkGrayBlue: UIColor {
         return UIColor(red: 58/255, green: 62/255, blue: 85/255, alpha: 1.0)
+    } // This is used as the main text color
+    
+    // MARK: - TableView Colors
+    #warning("Make all the colors for the color schemes named based on their use")
+    
+    static var tableViewSectionGray: UIColor {
+        return UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1.0)
+    }
+    static var tableViewScetionDarkGray: UIColor {
+        return UIColor(red: 50/255, green: 50/255, blue: 50/255, alpha: 1.0)
+    }
+    static var textFieldBackgroundGray: UIColor {
+        return UIColor(red: 86/255, green: 92/255, blue: 128/255, alpha: 1.0)
     }
 }

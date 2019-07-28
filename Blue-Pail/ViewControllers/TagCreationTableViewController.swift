@@ -29,9 +29,7 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
         deleteTagButton.layer.masksToBounds = true
         
         // NavigationBar Setup:
-        self.navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.foregroundColor: UIColor.darkGrayBlue,
-             NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: 18)!]
+        NavigationBarHelper.setupNativationBar(viewController: self)
         
         // Gesture recognizer Setup:
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
@@ -45,7 +43,11 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
         if tag != nil {
             updateElements()
         }
+        swapColorThemeIfNeeded()
+    }
     
+    override func viewDidLayoutSubviews() {
+        swapColorThemeIfNeeded()
     }
     
     // MARK: - Properties
@@ -59,6 +61,7 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
     @IBOutlet weak var tagTextField: UITextField!
     @IBOutlet weak var selectedColorView: UIView!
     @IBOutlet weak var deleteTagButton: UIButton!
+    @IBOutlet weak var selectedColorLabel: UILabel!
     
     // MARK: - Actions
     
@@ -181,6 +184,65 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
         updateColorChoice(colorID: selectedTag.colorNumber)
         tagTextField.text = selectedTag.title
         self.navigationItem.title = selectedTag.title
+    }
+    
+    func swapColorsToDark() {
+        // Self:
+        self.view.backgroundColor = UIColor.tableViewScetionDarkGray
+        // Navigation Bar:
+        NavigationBarHelper.setupDarkModeNavigationBar(viewController: self)
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.mintGreen
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.mintGreen
+        // TableView:
+        // TableView Cells:
+        #warning("Fix this loop => set a custom UIView with desired background color to the backgroundView property")
+        for section in 0..<tableView.numberOfSections {
+            let tableViewSection = tableView.headerView(forSection: section)
+            tableViewSection?.tintColor = UIColor.tableViewScetionDarkGray
+            tableViewSection?.textLabel?.textColor = UIColor.mintGreen
+        }
+        for view in self.tableView.subviews {
+            view.backgroundColor = UIColor.darkGrayBlue
+        }
+        // Outlets:
+        self.tagTextField.backgroundColor = UIColor.textFieldBackgroundGray
+        self.tagTextField.textColor = UIColor.mintGreen
+        let placeholderAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.mintGreen]
+        let placeholder = NSAttributedString(string: "Please enter a title...", attributes: placeholderAttributes)
+        self.tagTextField.attributedPlaceholder = placeholder
+        self.selectedColorLabel.textColor = UIColor.mintGreen
+    }
+    
+    func swapColorsToLight() {
+        // Self:
+        self.view.backgroundColor = UIColor.white
+        // Navigation Bar:
+        NavigationBarHelper.setupNativationBar(viewController: self)
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.darkGrayBlue
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGrayBlue
+        // TableView:
+        self.tableView.backgroundColor = UIColor.white
+        // TableView Cells:
+        var i = 0
+        while i < self.tableView.visibleCells.count {
+            let cell = self.tableView.visibleCells[i]
+            cell.backgroundColor = UIColor.white
+            i += 1
+        }
+        // Outlets:
+        self.tagTextField.backgroundColor = UIColor.white
+        self.tagTextField.textColor = UIColor.darkGrayBlue
+        let placeHolderAttributes = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+        let placeholder = NSAttributedString(string: "Please enter a title...", attributes: placeHolderAttributes)
+        self.tagTextField.attributedPlaceholder = placeholder
+    }
+    
+    func swapColorThemeIfNeeded() {
+        if UserDefaults.standard.bool(forKey: Keys.themeMode) {
+            swapColorsToDark()
+        } else {
+            swapColorsToLight()
+        }
     }
 }
 

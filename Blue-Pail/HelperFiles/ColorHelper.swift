@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 struct ColorHelper {
+    /// Returns a UI Color that corrosponds to a number (1.0 - 17.0).
     static func colorFrom(colorNumber: Double) -> UIColor {
         switch colorNumber {
         case 1.0:
@@ -48,6 +49,13 @@ struct ColorHelper {
             return UIColor.pink
         default:
             return UIColor.black
+        }
+    }
+    
+    static func themeBasedOnUserDefaults(viewController: UIViewController) {
+        if UserDefaults.standard.bool(forKey: Keys.themeMode) {
+            // Dark Mode Enabled:
+            
         }
     }
 }

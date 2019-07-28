@@ -114,7 +114,7 @@ struct DayHelper {
                 let daysUntilTheEndOfTheMonth = amountOfDaysInPreviousMonth - previousDateDay
                 amountOfDaysBetween = futureDateDay + daysUntilTheEndOfTheMonth
                 if amountOfDaysBetween == 1 {
-                    return "Tomorrow"
+                    return "Tomorrow(\(dateTwo.timeStringValue()))"
                 }
                 return "\(amountOfDaysBetween) Days"
             }
@@ -124,7 +124,7 @@ struct DayHelper {
             let daysUntilTheEndOfTheMonth = amountOfDaysInPreviousMonth - previousDateDay
             amountOfDaysBetween = futureDateDay + daysUntilTheEndOfTheMonth
             if amountOfDaysBetween == 1 {
-                return "Tomorrow"
+                return "Tomorrow(\(dateTwo.timeStringValue()))"
             }
             return "\(amountOfDaysBetween) Days"
         }

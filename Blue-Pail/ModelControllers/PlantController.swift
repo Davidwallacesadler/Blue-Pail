@@ -90,9 +90,9 @@ class PlantController : AlarmScheduler {
     /// Returns a UIColor reflecting the target Plants isWatered property (blue for true, yellow for false).
     func colorBasedOnWateredState(plant: Plant) -> UIColor {
         if plant.isWatered == true {
-            return UIColor.wateredBlue
+            return UIColor.mintGreen
         } else {
-            return UIColor.dryYellow
+            return UIColor.dryRed
         }
     }
     
@@ -133,6 +133,7 @@ protocol AlarmScheduler {
     func cancelUserNotifications(for plant: Plant)
 }
 
+#warning("Add in UNNotficationActions for Remind me in an 30 minutes, 1 hour, and water plant")
 extension AlarmScheduler {
     func scheduleUserNotifications(for plant: Plant) {
         let content  = UNMutableNotificationContent()
@@ -142,9 +143,9 @@ extension AlarmScheduler {
         
         let calendar = Calendar.current
         let dateCompoenents = calendar.dateComponents([.day, .hour, .minute], from: plant.needsWateredFireDate ?? Date())
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateCompoenents, repeats: true)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateCompoenents, repeats: false)
         let request = UNNotificationRequest(identifier: plant.uuid!.uuidString, content: content, trigger: trigger)
-        
+        trigger.nextTriggerDate()
         UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error {
                 print("Unable to add notification request. \(error.localizedDescription)")

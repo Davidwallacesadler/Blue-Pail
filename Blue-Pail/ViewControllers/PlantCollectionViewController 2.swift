@@ -23,25 +23,8 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         return filterTitles.count
     }
     
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return filterTitles[row]
-//    }
-    
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        if filterTitles.isEmpty == false {
-            let tagTitle = filterTitles[row]
-            let tag = TagController.shared.getSelectedTag(givenTagTitle: tagTitle)
-            var title = NSAttributedString(string: tagTitle, attributes: [NSAttributedString.Key.foregroundColor: ColorHelper.colorFrom(colorNumber: tag.colorNumber)])
-            if row == 0 {
-                if UserDefaults.standard.bool(forKey: Keys.themeMode) {
-                    title = NSAttributedString(string: tagTitle, attributes: [NSAttributedString.Key.foregroundColor: UIColor.mintGreen])
-                } else {
-                    title = NSAttributedString(string: tagTitle, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
-                }
-            }
-            return title
-        }
-        return nil
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return filterTitles[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -118,7 +101,8 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     }
     
     // MARK: - View LifeCycle
-    #warning("Find a more effiecent way of refreshing the collection view")
+    // TODO: - Find a better way of refreshing the collection view
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -137,10 +121,9 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         self.tagFilterPickerView.dataSource = self
         
         // NavigationBar Setup:
-//        self.navigationController?.navigationBar.titleTextAttributes =
-//            [NSAttributedString.Key.foregroundColor: UIColor.darkGrayBlue,
-//             NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: 18)!]
-        NavigationBarHelper.setupNativationBar(viewController: self)
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.foregroundColor: UIColor.darkGrayBlue,
+             NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: 18)!]
         
         // CollectionViewLayout Setup:
         let layout = UICollectionViewFlowLayout()
@@ -156,19 +139,8 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         plantCollection = getAllPlants()
         self.collectionView.reloadData()
-        swapColorsToDarkIfNeeded()
-        self.setNeedsStatusBarAppearanceUpdate()
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        if UserDefaults.standard.bool(forKey: Keys.themeMode) {
-            return .lightContent
-        } else {
-            return .default
-        }
     }
     
     // MARK: - Outlets
@@ -276,7 +248,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
                 if PlantController.shared.isPlantDry(plant: selectedPlant) {
                     cell.waterNotificationStatusImageView.image = UIImage(named: Keys.wateringPailIcon)
                     //cell.backgroundColor = UIColor.dryYellow
-                    cell.plantNameLabel.backgroundColor = UIColor.dryRed
+                    cell.plantNameLabel.backgroundColor = UIColor.dryYellow
                 } else {
                     cell.waterNotificationStatusImageView.image = UIImage(named: Keys.clockIcon)
                     //cell.backgroundColor = UIColor.wateredBlue
@@ -286,7 +258,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
                 // The current Date has passed the notification date:
                 daysToNextWater = DayHelper.shared.formatMonthAndDay(givenDate: fireDate)
                 cell.waterNotificationStatusImageView.image = UIImage(named: Keys.wateringPailIcon)
-                cell.plantNameLabel.backgroundColor = UIColor.dryRed
+                cell.plantNameLabel.backgroundColor = UIColor.dryYellow
             }
         }
         let selectedPlantTagColor = ColorHelper.colorFrom(colorNumber: selectedPlant.tag?.colorNumber ?? Double(Int.random(in: 1...6)))
@@ -368,41 +340,6 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         return truthValue
     }
 
-    func swapColorsToDark() {
-        // Navigation Bar:
-        NavigationBarHelper.setupDarkModeNavigationBar(viewController: self)
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.mintGreen
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.mintGreen
-        // Collection View:
-        self.collectionView.backgroundColor = UIColor.tableViewScetionDarkGray
-        // Tab Bar:
-        self.tabBarController?.tabBar.tintColor = UIColor.mintGreen
-        self.tabBarController?.tabBar.barTintColor = UIColor.darkGrayBlue
-        // Filter Picker View:
-        self.tagFilterPickerView.backgroundColor = UIColor.darkGray
-        
-    }
-    
-    func swapColorsToLight() {
-        // Navigation Bar:
-        NavigationBarHelper.setupNativationBar(viewController: self)
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.darkGrayBlue
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGrayBlue
-        // Collection View:
-        self.collectionView.backgroundColor = UIColor.white
-        // Tab Bar:
-        self.tabBarController?.tabBar.tintColor = UIColor.darkGrayBlue
-        self.tabBarController?.tabBar.barTintColor = UIColor.mintGreen
-        self.tagFilterPickerView.backgroundColor = UIColor.lightGray
-    }
-    
-    func swapColorsToDarkIfNeeded() {
-        if UserDefaults.standard.bool(forKey: Keys.themeMode) {
-            swapColorsToDark()
-        } else {
-            swapColorsToLight()
-        }
-    }
 }
 
 // MARK: - Delegate Flow Layout Extension
