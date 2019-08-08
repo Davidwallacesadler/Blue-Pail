@@ -20,6 +20,7 @@ enum Keys {
     static let themeMode = "themeMode"
     
     // MARK: - Image Names
+    #warning("fix the names with the -1 suffix")
     
     // For Collection View Cell Icons:
     static let plantIcon = "plantNameIcon-1"
@@ -43,6 +44,19 @@ enum Keys {
     static let FAQIcon = "frequentlyAskedIcon"
     static let shareIcon = "shareIcon"
     static let rateIcon = "rateIcon"
+    
+    // MARK: - Video Names
+    
+    static let createAPlant = "createAPlantTutorial"
+    
+    // MARK: - Notification Keys:
+    static let userInfoPlantName = "plantName"
+    static let userInfoTagTitle = "associatedTagTitle"
+    static let plantNotificationCatagoryIdentifier = "plantWateringNotification"
+    static let waterNotificationAction = "waterPlant"
+    static let oneHourSnoozeNotificationAction = "oneHourSnooze"
+    static let oneDaySnoozeNotificationAction = "oneDaySnooze"
+    
     
     
     

@@ -33,6 +33,7 @@ class PlantController : AlarmScheduler {
     // MARK: - CRUD
     
     // TODO: Fix optional values
+    #warning("Fix Optional Values in CRUD Methods")
     func createPlant(name: String?, image: UIImage?, needsWaterFireDate: Date?, tag: Tag, dayInteger: Int) {
         let imageData: Data?
         if let image = image {
@@ -78,11 +79,22 @@ class PlantController : AlarmScheduler {
     func waterPlant(plant: Plant) {
         plant.isWatered = true
         guard let fireDate = plant.needsWateredFireDate else { return }
+        // Early watering: (want to cancel the previous notification that was scheduled if we are watering before the firedate)
         if Date() < fireDate {
             cancelUserNotifications(for: plant)
         }
         let todayAtCorrectTime = DayHelper.shared.getSameTimeAsDateToday(targetDate: fireDate)
         plant.needsWateredFireDate = DayHelper.shared.futureDateFromADate(givenDate: todayAtCorrectTime, numberOfDays: Int(plant.dayToNextWater))
+        scheduleUserNotifications(for: plant)
+        saveToPersistentStorage()
+    }
+    
+    /// Waters the plant for now and creates a new notification that is the arguemnt amount of hours away from the fireDate.
+    func snoozeWateringFor(plant: Plant, hoursForSnooze: Int) {
+        plant.isWatered = true
+        guard let fireDate = plant.needsWateredFireDate else { return }
+        let dateAfterSnoozeTime = DayHelper.shared.getSameTimeAsDateTodayPlusSomeHours(targetDate: fireDate, givenAmountOfHours: hoursForSnooze)
+        plant.needsWateredFireDate = dateAfterSnoozeTime
         scheduleUserNotifications(for: plant)
         saveToPersistentStorage()
     }
@@ -133,25 +145,24 @@ protocol AlarmScheduler {
     func cancelUserNotifications(for plant: Plant)
 }
 
-#warning("Add in UNNotficationActions for Remind me in an 30 minutes, 1 hour, and water plant")
 extension AlarmScheduler {
     func scheduleUserNotifications(for plant: Plant) {
         let content  = UNMutableNotificationContent()
         content.title = "Time To Water!"
         content.body = "Water your \(plant.name ?? "plant")!"
         content.sound = UNNotificationSound.default
-        
+        content.userInfo = [Keys.userInfoPlantName : plant.name!]
+        content.categoryIdentifier = Keys.plantNotificationCatagoryIdentifier
         let calendar = Calendar.current
         let dateCompoenents = calendar.dateComponents([.day, .hour, .minute], from: plant.needsWateredFireDate ?? Date())
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateCompoenents, repeats: false)
         let request = UNNotificationRequest(identifier: plant.uuid!.uuidString, content: content, trigger: trigger)
-        trigger.nextTriggerDate()
         UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error {
                 print("Unable to add notification request. \(error.localizedDescription)")
             }
         }
-        print("NotificationCenter added the notification for alarm: \(String(describing: plant.name)) to go off: \(String(describing: plant.needsWateredFireDate)).")
+        print("Notification succesfully added for plant \(plant.name!)")
     }
     
     func cancelUserNotifications(for plant: Plant) {
@@ -161,5 +172,4 @@ extension AlarmScheduler {
             print("Alarm with UUID: \(plantID) had its notification request removed.")
         }
     }
-    
 }

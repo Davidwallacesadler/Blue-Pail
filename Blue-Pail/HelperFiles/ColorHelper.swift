@@ -51,11 +51,4 @@ struct ColorHelper {
             return UIColor.black
         }
     }
-    
-    static func themeBasedOnUserDefaults(viewController: UIViewController) {
-        if UserDefaults.standard.bool(forKey: Keys.themeMode) {
-            // Dark Mode Enabled:
-            
-        }
-    }
 }

@@ -107,7 +107,7 @@ extension UIColor {
     static var tableViewSectionGray: UIColor {
         return UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1.0)
     }
-    static var tableViewScetionDarkGray: UIColor {
+    static var darkModeGray: UIColor {
         return UIColor(red: 50/255, green: 50/255, blue: 50/255, alpha: 1.0)
     }
     static var textFieldBackgroundGray: UIColor {

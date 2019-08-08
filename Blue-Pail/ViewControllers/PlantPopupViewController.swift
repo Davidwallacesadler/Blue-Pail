@@ -23,18 +23,9 @@ class PlantPopupViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        yourView.clipsToBounds = true
-//        yourView.layer.cornerRadius = 10
-//        yourView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         
     }
     override func viewDidAppear(_ animated: Bool) {
-//        self.editButton.layer.cornerRadius = 6.0
-//        self.editButton.layer.borderWidth = 1.0
-//        self.editButton.layer.borderColor = UIColor.clear.cgColor
-//        self.editButton.clipsToBounds = true
-//        self.editButton.layer.cornerRadius = 6.0
-//        self.editButton.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner ]
         self.xButton.tintColor = UIColor.white
     }
     

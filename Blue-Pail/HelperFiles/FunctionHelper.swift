@@ -8,8 +8,10 @@
 
 import Foundation
 
+#warning("put all helper methonds in this struct")
 struct FunctionHelper {
     
+    /// Returns the amount of days in the argument month. Takes leap years into account.
    static func getAmountOfDaysInCurrentMonth(givenMonthNumber month: Int, givenYearNumber year: Int) -> Int {
         let isLeapYear = ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0))
         var februaryDays = 28

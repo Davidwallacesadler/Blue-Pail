@@ -49,46 +49,8 @@ struct DayHelper {
     }
     
     /// Returns a string representing how many days there are until the desired fireDate. Note: This makes the most sense to only call when dateOne <= dateTwo.
+    #warning("clean up the logic at the end this method")
     func amountOfDaysBetween(previousDate dateOne: Date, futureDate dateTwo: Date) -> String {
-        
-        // Helper Method:
-        /// Returns the amount of days in the arguemnt month. Takes leap years into account.
-        func getAmountOfDaysInCurrentMonth(givenMonthNumber month: Int, givenYearNumber year: Int) -> Int {
-            let isLeapYear = ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0))
-            var februaryDays = 28
-            if isLeapYear == true {
-                februaryDays = 29
-            }
-            switch month {
-            case 1:
-                return 31
-            case 2:
-                return februaryDays
-            case 3:
-                return 31
-            case 4:
-                return 30
-            case 5:
-                return 31
-            case 6:
-                return 30
-            case 7:
-                return 31
-            case 8:
-                return 30
-            case 9:
-                return 31
-            case 10:
-                return 31
-            case 11:
-                return 30
-            case 12:
-                return 31
-            default:
-                print("Defualting to 30 days this month -- dayHelper switch error")
-                return 30
-            }
-        }
         var amountOfDaysBetween = Int()
         let calendar = Calendar.current
         let previousDateComponents = calendar.dateComponents([.year, .month, .day], from: dateOne)
@@ -110,7 +72,7 @@ struct DayHelper {
                 }
             } else {
                 // Year is the same. Month, Day is different:
-                let amountOfDaysInPreviousMonth = getAmountOfDaysInCurrentMonth(givenMonthNumber: previousDateMonth, givenYearNumber: previousDateYear)
+                let amountOfDaysInPreviousMonth = FunctionHelper.getAmountOfDaysInCurrentMonth(givenMonthNumber: previousDateMonth, givenYearNumber: previousDateYear)
                 let daysUntilTheEndOfTheMonth = amountOfDaysInPreviousMonth - previousDateDay
                 amountOfDaysBetween = futureDateDay + daysUntilTheEndOfTheMonth
                 if amountOfDaysBetween == 1 {
@@ -120,7 +82,7 @@ struct DayHelper {
             }
         } else {
             // Year, Month, Day are different:
-            let amountOfDaysInPreviousMonth = getAmountOfDaysInCurrentMonth(givenMonthNumber: previousDateMonth, givenYearNumber: previousDateYear)
+            let amountOfDaysInPreviousMonth = FunctionHelper.getAmountOfDaysInCurrentMonth(givenMonthNumber: previousDateMonth, givenYearNumber: previousDateYear)
             let daysUntilTheEndOfTheMonth = amountOfDaysInPreviousMonth - previousDateDay
             amountOfDaysBetween = futureDateDay + daysUntilTheEndOfTheMonth
             if amountOfDaysBetween == 1 {
@@ -236,6 +198,26 @@ struct DayHelper {
             return Date()
         }
         todaysComponents.hour = correctHour
+        todaysComponents.minute = correctMinute
+        todaysComponents.second = 0
+        guard let todayAtCorrectTime = calendar.date(from: todaysComponents) else {
+            print("GetSameTimeAsDateToday: Error instantiating date from components - returning Date()")
+            return Date()
+        }
+        return todayAtCorrectTime
+    }
+    
+     ///Returns the desired hour/minute on todays date that matches the target dates hour/minute plus an amount of hours (used for snoozing the watering of a plant for a number of hours)
+    func getSameTimeAsDateTodayPlusSomeHours(targetDate date: Date, givenAmountOfHours: Int) -> Date {
+        let calendar = Calendar.current
+        let desiredComponents = calendar.dateComponents([.hour, .minute], from: date)
+        var todaysComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date())
+        guard let correctHour = desiredComponents.hour, let correctMinute = desiredComponents.minute else {
+            print("GetSameTimeAsDateToday: Error grabbing date components - returning Date()")
+            return Date()
+        }
+        todaysComponents.hour = correctHour + givenAmountOfHours
+        // WHAT IF THE HOUR IS OVER 24? -- creating a date from a component with more than 24 hours will move onto the next day.
         todaysComponents.minute = correctMinute
         todaysComponents.second = 0
         guard let todayAtCorrectTime = calendar.date(from: todaysComponents) else {

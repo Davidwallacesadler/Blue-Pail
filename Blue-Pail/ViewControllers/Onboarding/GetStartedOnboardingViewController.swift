@@ -14,10 +14,7 @@ class GetStartedOnboardingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        nextButton.layer.cornerRadius = 6.0
-        nextButton.layer.borderWidth = 1.0
-        nextButton.layer.borderColor = UIColor.clear.cgColor
-        nextButton.layer.masksToBounds = true
+        ViewHelper.roundCornersOf(viewLayer: nextButton.layer, withRoundingCoefficient: 15.0)
     }
     
     // MARK: - Outlets

@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         //alwaysFirstLaunch()
         onFirstLaunch()
-        
+        setupNotificationActions()
         return true
     }
     
@@ -39,6 +39,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             //UserDefaults.standard.set(false, forKey: Keys.automaticWatering)
             UserDefaults.standard.set(false, forKey: Keys.themeMode)
         }
+    }
+    
+    // MARK: - Notifcation Action Setup
+    private func setupNotificationActions() {
+        let waterAction = UNNotificationAction(identifier: Keys.waterNotificationAction, title: "Water Plant", options: UNNotificationActionOptions(rawValue: 0))
+        let oneHourSnoozeAction = UNNotificationAction(identifier: Keys.oneHourSnoozeNotificationAction, title: "One Hour Snooze", options: UNNotificationActionOptions(rawValue: 0))
+        let oneDaySnoozeAction = UNNotificationAction(identifier: Keys.oneDaySnoozeNotificationAction, title: "One Day Snooze", options: UNNotificationActionOptions(rawValue: 0))
+        let plantWateringCatagory = UNNotificationCategory(identifier: Keys.plantNotificationCatagoryIdentifier, actions: [waterAction, oneHourSnoozeAction, oneDaySnoozeAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction)
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.setNotificationCategories([plantWateringCatagory])
     }
     
     // MARK: userNotifcationCenter willPresentNotification
