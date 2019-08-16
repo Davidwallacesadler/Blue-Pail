@@ -10,7 +10,7 @@ import UIKit
 
 class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
-    #warning("Need to make center offset of dayslabel programatic")
+    #warning("TODO: Need to make center offset of dayslabel programmatic")
     // MARK: - TableViewController Delegate Methods
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -80,7 +80,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             if UserDefaults.standard.bool(forKey: Keys.themeMode) {
                 if pickerView == dayPickerView {
                     let day = "\(pickerDays[row])"
-                    let title = NSAttributedString(string: day, attributes: [NSAttributedString.Key.foregroundColor: UIColor.mintGreen])
+                    let title = NSAttributedString(string: day, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
                     return title
                 }
             }
@@ -130,7 +130,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         }
         
         // Rounding Corners:
-        #warning("might have to stick with a static value of rounding for delete button - check superview width / cgsize and set the coefficient there")
         ViewHelper.roundCornersOf(viewLayer: deletePlantButton.layer, withRoundingCoefficient: 20.0)
         // NavigationBar Setup:
         //NavigationBarHelper.setupNativationBar(viewController: self)
@@ -488,12 +487,14 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         self.navigationItem.rightBarButtonItem?.tintColor = .white
         self.navigationController?.navigationBar.barStyle = .black
         //Outlets:
+        #warning("TODO: Autocomplete block is black - see how to fix this")
         let placeholderAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.white]
         let placeholder = NSAttributedString(string: "Please enter a title...", attributes: placeholderAttributes)
         self.plantNameTextField.attributedPlaceholder = placeholder
         self.plantNameTextField.backgroundColor = .gray
         self.plantNameTextField.textColor = .white
-        self.notifcationDateLabel.textColor = .white
+        self.plantNameTextField.keyboardAppearance = .dark
+        self.notifcationDateLabel.textColor = .skyBlue
         self.dayPickerLabel.textColor = .white
         self.nextLabel.textColor = .white
         self.timeDatePicker.setValue(UIColor.white, forKey: "textColor")
@@ -510,11 +511,11 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     func swapColorsToLight() {
         //  NavigationBar:
         NavigationBarHelper.setupNativationBar(viewController: self)
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.darkGrayBlue
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGrayBlue
+        self.navigationItem.leftBarButtonItem?.tintColor = .darkGrayBlue
+        self.navigationItem.rightBarButtonItem?.tintColor = .darkGrayBlue
         self.navigationController?.navigationBar.barStyle = .default
         // TableView:
-        self.tableView.backgroundColor = UIColor.white
+        self.tableView.backgroundColor = .white
         
     }
     

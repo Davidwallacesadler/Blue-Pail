@@ -47,7 +47,9 @@ enum Keys {
     
     // MARK: - Video Names
     
-    static let createAPlant = "createAPlantTutorial"
+    static let createAPlantTutorial = "CreateAPlant"
+    static let createATagTutorialVideo = "CreateATag"
+    static let waterPlantTutorialVideo = "WaterPlant"
     
     // MARK: - Notification Keys:
     static let userInfoPlantName = "plantName"

@@ -51,7 +51,9 @@
 		63DAADA722F0A4E5009DC288 /* TutorialTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63DAADA522F0A4E5009DC288 /* TutorialTableViewController.xib */; };
 		63DAADAC22F0A5E3009DC288 /* VideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DAADAA22F0A5E3009DC288 /* VideoTableViewCell.swift */; };
 		63DAADAD22F0A5E3009DC288 /* VideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63DAADAB22F0A5E3009DC288 /* VideoTableViewCell.xib */; };
-		63DAADAF22F11DC9009DC288 /* createAPlantTutorial.mov in Resources */ = {isa = PBXBuildFile; fileRef = 63DAADAE22F11DC8009DC288 /* createAPlantTutorial.mov */; };
+		63FAFDE52302FD7700F8CC50 /* WaterPlant.mov in Resources */ = {isa = PBXBuildFile; fileRef = 63FAFDE22302FD7600F8CC50 /* WaterPlant.mov */; };
+		63FAFDE62302FD7700F8CC50 /* CreateATag.mov in Resources */ = {isa = PBXBuildFile; fileRef = 63FAFDE32302FD7700F8CC50 /* CreateATag.mov */; };
+		63FAFDE72302FD7700F8CC50 /* CreateAPlant.mov in Resources */ = {isa = PBXBuildFile; fileRef = 63FAFDE42302FD7700F8CC50 /* CreateAPlant.mov */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,7 +103,9 @@
 		63DAADA522F0A4E5009DC288 /* TutorialTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialTableViewController.xib; sourceTree = "<group>"; };
 		63DAADAA22F0A5E3009DC288 /* VideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTableViewCell.swift; sourceTree = "<group>"; };
 		63DAADAB22F0A5E3009DC288 /* VideoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoTableViewCell.xib; sourceTree = "<group>"; };
-		63DAADAE22F11DC8009DC288 /* createAPlantTutorial.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = createAPlantTutorial.mov; sourceTree = "<group>"; };
+		63FAFDE22302FD7600F8CC50 /* WaterPlant.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = WaterPlant.mov; sourceTree = "<group>"; };
+		63FAFDE32302FD7700F8CC50 /* CreateATag.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = CreateATag.mov; sourceTree = "<group>"; };
+		63FAFDE42302FD7700F8CC50 /* CreateAPlant.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = CreateAPlant.mov; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,7 +122,9 @@
 		63264FF722810CFE0025E10C = {
 			isa = PBXGroup;
 			children = (
-				63DAADAE22F11DC8009DC288 /* createAPlantTutorial.mov */,
+				63FAFDE42302FD7700F8CC50 /* CreateAPlant.mov */,
+				63FAFDE32302FD7700F8CC50 /* CreateATag.mov */,
+				63FAFDE22302FD7600F8CC50 /* WaterPlant.mov */,
 				6326500222810CFE0025E10C /* Blue-Pail */,
 				6326500122810CFE0025E10C /* Products */,
 			);
@@ -343,7 +349,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63DAADAF22F11DC9009DC288 /* createAPlantTutorial.mov in Resources */,
+				63FAFDE52302FD7700F8CC50 /* WaterPlant.mov in Resources */,
+				63FAFDE62302FD7700F8CC50 /* CreateATag.mov in Resources */,
+				63FAFDE72302FD7700F8CC50 /* CreateAPlant.mov in Resources */,
 				63DAADAD22F0A5E3009DC288 /* VideoTableViewCell.xib in Resources */,
 				6326500E22810D050025E10C /* LaunchScreen.storyboard in Resources */,
 				6326500B22810D050025E10C /* Assets.xcassets in Resources */,

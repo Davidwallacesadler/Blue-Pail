@@ -28,7 +28,7 @@ class SettingsTableViewController: UITableViewController {
     // Support Settings Labels & Image Keys:
     // Removing FAQ for now - not enough question to begin with.
     private let supportSettingLabels: [String] = [
-        "View Tutorial",
+        "View Tutorials",
         //"FAQ"
     ]
     private let supportSettingIconKeys: [String] = [
@@ -38,11 +38,11 @@ class SettingsTableViewController: UITableViewController {
     // Support Settings Labels & Image Keys:
     private let sharingSettingLabels: [String] = [
         "Share",
-        "Rate"
+    //    "Rate"
     ]
     private let sharingSettingIconKeys: [String] = [
         Keys.shareIcon,
-        Keys.rateIcon
+    //    Keys.rateIcon
     ]
     // Section Labels:
     private let sectionLabels: [String] = [
@@ -83,7 +83,7 @@ class SettingsTableViewController: UITableViewController {
         case 1:
             return 1
         default:
-            return 2
+            return 1
         }
     }
     

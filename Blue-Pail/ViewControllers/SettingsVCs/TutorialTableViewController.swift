@@ -10,10 +10,10 @@ import UIKit
 import AVFoundation
 import AVKit
 
+#warning("TODO: - Turn this viewController into a PageViewController and have each page be a viewController with an autoplaying video")
 class TutorialTableViewController: UITableViewController {
     
     // MARK: - Internal Properties
-    #warning("This is not getting switched on toggling of darkMode")
     private var isDarkMode: Bool = false {
         didSet {
             self.tableView.reloadData()
@@ -25,12 +25,15 @@ class TutorialTableViewController: UITableViewController {
         "Creating A Tag",
         "Watering Your Plants"
     ]
-    var avPlayer: AVPlayer!
+    var avPlayer: AVPlayer?
     var cellId = 1
     
     // MARK: - Actions
-    
     @IBAction func doneButtonPressed(_ sender: Any) {
+        if avPlayer != nil {
+            avPlayer?.pause()
+            avPlayer?.replaceCurrentItem(with: nil)
+        }
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -38,8 +41,6 @@ class TutorialTableViewController: UITableViewController {
     
     /// Swaps the the colors of the onscreen elements to their dark versions.
     func swapColorsToDark() {
-        // Self:
-        self.view.backgroundColor = .black
         // Navigation Controller:
         NavigationBarHelper.setupDarkModeNavigationBar(viewController: self)
         self.navigationController?.navigationBar.barStyle = .black
@@ -73,8 +74,8 @@ class TutorialTableViewController: UITableViewController {
         let videoNib = UINib(nibName: "VideoTableViewCell", bundle: nil)
         self.tableView.register(videoNib, forCellReuseIdentifier: "videoTableViewCell")
     }
-
-    #warning("need some way of stopping the video to play another one")
+    
+    #warning("TODO: need some way of stopping the video to play another one")
     /// Plays the video based on the passed in video key.
     func playVideo(givenVideoKey: String) {
         let filepath: String? = Bundle.main.path(forResource: givenVideoKey, ofType: "mov")
@@ -82,7 +83,7 @@ class TutorialTableViewController: UITableViewController {
         avPlayer = AVPlayer(url: fileURL)
         let avPlayerController = AVPlayerViewController()
         avPlayerController.player = avPlayer
-        #warning("Want the video to not take up the whole screen?")
+        #warning("TODO: Want the video to not take up the whole screen?")
         avPlayerController.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
         avPlayerController.showsPlaybackControls = true
         avPlayerController.player?.play()
@@ -105,10 +106,19 @@ class TutorialTableViewController: UITableViewController {
         self.isDarkMode = UserDefaults.standard.bool(forKey: Keys.themeMode)
     }
     
-//    override func viewDidLayoutSubviews() {
-//        self.isDarkMode = DarkMode.shared.isDarkMode    
-//    }
-
+    override func viewDidLayoutSubviews() {
+        for view in tableView.subviews {
+            if isDarkMode {
+                if let viewAsSectionHeader = view as? UITableViewHeaderFooterView {
+                    let backgroundView = UIView(frame: viewAsSectionHeader.bounds)
+                    backgroundView.backgroundColor = .darkModeGray
+                    viewAsSectionHeader.backgroundView = backgroundView
+                    viewAsSectionHeader.textLabel?.textColor = .white
+                }
+            }
+        }
+    }
+    
     // MARK: - TableView DataSource Methods
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -140,18 +150,21 @@ class TutorialTableViewController: UITableViewController {
         return videoCell
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let sectionHeaderView = tableView.headerView(forSection: section)
-        if isDarkMode {
-            sectionHeaderView?.backgroundColor = .darkModeGray
-            sectionHeaderView?.textLabel?.textColor = .white
-            return sectionHeaderView
-        } else {
-            sectionHeaderView?.backgroundColor = .lightGray
-            sectionHeaderView?.textLabel?.textColor = .black
-            return sectionHeaderView
-        }
-    }
+//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let sectionHeaderView = tableView.headerView(forSection: section)
+//        let backgroundView = UIView(frame: sectionHeaderView!.bounds)
+//        if isDarkMode {
+//            backgroundView.backgroundColor = .darkModeGray
+//            sectionHeaderView?.backgroundView = backgroundView
+//            sectionHeaderView?.textLabel?.textColor = .white
+//            return sectionHeaderView
+//        } else {
+//            backgroundView.backgroundColor = .lightGray
+//            sectionHeaderView?.backgroundView = backgroundView
+//            sectionHeaderView?.textLabel?.textColor = .black
+//            return sectionHeaderView
+//        }
+//    }
     
     @objc private func didChangeThemeMode() {
         isDarkMode = UserDefaults.standard.bool(forKey: Keys.themeMode)
@@ -161,16 +174,17 @@ class TutorialTableViewController: UITableViewController {
 
 // MARK: - PlayButtonPressedDelegate Methods
 
-#warning("Create 3 videos - edit them down to as short as possible. Figure out the best way to capture video")
 extension TutorialTableViewController: PlayButtonPressedDelegate {
     func playButtonPressedForCellWith(id: Int?) {
         if id == 1 {
             // Play the create a plant media
-            playVideo(givenVideoKey: Keys.createAPlant)
+            playVideo(givenVideoKey: Keys.createAPlantTutorial)
         } else if id == 2 {
             // Play the create a tag media
+            playVideo(givenVideoKey: Keys.createATagTutorialVideo)
         } else if id == 3 {
             // Play the watering demonstration
+            playVideo(givenVideoKey: Keys.waterPlantTutorialVideo)
         }
     }
     

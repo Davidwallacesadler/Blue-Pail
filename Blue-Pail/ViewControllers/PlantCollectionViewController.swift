@@ -17,6 +17,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
+        #warning("save the plants uuid instead of the name and find it that way?")
         let plantName = userInfo[Keys.userInfoPlantName] as! String
         //let tagTitle = userInfo[Keys.userInforTagTitle] as! String
         var plantAssociatedWithNotification : Plant?
@@ -52,6 +53,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         default:
             break
         }
+        completionHandler()
     }
     
     // MARK: - PickerView Delegate Methods
@@ -344,13 +346,16 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             cell.detailsBackgroundView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.7914972175)
             cell.tagTitleLabel.textColor = .white
             cell.waterNotificationStatusLabel.textColor = .white
+            cell.waterNotificationStatusImageView.tintColor = .skyBlue
+            cell.tagNameIconImageView.tintColor = .skyBlue
         } else {
             cell.detailsBackgroundView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8112425085)
             cell.tagTitleLabel.textColor = .darkGrayBlue
             cell.waterNotificationStatusLabel.textColor = .darkGrayBlue
+            cell.waterNotificationStatusImageView.tintColor = .deepBlue
+            cell.tagNameIconImageView.tintColor = .deepBlue
         }
-        cell.waterNotificationStatusImageView.tintColor = .deepBlue
-        cell.tagNameIconImageView.tintColor = .deepBlue
+        
         ViewHelper.roundCornersOf(viewLayer: cell.detailsBackgroundView.layer, withRoundingCoefficient: 9.0)
         ViewHelper.roundCornersOf(viewLayer: cell.contentView.layer, withRoundingCoefficient: 6.0)
         ViewHelper.roundCornersOf(viewLayer: cell.layer, withRoundingCoefficient: 6.0)

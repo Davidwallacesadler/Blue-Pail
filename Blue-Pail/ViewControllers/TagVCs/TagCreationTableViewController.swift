@@ -271,6 +271,7 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
         let placeholderAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.white ]
         let placeholder = NSAttributedString(string: "Please enter a title...", attributes: placeholderAttributes)
         self.tagTextField.attributedPlaceholder = placeholder
+        self.tagTextField.keyboardAppearance = .dark
         self.selectedColorLabel.textColor = .white
     }
     
