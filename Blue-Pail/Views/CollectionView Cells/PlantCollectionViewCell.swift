@@ -10,6 +10,20 @@ import UIKit
 
 class PlantCollectionViewCell: UICollectionViewCell {
 
+    // MARK: - View Lifecycle
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressWater))
+        addGestureRecognizer(longPressGesture)
+    }
+    
+    // MARK: - Methods
+    
+    @objc func longPressWater() {
+        // NOW JUST NEED TO DELEGATE BACK TO THE VIEW CONTROLLER?
+    }
+    
     // MARK: - Outlets
     
     @IBOutlet weak var tagColorView: UIView!

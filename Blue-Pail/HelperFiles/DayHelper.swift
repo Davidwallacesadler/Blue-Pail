@@ -207,6 +207,25 @@ struct DayHelper {
         return todayAtCorrectTime
     }
     
+    ///Returns the desired hour/minute on todays date that matches the target dates hour/minute.
+    func getSameTimeAsDateTodayGivenDesired(FireDatehour: Int,targetDate date: Date) -> Date {
+        let calendar = Calendar.current
+        let desiredComponents = calendar.dateComponents([.hour, .minute], from: date)
+        var todaysComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date())
+        guard let correctMinute = desiredComponents.minute else {
+            print("GetSameTimeAsDateToday: Error grabbing date components - returning Date()")
+            return Date()
+        }
+        todaysComponents.hour = FireDatehour
+        todaysComponents.minute = correctMinute
+        todaysComponents.second = 0
+        guard let todayAtCorrectTime = calendar.date(from: todaysComponents) else {
+            print("GetSameTimeAsDateToday: Error instantiating date from components - returning Date()")
+            return Date()
+        }
+        return todayAtCorrectTime
+    }
+    
      ///Returns the desired hour/minute on todays date that matches the target dates hour/minute plus an amount of hours (used for snoozing the watering of a plant for a number of hours)
     func getSameTimeAsDateTodayPlusSomeHours(targetDate date: Date, givenAmountOfHours: Int) -> Date {
         let calendar = Calendar.current

@@ -42,7 +42,9 @@ class PlantController : AlarmScheduler {
             imageData = nil
         }
         let uuid = UUID()
-        let plant = Plant(name: name, isWatered: true, needsWateredFireDate: needsWaterFireDate ?? Date(), image: imageData, uuid: uuid, dayToNextWater: Int16(dayInteger), context: CoreDataStack.context)
+        let calendar = Calendar.current
+        let selectedFireDateHour = calendar.component(.hour, from: needsWaterFireDate!)
+        let plant = Plant(name: name, isWatered: true, needsWateredFireDate: needsWaterFireDate ?? Date(), image: imageData, uuid: uuid, dayToNextWater: Int16(dayInteger), fireDateHour: Int16(selectedFireDateHour), context: CoreDataStack.context)
         TagController.shared.appendPlantTo(targetTag: tag, desiredPlant: plant)
         scheduleUserNotifications(for: plant)
         saveToPersistentStorage()
@@ -56,11 +58,15 @@ class PlantController : AlarmScheduler {
         } else {
             imageData = nil
         }
+        let calendar = Calendar.current
+        let selectedFireDateHour = calendar.component(.hour, from: newFireDate!)
         plant.name = newName
         plant.image = imageData
         plant.needsWateredFireDate = newFireDate
         plant.dayToNextWater = Int16(dayInteger)
+        plant.fireDateHour = Int16(selectedFireDateHour)
         TagController.shared.appendPlantTo(targetTag: newTag, desiredPlant: plant)
+        cancelUserNotifications(for: plant)
         scheduleUserNotifications(for: plant)
         saveToPersistentStorage()
     }
@@ -76,6 +82,7 @@ class PlantController : AlarmScheduler {
     // MARK: - Additional Helper Methods
     
     /// Sets the target plant's isWatered property to true, and schedules a notification for the argument number of days away from the current date at the correct time. If the current date is less than the fire date the previous firedate will have its notifications removed.
+    #warning("NEED TO INCORPORATE HOUR OF REMINDER AS WELL INTO DATA MODEL")
     func waterPlant(plant: Plant) {
         plant.isWatered = true
         guard let fireDate = plant.needsWateredFireDate else { return }
@@ -83,7 +90,8 @@ class PlantController : AlarmScheduler {
         if Date() < fireDate {
             cancelUserNotifications(for: plant)
         }
-        let todayAtCorrectTime = DayHelper.shared.getSameTimeAsDateToday(targetDate: fireDate)
+        let correctFireHour = Int(plant.fireDateHour)
+        let todayAtCorrectTime = DayHelper.shared.getSameTimeAsDateTodayGivenDesired(FireDatehour: correctFireHour, targetDate: fireDate)
         plant.needsWateredFireDate = DayHelper.shared.futureDateFromADate(givenDate: todayAtCorrectTime, numberOfDays: Int(plant.dayToNextWater))
         scheduleUserNotifications(for: plant)
         saveToPersistentStorage()
