@@ -16,8 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     let defaults = UserDefaults()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        //alwaysFirstLaunch()
         onFirstLaunch()
         setupNotificationActions()
         return true
@@ -25,7 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     // MARK: - First Launch Methods
     
-    // CHECK IF THESE ARE PROPERLY CONFIGURED
     private func onFirstLaunch() {
         let firstLaunch = FirstLaunch(userDefaults: .standard, key: Keys.FirstLaunchKey)
         if firstLaunch.isFirstLaunch {
@@ -34,9 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let onboardingViewController = storyboard.instantiateViewController(withIdentifier: "OnboardingPageViewController") as! OnboardingPageViewController
             self.window?.rootViewController = onboardingViewController
             self.window?.makeKeyAndVisible()
-            
             // UserDefaults Setup:
-            //UserDefaults.standard.set(false, forKey: Keys.automaticWatering)
             UserDefaults.standard.set(false, forKey: Keys.themeMode)
         }
     }

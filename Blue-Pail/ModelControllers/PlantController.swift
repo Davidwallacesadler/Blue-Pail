@@ -82,7 +82,6 @@ class PlantController : AlarmScheduler {
     // MARK: - Additional Helper Methods
     
     /// Sets the target plant's isWatered property to true, and schedules a notification for the argument number of days away from the current date at the correct time. If the current date is less than the fire date the previous firedate will have its notifications removed.
-    #warning("NEED TO INCORPORATE HOUR OF REMINDER AS WELL INTO DATA MODEL")
     func waterPlant(plant: Plant) {
         plant.isWatered = true
         guard let fireDate = plant.needsWateredFireDate else { return }
