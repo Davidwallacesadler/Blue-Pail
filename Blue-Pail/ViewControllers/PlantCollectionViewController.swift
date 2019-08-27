@@ -11,20 +11,27 @@ import UserNotifications
 
 private let reuseIdentifier = "plantCell"
 
-class PlantCollectionViewController: UICollectionViewController, PopupDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UNUserNotificationCenterDelegate {
+class PlantCollectionViewController: UICollectionViewController, PopupDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UNUserNotificationCenterDelegate, CollectionViewCellLongTouchDelegate {
+    
+    
+    func didLongPress(index: IndexPath) {
+        let selectedPlant = plantCollection[index.row]
+        PlantController.shared.waterPlant(plant: selectedPlant)
+        self.collectionView.reloadItems(at: [index])
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
+        if areAllPlantsWatered() {
+            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        }
+    }
     
     // MARK: - UNUserNotificationCenter Delegate Methods
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        #warning("save the plants uuid instead of the name and find it that way?")
+        #warning("save the plants uuid instead of the name and find it that way")
         let plantName = userInfo[Keys.userInfoPlantName] as! String
-        //let tagTitle = userInfo[Keys.userInforTagTitle] as! String
         var plantAssociatedWithNotification : Plant?
-//        let associatedTag = TagController.shared.getSelectedTag(givenTagTitle: tagTitle)
-//        guard let tagPlantCollection = associatedTag.plants?.array else {
-//            return
-//        }
         for plant in plantCollection {
             if plant.name == plantName {
                 plantAssociatedWithNotification = plant
@@ -114,6 +121,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
                 UNUserNotificationCenter.current().removeAllDeliveredNotifications()
             }
         } else {
+            #warning("get rid of selectedIndex?")
             selectedIndex = targetIndex
             let todayAtFireHourMinute = DayHelper.shared.getSameTimeAsDateToday(targetDate: targetPlantFireDate)
             let nextWateringDay = DayHelper.shared.futureDateFromADate(givenDate: todayAtFireHourMinute, numberOfDays: Int(targetPlant.dayToNextWater))
@@ -238,7 +246,6 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     }
     
     // MARK: - CollectionView DataSource Methods
-    // TODO: - clean up cell setup - remove logic from the cellForItemAt method probably
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -255,6 +262,8 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         }
         let selectedPlant = plantCollection[indexPath.row]
         setupCell(cell: cell, selectedPlant: selectedPlant)
+        cell.delegate = self
+        cell.indexPath = indexPath
         return cell
     }
 

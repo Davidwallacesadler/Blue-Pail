@@ -15,6 +15,8 @@ struct DayHelper {
     static let shared = DayHelper()
 
     // MARK: - Methods
+  
+    
     
     /// Returns a date that is equivalent to today's date plus the argument number of days.
     func futrueDateFrom(givenNumberOfDays days: Int) -> Date {

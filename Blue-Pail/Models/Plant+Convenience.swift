@@ -42,7 +42,6 @@ extension Plant {
                      image: Data?,
                      uuid: UUID,
                      dayToNextWater: Int16,
-                     fireDateHour: Int16,
                      context: NSManagedObjectContext = CoreDataStack.context) {
         self.init(context: context)
         
@@ -52,7 +51,6 @@ extension Plant {
         self.image = image
         self.uuid = uuid
         self.dayToNextWater = dayToNextWater
-        self.fireDateHour = fireDateHour
     }
     
 }

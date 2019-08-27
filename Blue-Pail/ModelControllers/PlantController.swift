@@ -44,7 +44,7 @@ class PlantController : AlarmScheduler {
         let uuid = UUID()
         let calendar = Calendar.current
         let selectedFireDateHour = calendar.component(.hour, from: needsWaterFireDate!)
-        let plant = Plant(name: name, isWatered: true, needsWateredFireDate: needsWaterFireDate ?? Date(), image: imageData, uuid: uuid, dayToNextWater: Int16(dayInteger), fireDateHour: Int16(selectedFireDateHour), context: CoreDataStack.context)
+        let plant = Plant(name: name, isWatered: true, needsWateredFireDate: needsWaterFireDate ?? Date(), image: imageData, uuid: uuid, dayToNextWater: Int16(dayInteger), context: CoreDataStack.context)
         TagController.shared.appendPlantTo(targetTag: tag, desiredPlant: plant)
         scheduleUserNotifications(for: plant)
         saveToPersistentStorage()
@@ -64,7 +64,6 @@ class PlantController : AlarmScheduler {
         plant.image = imageData
         plant.needsWateredFireDate = newFireDate
         plant.dayToNextWater = Int16(dayInteger)
-        plant.fireDateHour = Int16(selectedFireDateHour)
         TagController.shared.appendPlantTo(targetTag: newTag, desiredPlant: plant)
         cancelUserNotifications(for: plant)
         scheduleUserNotifications(for: plant)
@@ -89,20 +88,22 @@ class PlantController : AlarmScheduler {
         if Date() < fireDate {
             cancelUserNotifications(for: plant)
         }
-        let correctFireHour = Int(plant.fireDateHour)
-        let todayAtCorrectTime = DayHelper.shared.getSameTimeAsDateTodayGivenDesired(FireDatehour: correctFireHour, targetDate: fireDate)
+        let todayAtCorrectTime = DayHelper.shared.getSameTimeAsDateToday(targetDate: fireDate)
         plant.needsWateredFireDate = DayHelper.shared.futureDateFromADate(givenDate: todayAtCorrectTime, numberOfDays: Int(plant.dayToNextWater))
         scheduleUserNotifications(for: plant)
         saveToPersistentStorage()
     }
     
     /// Waters the plant for now and creates a new notification that is the arguemnt amount of hours away from the fireDate.
+    #warning("Use a differnent notification - a snooze notification")
     func snoozeWateringFor(plant: Plant, hoursForSnooze: Int) {
-        plant.isWatered = true
         guard let fireDate = plant.needsWateredFireDate else { return }
+        let hoursForSnoozeInSeconds = 3600 * hoursForSnooze
+        #warning("If the hoursForSnooze get us into the next day we want the next watering fire date to be based off that")
+        guard let hoursTimeInterval = TimeInterval(exactly: hoursForSnooze) else { return }
         let dateAfterSnoozeTime = DayHelper.shared.getSameTimeAsDateTodayPlusSomeHours(targetDate: fireDate, givenAmountOfHours: hoursForSnooze)
         plant.needsWateredFireDate = dateAfterSnoozeTime
-        scheduleUserNotifications(for: plant)
+        scheduleUserNotifications(for: plant,isSnoozed: true)
         saveToPersistentStorage()
     }
     
@@ -148,35 +149,42 @@ class PlantController : AlarmScheduler {
 // MARK: - AlarmScheduler Protocol
 
 protocol AlarmScheduler {
-    func scheduleUserNotifications(for plant: Plant)
-    func cancelUserNotifications(for plant: Plant)
+    func scheduleUserNotifications(for plant: Plant, isSnoozed: Bool)
+    func cancelUserNotifications(for plant: Plant, isSnoozed: Bool)
 }
 
 extension AlarmScheduler {
-    func scheduleUserNotifications(for plant: Plant) {
+    func scheduleUserNotifications(for plant: Plant, isSnoozed: Bool = false) {
         let content  = UNMutableNotificationContent()
         content.title = "Time To Water!"
-        content.body = "Water your \(plant.name ?? "plant")!"
+        content.body = "Water your \(plant.name!)!"
         content.sound = UNNotificationSound.default
         content.userInfo = [Keys.userInfoPlantName : plant.name!]
         content.categoryIdentifier = Keys.plantNotificationCatagoryIdentifier
         let calendar = Calendar.current
+        
         let dateCompoenents = calendar.dateComponents([.day, .hour, .minute], from: plant.needsWateredFireDate ?? Date())
+        var dateTrigger = UNTimeIntervalNotificationTrigger.init(timeInterval: <#T##TimeInterval#>, repeats: <#T##Bool#>)
+        if isSnoozed {
+            
+        }
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateCompoenents, repeats: false)
+        var identifier = plant.uuid!.uuidString
+       
         let request = UNNotificationRequest(identifier: plant.uuid!.uuidString, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error {
                 print("Unable to add notification request. \(error.localizedDescription)")
             }
         }
-        print("Notification succesfully added for plant \(plant.name!)")
+        print("Notification successfully added for plant \(plant.name!)")
     }
     
-    func cancelUserNotifications(for plant: Plant) {
+    func cancelUserNotifications(for plant: Plant, isSnoozed: Bool = false) {
         if let plantID = plant.uuid?.uuidString {
             let userNotifcations = UNUserNotificationCenter.current()
             userNotifcations.removePendingNotificationRequests(withIdentifiers: [plantID])
-            print("Alarm with UUID: \(plantID) had its notification request removed.")
+            print("Notification successfully removed for plant \(plant.name!)")
         }
     }
 }

@@ -8,7 +8,14 @@
 
 import UIKit
 
+protocol CollectionViewCellLongTouchDelegate {
+    func didLongPress(index: IndexPath)
+}
+
 class PlantCollectionViewCell: UICollectionViewCell {
+    
+    var delegate: CollectionViewCellLongTouchDelegate?
+    var indexPath: IndexPath?
 
     // MARK: - View Lifecycle
     
@@ -20,8 +27,13 @@ class PlantCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Methods
     
-    @objc func longPressWater() {
-        // NOW JUST NEED TO DELEGATE BACK TO THE VIEW CONTROLLER?
+    @objc func longPressWater(sender: UILongPressGestureRecognizer) {
+        guard let desiredIndexPath = indexPath else {
+            return
+        }
+        if sender.state == .began {
+            delegate?.didLongPress(index: desiredIndexPath)
+        }
     }
     
     // MARK: - Outlets
