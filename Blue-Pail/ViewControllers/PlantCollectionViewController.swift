@@ -18,7 +18,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         let selectedPlant = plantCollection[index.row]
         PlantController.shared.waterPlant(plant: selectedPlant)
         self.collectionView.reloadItems(at: [index])
-        let generator = UIImpactFeedbackGenerator(style: .medium)
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
         generator.impactOccurred()
         if areAllPlantsWatered() {
             UNUserNotificationCenter.current().removeAllDeliveredNotifications()
@@ -214,10 +214,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         self.view.addGestureRecognizer(tap)
         
         // FORCE TAP:
-        if self.traitCollection.forceTouchCapability == .available {
-            // 3D Touch Enabled:
-            
-        }
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {

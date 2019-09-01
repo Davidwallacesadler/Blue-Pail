@@ -21,9 +21,34 @@ class PlantCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressWater))
-        addGestureRecognizer(longPressGesture)
+    
+            // Fall back on longPress if force touch is not available:
+            let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressWater))
+            addGestureRecognizer(longPressGesture)
+        #warning("Make a cell animation that is 1.25 sections that expands the cell is pressed and then shrinks it back as it waters")
+     
     }
+    
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        if let touch = touches.first {
+//            if self.traitCollection.forceTouchCapability == .available {
+//                let cellLayer = self.contentView.layer
+//                // Set the bounds (since they are animatable) to be a proportion of the force applied
+//                let force = touch.force
+//                let defaultCellBounds = cellLayer.bounds
+//                let cellPostion = cellLayer.bounds.origin
+//                let newHeightBasedOnForce = defaultCellBounds.size.height / force
+//                let newWidthBasedOnForce = defaultCellBounds.size.width / force
+//                let newCellBounds = CGRect(x: cellPostion.x, y: cellPostion.y, width: newWidthBasedOnForce, height: newHeightBasedOnForce)
+//                self.contentView.layer.bounds = newCellBounds
+//                if touch.force >= touch.maximumPossibleForce {
+//                    // water and push cell in
+//
+//
+//                }
+//            }
+//        }
+//    }
     
     // MARK: - Methods
     
@@ -32,6 +57,11 @@ class PlantCollectionViewCell: UICollectionViewCell {
             return
         }
         if sender.state == .began {
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+        }
+        // Animation Idea: when the longpress starts - start a timer and run the animation - any time durring if they cancel go back to normal. when the timer fires - the lenght of animation - run the water method. When it starts run the timer - call method that animates over the timer period. Timer and animation length match up and then call the selector. if the sender state is cancelled then cancel the animation.
+        if sender.state == .ended {
             delegate?.didLongPress(index: desiredIndexPath)
         }
     }

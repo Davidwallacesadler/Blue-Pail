@@ -34,7 +34,7 @@ struct FunctionHelper {
         case 7:
             return 31
         case 8:
-            return 30
+            return 31
         case 9:
             return 31
         case 10:
