@@ -11,7 +11,7 @@ import UserNotifications
 
 private let reuseIdentifier = "plantCell"
 
-class PlantCollectionViewController: UICollectionViewController, PopupDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UNUserNotificationCenterDelegate, CollectionViewCellLongTouchDelegate {
+class PlantCollectionViewController: UICollectionViewController, PopupDelegate, UIPickerViewDelegate, UIPickerViewDataSource, CollectionViewCellLongTouchDelegate {
     
     
     func didLongPress(index: IndexPath) {
@@ -27,41 +27,40 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     
     // MARK: - UNUserNotificationCenter Delegate Methods
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        let userInfo = response.notification.request.content.userInfo
-        #warning("save the plants uuid instead of the name and find it that way")
-        let plantName = userInfo[Keys.userInfoPlantName] as! String
-        var plantAssociatedWithNotification : Plant?
-        for plant in plantCollection {
-            if plant.name == plantName {
-                plantAssociatedWithNotification = plant
-                break
-            }
-        }
-        switch response.actionIdentifier {
-        case Keys.waterNotificationAction:
-            // Waters the selected plant:
-            if plantAssociatedWithNotification != nil {
-                PlantController.shared.waterPlant(plant: plantAssociatedWithNotification!)
-            }
-            break
-        case Keys.oneHourSnoozeNotificationAction:
-            // Set Watered status of plant to true and set the next notification to be one hour from Date():
-            if plantAssociatedWithNotification != nil {
-                PlantController.shared.snoozeWateringFor(plant: plantAssociatedWithNotification!, hoursForSnooze: 1)
-            }
-            break
-        case Keys.oneDaySnoozeNotificationAction:
-            // Set Watered status of plant to true and set the next notification to be one day from Date():
-            if plantAssociatedWithNotification != nil {
-                PlantController.shared.snoozeWateringFor(plant: plantAssociatedWithNotification!, hoursForSnooze: 24)
-            }
-            break
-        default:
-            break
-        }
-        completionHandler()
-    }
+//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+//        let userInfo = response.notification.request.content.userInfo
+//        let plantId = userInfo[Keys.userInfoPlantUuid] as! String
+//        var plantAssociatedWithNotification : Plant?
+//        for plant in PlantController.shared.plants {
+//            if plant.uuid?.uuidString == plantId {
+//                plantAssociatedWithNotification = plant
+//                break
+//            }
+//        }
+//        switch response.actionIdentifier {
+//        case Keys.waterNotificationAction:
+//            // Waters the selected plant:
+//            if plantAssociatedWithNotification != nil {
+//                PlantController.shared.waterPlant(plant: plantAssociatedWithNotification!)
+//            }
+//            break
+//        case Keys.oneHourSnoozeNotificationAction:
+//            // Set Watered status of plant to true and set the next notification to be one hour from Date():
+//            if plantAssociatedWithNotification != nil {
+//                PlantController.shared.snoozeWateringFor(plant: plantAssociatedWithNotification!, hoursForSnooze: 1)
+//            }
+//            break
+//        case Keys.oneDaySnoozeNotificationAction:
+//            // Set Watered status of plant to true and set the next notification to be one day from Date():
+//            if plantAssociatedWithNotification != nil {
+//                PlantController.shared.snoozeWateringFor(plant: plantAssociatedWithNotification!, hoursForSnooze: 24)
+//            }
+//            break
+//        default:
+//            break
+//        }
+//        completionHandler()
+//    }
     
     // MARK: - PickerView Delegate Methods
     
@@ -121,7 +120,6 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
                 UNUserNotificationCenter.current().removeAllDeliveredNotifications()
             }
         } else {
-            #warning("get rid of selectedIndex?")
             selectedIndex = targetIndex
             let todayAtFireHourMinute = DayHelper.shared.getSameTimeAsDateToday(targetDate: targetPlantFireDate)
             let nextWateringDay = DayHelper.shared.futureDateFromADate(givenDate: todayAtFireHourMinute, numberOfDays: Int(targetPlant.dayToNextWater))
@@ -194,7 +192,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         self.isDarkMode = DarkMode.shared.isDarkMode
         
         // Notification Actions:
-        configureUserNotificationsCenter()
+        //configureUserNotificationsCenter()
  
         // PickerView Setup:
         self.tagFilterPickerView.delegate = self
@@ -409,7 +407,8 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
                     print("Notification access has been denied")
                 }
             }
-            UNUserNotificationCenter.current().delegate = self
+            #warning("check to make sure i can remove delegation here and still can get notification access")
+            //UNUserNotificationCenter.current().delegate = self
         }
     }
     
@@ -467,9 +466,9 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     }
     
     /// Sets the notification center delegate to the VC.
-    private func configureUserNotificationsCenter() {
-        UNUserNotificationCenter.current().delegate = self
-    }
+//    private func configureUserNotificationsCenter() {
+//        UNUserNotificationCenter.current().delegate = self
+//    }
 }
 
 // MARK: - Delegate Flow Layout Extension
@@ -489,11 +488,11 @@ extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
     
      // MARK: - Navigation
      
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toEditPlant" {
-            guard let detailVC = segue.destination as? PlantDetailTableViewController else { return }
-            detailVC.plant = selectedPlant
-            detailVC.navigationItem.title = selectedPlant?.name
-            }
+ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "toEditPlant" {
+        guard let detailVC = segue.destination as? PlantDetailTableViewController else { return }
+        detailVC.plant = selectedPlant
+        detailVC.navigationItem.title = selectedPlant?.name
         }
+    }
 }

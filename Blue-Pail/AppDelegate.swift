@@ -11,14 +11,56 @@ import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    
+    // MARK: - Properties
 
     var window: UIWindow?
     let defaults = UserDefaults()
+    
+    // MARK: - DidFinishLaunchingWithOptions
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        UNUserNotificationCenter.current().delegate = self
         onFirstLaunch()
         setupNotificationActions()
         return true
+    }
+    
+    // MARK: - UNUserNotificationCenterDelegate
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        let plantId = userInfo[Keys.userInfoPlantUuid] as! String
+        var plantAssociatedWithNotification : Plant?
+        for plant in PlantController.shared.plants {
+            if plant.uuid?.uuidString == plantId {
+                plantAssociatedWithNotification = plant
+                break
+            }
+        }
+        switch response.actionIdentifier {
+        case Keys.waterNotificationAction:
+            // Waters the selected plant:
+            if plantAssociatedWithNotification != nil {
+                PlantController.shared.waterPlant(plant: plantAssociatedWithNotification!)
+            }
+            break
+        case Keys.oneHourSnoozeNotificationAction:
+            // Set Watered status of plant to true and set the next notification to be one hour from Date():
+            if plantAssociatedWithNotification != nil {
+                PlantController.shared.snoozeWateringFor(plant: plantAssociatedWithNotification!, hoursForSnooze: 1)
+            }
+            break
+        case Keys.oneDaySnoozeNotificationAction:
+            // Set Watered status of plant to true and set the next notification to be one day from Date():
+            if plantAssociatedWithNotification != nil {
+                PlantController.shared.snoozeWateringFor(plant: plantAssociatedWithNotification!, hoursForSnooze: 24)
+            }
+            break
+        default:
+            break
+        }
+        completionHandler()
     }
     
     // MARK: - First Launch Methods

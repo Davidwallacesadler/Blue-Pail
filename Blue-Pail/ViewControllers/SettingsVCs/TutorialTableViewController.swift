@@ -26,15 +26,19 @@ class TutorialTableViewController: UITableViewController {
         "Watering Your Plants"
     ]
     var avPlayer: AVPlayer?
+    var avPlayerContr: AVPlayerViewController?
     var cellId = 1
     
     // MARK: - Actions
     @IBAction func doneButtonPressed(_ sender: Any) {
-        if avPlayer != nil {
+        if avPlayer?.currentItem == nil {
+            self.navigationController?.popViewController(animated: true)
+        } else {
             avPlayer?.pause()
             avPlayer?.replaceCurrentItem(with: nil)
+            avPlayerContr?.removeFromParent()
+            avPlayerContr?.view.removeFromSuperview()
         }
-        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Internal Methods
@@ -83,14 +87,13 @@ class TutorialTableViewController: UITableViewController {
         avPlayer = AVPlayer(url: fileURL)
         let avPlayerController = AVPlayerViewController()
         avPlayerController.player = avPlayer
-        #warning("TODO: Want the video to not take up the whole screen?")
-        avPlayerController.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
         avPlayerController.showsPlaybackControls = true
         avPlayerController.player?.play()
         self.addChild(avPlayerController)
         avPlayerController.view.frame = self.view.bounds
         self.view.addSubview(avPlayerController.view)
         avPlayerController.didMove(toParent: self)
+        avPlayerContr = avPlayerController
     }
     
     // MARK: - View Lifecycle
@@ -150,22 +153,6 @@ class TutorialTableViewController: UITableViewController {
         return videoCell
     }
     
-//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let sectionHeaderView = tableView.headerView(forSection: section)
-//        let backgroundView = UIView(frame: sectionHeaderView!.bounds)
-//        if isDarkMode {
-//            backgroundView.backgroundColor = .darkModeGray
-//            sectionHeaderView?.backgroundView = backgroundView
-//            sectionHeaderView?.textLabel?.textColor = .white
-//            return sectionHeaderView
-//        } else {
-//            backgroundView.backgroundColor = .lightGray
-//            sectionHeaderView?.backgroundView = backgroundView
-//            sectionHeaderView?.textLabel?.textColor = .black
-//            return sectionHeaderView
-//        }
-//    }
-    
     @objc private func didChangeThemeMode() {
         isDarkMode = UserDefaults.standard.bool(forKey: Keys.themeMode)
     }
@@ -178,7 +165,7 @@ extension TutorialTableViewController: PlayButtonPressedDelegate {
     func playButtonPressedForCellWith(id: Int?) {
         if id == 1 {
             // Play the create a plant media
-            playVideo(givenVideoKey: Keys.createAPlantTutorial)
+            playVideo(givenVideoKey: Keys.createAPlantTutorialVideo)
         } else if id == 2 {
             // Play the create a tag media
             playVideo(givenVideoKey: Keys.createATagTutorialVideo)

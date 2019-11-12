@@ -146,7 +146,7 @@ extension AlarmScheduler {
         content.title = "Time To Water!"
         content.body = "Water your \(plant.name!)!"
         content.sound = UNNotificationSound.default
-        content.userInfo = [Keys.userInfoPlantName : plant.name!]
+        content.userInfo = [Keys.userInfoPlantUuid : plant.uuid!.uuidString]
         content.categoryIdentifier = Keys.plantNotificationCatagoryIdentifier
         if isSnoozed {
             // Use the snooze time interval for the trigger:

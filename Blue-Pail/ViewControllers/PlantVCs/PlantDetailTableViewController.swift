@@ -453,8 +453,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
                 tableViewSection.backgroundView = backgroundView
                 tableViewSection.textLabel?.textColor = .white
             }
-            
-            
         } else {
             // TableView Cells:
             for view in self.tableView.subviews {
