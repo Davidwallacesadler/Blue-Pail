@@ -351,9 +351,9 @@
 			files = (
 				63FAFDE52302FD7700F8CC50 /* WaterPlant.mov in Resources */,
 				63FAFDE62302FD7700F8CC50 /* CreateATag.mov in Resources */,
+				6326500E22810D050025E10C /* LaunchScreen.storyboard in Resources */,
 				63FAFDE72302FD7700F8CC50 /* CreateAPlant.mov in Resources */,
 				63DAADAD22F0A5E3009DC288 /* VideoTableViewCell.xib in Resources */,
-				6326500E22810D050025E10C /* LaunchScreen.storyboard in Resources */,
 				6326500B22810D050025E10C /* Assets.xcassets in Resources */,
 				6326500922810CFE0025E10C /* Main.storyboard in Resources */,
 				63DAADA722F0A4E5009DC288 /* TutorialTableViewController.xib in Resources */,
