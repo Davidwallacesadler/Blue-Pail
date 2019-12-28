@@ -34,7 +34,14 @@ class PlantController : AlarmScheduler {
     
     // TODO: Fix optional values
     #warning("Fix Optional Values in CRUD Methods")
-    func createPlant(name: String?, image: UIImage?, needsWaterFireDate: Date?, tag: Tag, dayInteger: Int) {
+    func createPlant(name: String?,
+                     image: UIImage?,
+                     needsWateredFireDate: Date,
+                     tag: Tag,
+                     wateringDayInteger: Int,
+                     fertilizingDayInteger: Int?,
+                     needsFertilizedFireDate: Date?
+                     ) {
         let imageData: Data?
         if let image = image {
             imageData = image.jpegData(compressionQuality: 1.0)
@@ -42,7 +49,13 @@ class PlantController : AlarmScheduler {
             imageData = nil
         }
         let uuid = UUID()
-        let plant = Plant(name: name, isWatered: true, needsWateredFireDate: needsWaterFireDate ?? Date(), image: imageData, uuid: uuid, dayToNextWater: Int16(dayInteger), context: CoreDataStack.context)
+        let plant = Plant(name: name,
+                          image: imageData,
+                          uuid: uuid,
+                          dayToNextWater: Int16(wateringDayInteger),
+                          daysToNextFertilize: Int16(fertilizingDayInteger ?? 0),
+                          isFertilized: true,
+                          needsFertilizedFireDate: needsFertilizedFireDate)
         TagController.shared.appendPlantTo(targetTag: tag, desiredPlant: plant)
         scheduleUserNotifications(for: plant, isSnoozed: false, snoozeTimeInterval: nil)
         saveToPersistentStorage()
@@ -120,6 +133,18 @@ class PlantController : AlarmScheduler {
         } else {
             return false
         }
+    }
+    
+    /// Creates a fertilizer history point for the selected plant at the current date.
+    func createFertilizerHistory(forSelectedPlant plant: Plant) {
+        FertilizerHistoryController.shared.createFertilizerHistory(givenOccurenceDate: Date(), givenParentPlant: plant)
+        saveToPersistentStorage()
+    }
+    
+    /// Deletes a Fertilizer History point for the selected plant at the current date
+    func deleteFertilizerHistory(forSelectedPlant plant: Plant, atDate targetDate: Date) {
+        FertilizerHistoryController.shared.deleteFertilizerHistory(selectedOccurenceDate: targetDate, givenParentPlant: plant)
+        saveToPersistentStorage()
     }
     
     // MARK: - Persistence

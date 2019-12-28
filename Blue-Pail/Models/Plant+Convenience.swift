@@ -42,15 +42,20 @@ extension Plant {
                      image: Data?,
                      uuid: UUID,
                      dayToNextWater: Int16,
+                     daysToNextFertilize: Int16?,
+                     isFertilized: Bool?,
+                     needsFertilizedFireDate: Date?,
                      context: NSManagedObjectContext = CoreDataStack.context) {
         self.init(context: context)
-        
         self.name = name
         self.isWatered = isWatered
         self.needsWateredFireDate = needsWateredFireDate
         self.image = image
         self.uuid = uuid
         self.dayToNextWater = dayToNextWater
+        self.daysToNextFertilize = daysToNextFertilize ?? 0
+        self.isFertilized = isFertilized ?? true
+        self.needsFertilizedFireDate = needsFertilizedFireDate ?? Date()
     }
     
 }
