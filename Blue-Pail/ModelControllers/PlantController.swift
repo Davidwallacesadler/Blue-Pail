@@ -40,8 +40,7 @@ class PlantController : AlarmScheduler {
                      tag: Tag,
                      wateringDayInteger: Int,
                      fertilizingDayInteger: Int?,
-                     needsFertilizedFireDate: Date?
-                     ) {
+                     needsFertilizedFireDate: Date?) {
         let imageData: Data?
         if let image = image {
             imageData = image.jpegData(compressionQuality: 1.0)
@@ -57,12 +56,28 @@ class PlantController : AlarmScheduler {
                           isFertilized: true,
                           needsFertilizedFireDate: needsFertilizedFireDate)
         TagController.shared.appendPlantTo(targetTag: tag, desiredPlant: plant)
-        scheduleUserNotifications(for: plant, isSnoozed: false, snoozeTimeInterval: nil)
+        scheduleUserNotifications(for: plant,
+                                  isSnoozed: false,
+                                  snoozeTimeInterval: nil,
+                                  givenNotificationKey: Keys.waterNotification)
+        if needsFertilizedFireDate != nil {
+            scheduleUserNotifications(for: plant,
+                                      isSnoozed: false,
+                                      snoozeTimeInterval: nil,
+                                      givenNotificationKey: Keys.fertilizerNotification)
+        }
         saveToPersistentStorage()
     }
     
     
-    func updatePlant(plant: Plant, newName: String?, newImage: UIImage?, newFireDate: Date?, newTag: Tag, dayInteger: Int) {
+    func updatePlant(plant: Plant,
+                     newName: String?,
+                     newImage: UIImage?,
+                     newWateringFireDate: Date?,
+                     newTag: Tag,
+                     daysToNextWater: Int,
+                     newFertilizerFireDate: Date?,
+                     daysToNextFertilizing: Int?) {
         let imageData: Data?
         if let image = newImage {
             imageData = image.jpegData(compressionQuality: 1.0)
@@ -71,11 +86,23 @@ class PlantController : AlarmScheduler {
         }
         plant.name = newName
         plant.image = imageData
-        plant.needsWateredFireDate = newFireDate
-        plant.dayToNextWater = Int16(dayInteger)
-        TagController.shared.appendPlantTo(targetTag: newTag, desiredPlant: plant)
+        plant.needsWateredFireDate = newWateringFireDate
+        plant.dayToNextWater = Int16(daysToNextWater)
+        plant.needsFertilizedFireDate = newFertilizerFireDate
+        plant.daysToNextFertilize = Int16(daysToNextFertilizing ?? 0)
+        TagController.shared.appendPlantTo(targetTag: newTag,
+                                           desiredPlant: plant)
         cancelUserNotifications(for: plant)
-        scheduleUserNotifications(for: plant, isSnoozed: false, snoozeTimeInterval: nil)
+        if newFertilizerFireDate != nil {
+            scheduleUserNotifications(for: plant,
+                                      isSnoozed: false,
+                                      snoozeTimeInterval: nil,
+                                      givenNotificationKey: Keys.fertilizerNotification)
+        }
+        scheduleUserNotifications(for: plant,
+                                  isSnoozed: false,
+                                  snoozeTimeInterval: nil,
+                                  givenNotificationKey: Keys.waterNotification)
         saveToPersistentStorage()
     }
     
@@ -89,6 +116,19 @@ class PlantController : AlarmScheduler {
     
     // MARK: - Additional Helper Methods
     
+    func fertilizePlant(plant: Plant) {
+        plant.isFertilized = true
+        guard let fireDate = plant.needsFertilizedFireDate else { return }
+        let todayAtCorrectTime = DayHelper.shared.getSameTimeAsDateToday(targetDate: fireDate)
+        plant.needsFertilizedFireDate = DayHelper.shared.futureDateFromADate(givenDate: todayAtCorrectTime, numberOfDays: Int(plant.daysToNextFertilize))
+        //cancelUserNotifications(for: plant)
+        scheduleUserNotifications(for: plant,
+                                  isSnoozed: false,
+                                  snoozeTimeInterval: nil,
+                                  givenNotificationKey: Keys.fertilizerNotification)
+        saveToPersistentStorage()
+    }
+    
     /// Sets the target plant's isWatered property to true, and schedules a notification for the argument number of days away from the current date at the correct time. If the current date is less than the fire date the previous firedate will have its notifications removed.
     func waterPlant(plant: Plant) {
         plant.isWatered = true
@@ -96,15 +136,22 @@ class PlantController : AlarmScheduler {
         let todayAtCorrectTime = DayHelper.shared.getSameTimeAsDateToday(targetDate: fireDate)
         plant.needsWateredFireDate = DayHelper.shared.futureDateFromADate(givenDate: todayAtCorrectTime, numberOfDays: Int(plant.dayToNextWater))
         cancelUserNotifications(for: plant)
-        scheduleUserNotifications(for: plant, isSnoozed: false, snoozeTimeInterval: nil)
+        scheduleUserNotifications(for: plant,
+                                  isSnoozed: false,
+                                  snoozeTimeInterval: nil,
+                                  givenNotificationKey: Keys.waterNotification)
         saveToPersistentStorage()
     }
     
     /// Waters the plant for now and creates a new notification that is the arguemnt amount of hours away from the fireDate.
-    func snoozeWateringFor(plant: Plant, hoursForSnooze: Int) {
+    func snoozeWateringFor(plant: Plant,
+                           hoursForSnooze: Int) {
         let hoursForSnoozeInSeconds = 3600 * hoursForSnooze
         guard let snoozeTimeInterval = TimeInterval(exactly: hoursForSnoozeInSeconds) else { return }
-        scheduleUserNotifications(for: plant,isSnoozed: true, snoozeTimeInterval: snoozeTimeInterval)
+        scheduleUserNotifications(for: plant,
+                                  isSnoozed: true,
+                                  snoozeTimeInterval: snoozeTimeInterval,
+                                  givenNotificationKey: Keys.waterNotification)
     }
     
     /// Returns a UIColor reflecting the target Plants isWatered property (blue for true, yellow for false).
@@ -116,12 +163,21 @@ class PlantController : AlarmScheduler {
         }
     }
     
-    /// Checks if the current date is greater than or equal to the fireDate of the target Plant, if so it sets the plant to dry and saves the changes to persistent storage.
+    /// Checks if the current date is greater than or equal to the wateringFireDate of the target Plant.
     func checkIfDry(plant:Plant) {
         guard let isDryDate = plant.needsWateredFireDate else { return }
         let currentDate = Date()
         if currentDate >= isDryDate {
             plant.isWatered = false
+            saveToPersistentStorage()
+        }
+    }
+    
+    /// Checks if the current date is greater than or equal to the fertilizerFireDate of the target Plant.
+    func checkIfFertilized(plant: Plant) {
+        guard let needsFertilizedDate = plant.needsFertilizedFireDate else { return }
+        if Date() >= needsFertilizedDate {
+            plant.isFertilized = false
             saveToPersistentStorage()
         }
     }
@@ -161,18 +217,33 @@ class PlantController : AlarmScheduler {
 // MARK: - AlarmScheduler Protocol
 
 protocol AlarmScheduler {
-    func scheduleUserNotifications(for plant: Plant, isSnoozed: Bool, snoozeTimeInterval: TimeInterval?)
+    func scheduleUserNotifications(for plant: Plant,
+                                   isSnoozed: Bool,
+                                   snoozeTimeInterval: TimeInterval?,
+                                   givenNotificationKey: String)
     func cancelUserNotifications(for plant: Plant)
 }
 
 extension AlarmScheduler {
-    func scheduleUserNotifications(for plant: Plant, isSnoozed: Bool, snoozeTimeInterval: TimeInterval?) {
+    func scheduleUserNotifications(for plant: Plant,
+                                   isSnoozed: Bool,
+                                   snoozeTimeInterval: TimeInterval?,
+                                   givenNotificationKey: String) {
         let content  = UNMutableNotificationContent()
-        content.title = "Time To Water!"
-        content.body = "Water your \(plant.name!)!"
+        switch givenNotificationKey {
+        case Keys.waterNotification:
+            content.title = "Time To Water"
+            content.body = "Water your \(plant.name!)."
+            content.categoryIdentifier = Keys.plantNotificationCatagoryIdentifier
+        case Keys.fertilizerNotification:
+            content.title = "Time To Fertilize"
+            content.body = "Fertilize your \(plant.name!)."
+            content.categoryIdentifier = Keys.fertilizerNotificationCatagoryIdentifier
+        default:
+            return
+        }
         content.sound = UNNotificationSound.default
         content.userInfo = [Keys.userInfoPlantUuid : plant.uuid!.uuidString]
-        content.categoryIdentifier = Keys.plantNotificationCatagoryIdentifier
         if isSnoozed {
             // Use the snooze time interval for the trigger:
             if let snoozeTime = snoozeTimeInterval {

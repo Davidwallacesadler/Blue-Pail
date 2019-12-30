@@ -55,13 +55,12 @@ enum Keys {
     static let userInfoPlantUuid = "plantUuid"
     static let userInfoTagTitle = "associatedTagTitle"
     static let plantNotificationCatagoryIdentifier = "plantWateringNotification"
+    static let fertilizerNotificationCatagoryIdentifier = "plantFertilizerNotification"
     static let waterNotificationAction = "waterPlant"
     static let oneHourSnoozeNotificationAction = "oneHourSnooze"
     static let oneDaySnoozeNotificationAction = "oneDaySnooze"
-    
-    
-    
-    
-   
+    static let fertilizePlantNotificationAction = "fertilizePlant"
+    static let waterNotification = "water"
+    static let fertilizerNotification = "fertilize"
     
 }
