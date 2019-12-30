@@ -30,35 +30,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        let plantId = userInfo[Keys.userInfoPlantUuid] as! String
+        let plantId = userInfo[Keys.userInfoPlantUuid] as! UUID
+        #warning("replace this for loop with a NSFetchRequest with a predicate string == 'uuid == plantId'")
         var plantAssociatedWithNotification : Plant?
         for plant in PlantController.shared.plants {
-            if plant.uuid?.uuidString == plantId {
+            if plant.uuid?.uuidString == plantId.uuidString {
                 plantAssociatedWithNotification = plant
                 break
             }
         }
-        switch response.actionIdentifier {
-        case Keys.waterNotificationAction:
-            // Waters the selected plant:
-            if plantAssociatedWithNotification != nil {
-                PlantController.shared.waterPlant(plant: plantAssociatedWithNotification!)
+        //PlantController.shared.getPlants(withUuid: plantId)
+        if let plant = plantAssociatedWithNotification {
+            switch response.actionIdentifier {
+            case Keys.waterNotificationAction:
+                PlantController.shared.waterPlant(plant: plant)
+                break
+            case Keys.fertilizePlantNotificationAction:
+                PlantController.shared.fertilizePlant(plant: plant)
+                break
+            case Keys.oneHourSnoozeNotificationAction:
+                if userInfo[Keys.userInfoFertilizerSnooze] != nil {
+                    PlantController.shared.snoozeWateringFor(plant: plant,
+                                                             hoursForSnooze: 1,
+                                                             givenNotificationName: Keys.fertilizerNotification)
+                } else {
+                    PlantController.shared.snoozeWateringFor(plant: plant,
+                                                             hoursForSnooze: 1,
+                                                             givenNotificationName: Keys.waterNotification)
+                }
+                break
+            case Keys.oneDaySnoozeNotificationAction:
+                if userInfo[Keys.userInfoFertilizerSnooze] != nil {
+                    PlantController.shared.snoozeWateringFor(plant: plant,
+                                                             hoursForSnooze: 24,
+                                                             givenNotificationName: Keys.fertilizerNotification)
+                }
+                PlantController.shared.snoozeWateringFor(plant: plant,
+                                                         hoursForSnooze: 24,
+                                                         givenNotificationName: Keys.waterNotification)
+                break
+            default:
+                break
             }
-            break
-        case Keys.oneHourSnoozeNotificationAction:
-            // Set Watered status of plant to true and set the next notification to be one hour from Date():
-            if plantAssociatedWithNotification != nil {
-                PlantController.shared.snoozeWateringFor(plant: plantAssociatedWithNotification!, hoursForSnooze: 1)
-            }
-            break
-        case Keys.oneDaySnoozeNotificationAction:
-            // Set Watered status of plant to true and set the next notification to be one day from Date():
-            if plantAssociatedWithNotification != nil {
-                PlantController.shared.snoozeWateringFor(plant: plantAssociatedWithNotification!, hoursForSnooze: 24)
-            }
-            break
-        default:
-            break
         }
         completionHandler()
     }
@@ -80,17 +93,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     // MARK: - Notifcation Action Setup
     private func setupNotificationActions() {
-        let waterAction = UNNotificationAction(identifier: Keys.waterNotificationAction, title: "Water Plant", options: UNNotificationActionOptions(rawValue: 0))
-        let oneHourSnoozeAction = UNNotificationAction(identifier: Keys.oneHourSnoozeNotificationAction, title: "One Hour Snooze", options: UNNotificationActionOptions(rawValue: 0))
-        let oneDaySnoozeAction = UNNotificationAction(identifier: Keys.oneDaySnoozeNotificationAction, title: "One Day Snooze", options: UNNotificationActionOptions(rawValue: 0))
-        let plantWateringCatagory = UNNotificationCategory(identifier: Keys.plantNotificationCatagoryIdentifier, actions: [waterAction, oneHourSnoozeAction, oneDaySnoozeAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction)
+        let waterAction = UNNotificationAction(identifier: Keys.waterNotificationAction,
+                                               title: "Water Plant",
+                                               options: UNNotificationActionOptions(rawValue: 0))
+        let oneHourSnoozeAction = UNNotificationAction(identifier: Keys.oneHourSnoozeNotificationAction,
+                                                       title: "One Hour Snooze",
+                                                       options: UNNotificationActionOptions(rawValue: 0))
+        let oneDaySnoozeAction = UNNotificationAction(identifier: Keys.oneDaySnoozeNotificationAction,
+                                                      title: "One Day Snooze",
+                                                      options: UNNotificationActionOptions(rawValue: 0))
+        let plantWateringCatagory = UNNotificationCategory(identifier: Keys.waterNotificationCatagoryIdentifier,
+                                                           actions: [waterAction, oneHourSnoozeAction, oneDaySnoozeAction],
+                                                           intentIdentifiers: [],
+                                                           hiddenPreviewsBodyPlaceholder: "",
+                                                           options: .customDismissAction)
+        let fertilizeAction = UNNotificationAction(identifier: Keys.fertilizePlantNotificationAction,
+                                                   title: "Fertilize Plant",
+                                                   options: UNNotificationActionOptions(rawValue: 0))
+        let plantFertilizingCatagory = UNNotificationCategory(identifier: Keys.fertilizePlantNotificationAction,
+                                                              actions: [fertilizeAction, oneHourSnoozeAction, oneDaySnoozeAction],
+                                                              intentIdentifiers: [],
+                                                              hiddenPreviewsBodyPlaceholder: "",
+                                                              options: .customDismissAction)
         let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.setNotificationCategories([plantWateringCatagory])
+        notificationCenter.setNotificationCategories([plantWateringCatagory, plantFertilizingCatagory])
     }
     
     // MARK: userNotifcationCenter willPresentNotification
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.alert, .sound])
     }
 }

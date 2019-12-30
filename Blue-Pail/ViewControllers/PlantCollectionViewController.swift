@@ -25,43 +25,6 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         }
     }
     
-    // MARK: - UNUserNotificationCenter Delegate Methods
-    
-//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-//        let userInfo = response.notification.request.content.userInfo
-//        let plantId = userInfo[Keys.userInfoPlantUuid] as! String
-//        var plantAssociatedWithNotification : Plant?
-//        for plant in PlantController.shared.plants {
-//            if plant.uuid?.uuidString == plantId {
-//                plantAssociatedWithNotification = plant
-//                break
-//            }
-//        }
-//        switch response.actionIdentifier {
-//        case Keys.waterNotificationAction:
-//            // Waters the selected plant:
-//            if plantAssociatedWithNotification != nil {
-//                PlantController.shared.waterPlant(plant: plantAssociatedWithNotification!)
-//            }
-//            break
-//        case Keys.oneHourSnoozeNotificationAction:
-//            // Set Watered status of plant to true and set the next notification to be one hour from Date():
-//            if plantAssociatedWithNotification != nil {
-//                PlantController.shared.snoozeWateringFor(plant: plantAssociatedWithNotification!, hoursForSnooze: 1)
-//            }
-//            break
-//        case Keys.oneDaySnoozeNotificationAction:
-//            // Set Watered status of plant to true and set the next notification to be one day from Date():
-//            if plantAssociatedWithNotification != nil {
-//                PlantController.shared.snoozeWateringFor(plant: plantAssociatedWithNotification!, hoursForSnooze: 24)
-//            }
-//            break
-//        default:
-//            break
-//        }
-//        completionHandler()
-//    }
-    
     // MARK: - PickerView Delegate Methods
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
