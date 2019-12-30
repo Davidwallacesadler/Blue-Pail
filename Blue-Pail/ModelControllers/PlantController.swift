@@ -30,6 +30,18 @@ class PlantController : AlarmScheduler {
         }
     }
     
+    func getPlants(withUuid id: UUID) -> [Plant] {
+        let request: NSFetchRequest<Plant> = Plant.fetchRequest()
+        request.predicate = NSPredicate(format: "uuid == \(id)", argumentArray: nil)
+        let moc = CoreDataStack.context
+        do {
+            let result = try moc.fetch(request)
+            return result
+        } catch {
+            return []
+        }
+    }
+    
     // MARK: - CRUD
     
     // TODO: Fix optional values
@@ -253,7 +265,7 @@ extension AlarmScheduler {
                                    givenNotificationName: String) {
         let content  = UNMutableNotificationContent()
         content.sound = UNNotificationSound.default
-        content.userInfo = [Keys.userInfoPlantUuid : plant.uuid!.uuidString]
+        content.userInfo = [Keys.userInfoPlantUuid : plant.uuid!]
         switch givenNotificationName {
         case Keys.waterNotification:
             content.title = "Time To Water"

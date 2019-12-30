@@ -30,15 +30,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        let plantId = userInfo[Keys.userInfoPlantUuid] as! String
+        let plantId = userInfo[Keys.userInfoPlantUuid] as! UUID
         #warning("replace this for loop with a NSFetchRequest with a predicate string == 'uuid == plantId'")
         var plantAssociatedWithNotification : Plant?
         for plant in PlantController.shared.plants {
-            if plant.uuid?.uuidString == plantId {
+            if plant.uuid?.uuidString == plantId.uuidString {
                 plantAssociatedWithNotification = plant
                 break
             }
         }
+        //PlantController.shared.getPlants(withUuid: plantId)
         if let plant = plantAssociatedWithNotification {
             switch response.actionIdentifier {
             case Keys.waterNotificationAction:
