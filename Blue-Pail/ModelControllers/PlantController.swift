@@ -30,6 +30,7 @@ class PlantController : AlarmScheduler {
         }
     }
     
+    #warning("Not too sure if this is going to work...")
     func getPlants(withUuid id: UUID) -> [Plant] {
         let request: NSFetchRequest<Plant> = Plant.fetchRequest()
         request.predicate = NSPredicate(format: "uuid == \(id)", argumentArray: nil)
