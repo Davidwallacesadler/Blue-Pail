@@ -1,0 +1,6 @@
+framework module Pods_Blue_Pail {
+  umbrella header "Pods-Blue-Pail-umbrella.h"
+
+  export *
+  module * { export * }
+}
