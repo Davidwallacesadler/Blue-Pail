@@ -59,12 +59,12 @@ class PlantController : AlarmScheduler {
         scheduleUserNotifications(for: plant,
                                   isSnoozed: false,
                                   snoozeTimeInterval: nil,
-                                  givenNotificationKey: Keys.waterNotification)
+                                  givenNotificationName: Keys.waterNotification)
         if needsFertilizedFireDate != nil {
             scheduleUserNotifications(for: plant,
                                       isSnoozed: false,
                                       snoozeTimeInterval: nil,
-                                      givenNotificationKey: Keys.fertilizerNotification)
+                                      givenNotificationName: Keys.fertilizerNotification)
         }
         saveToPersistentStorage()
     }
@@ -84,6 +84,14 @@ class PlantController : AlarmScheduler {
         } else {
             imageData = nil
         }
+        if newWateringFireDate != nil {
+            cancelUserNotifications(for: plant,
+                                    givenNotificationKey: Keys.waterNotificationCatagoryIdentifier)
+        }
+        if newFertilizerFireDate != nil {
+            cancelUserNotifications(for: plant,
+                                    givenNotificationKey: Keys.fertilizerNotificationCatagoryIdentifier)
+        }
         plant.name = newName
         plant.image = imageData
         plant.needsWateredFireDate = newWateringFireDate
@@ -92,66 +100,80 @@ class PlantController : AlarmScheduler {
         plant.daysToNextFertilize = Int16(daysToNextFertilizing ?? 0)
         TagController.shared.appendPlantTo(targetTag: newTag,
                                            desiredPlant: plant)
-        cancelUserNotifications(for: plant)
         if newFertilizerFireDate != nil {
             scheduleUserNotifications(for: plant,
                                       isSnoozed: false,
                                       snoozeTimeInterval: nil,
-                                      givenNotificationKey: Keys.fertilizerNotification)
+                                      givenNotificationName: Keys.fertilizerNotification)
         }
         scheduleUserNotifications(for: plant,
                                   isSnoozed: false,
                                   snoozeTimeInterval: nil,
-                                  givenNotificationKey: Keys.waterNotification)
+                                  givenNotificationName: Keys.waterNotification)
         saveToPersistentStorage()
     }
     
     /// Deletes the target plant from the moc, and saves to persistent storage. Important: Make sure to remove the plant from its tag collection before calling this method.
     func deletePlant(plant: Plant) {
+        if plant.needsFertilizedFireDate != nil {
+            cancelUserNotifications(for: plant,
+                                    givenNotificationKey: Keys.fertilizerNotificationCatagoryIdentifier)
+        }
+        if plant.needsWateredFireDate != nil {
+            cancelUserNotifications(for: plant,
+                                    givenNotificationKey: Keys.waterNotificationCatagoryIdentifier)
+        }
         let moc = plant.managedObjectContext
         moc?.delete(plant)
-        cancelUserNotifications(for: plant)
         saveToPersistentStorage()
     }
     
     // MARK: - Additional Helper Methods
     
+    ///
     func fertilizePlant(plant: Plant) {
         plant.isFertilized = true
         guard let fireDate = plant.needsFertilizedFireDate else { return }
+        if fireDate > Date() {
+            cancelUserNotifications(for: plant,
+                                    givenNotificationKey: Keys.fertilizerNotificationCatagoryIdentifier)
+        }
         let todayAtCorrectTime = DayHelper.shared.getSameTimeAsDateToday(targetDate: fireDate)
-        plant.needsFertilizedFireDate = DayHelper.shared.futureDateFromADate(givenDate: todayAtCorrectTime, numberOfDays: Int(plant.daysToNextFertilize))
-        //cancelUserNotifications(for: plant)
+        plant.needsFertilizedFireDate = DayHelper.shared.futureDateFromADate(givenDate: todayAtCorrectTime,
+                                                                             numberOfDays: Int(plant.daysToNextFertilize))
         scheduleUserNotifications(for: plant,
                                   isSnoozed: false,
                                   snoozeTimeInterval: nil,
-                                  givenNotificationKey: Keys.fertilizerNotification)
+                                  givenNotificationName: Keys.fertilizerNotification)
+        createFertilizerHistory(forSelectedPlant: plant)
         saveToPersistentStorage()
     }
     
-    /// Sets the target plant's isWatered property to true, and schedules a notification for the argument number of days away from the current date at the correct time. If the current date is less than the fire date the previous firedate will have its notifications removed.
     func waterPlant(plant: Plant) {
         plant.isWatered = true
         guard let fireDate = plant.needsWateredFireDate else { return }
         let todayAtCorrectTime = DayHelper.shared.getSameTimeAsDateToday(targetDate: fireDate)
-        plant.needsWateredFireDate = DayHelper.shared.futureDateFromADate(givenDate: todayAtCorrectTime, numberOfDays: Int(plant.dayToNextWater))
-        cancelUserNotifications(for: plant)
+        plant.needsWateredFireDate = DayHelper.shared.futureDateFromADate(givenDate: todayAtCorrectTime,
+                                                                          numberOfDays: Int(plant.dayToNextWater))
+        cancelUserNotifications(for: plant,
+                                givenNotificationKey: Keys.waterNotificationCatagoryIdentifier)
         scheduleUserNotifications(for: plant,
                                   isSnoozed: false,
                                   snoozeTimeInterval: nil,
-                                  givenNotificationKey: Keys.waterNotification)
+                                  givenNotificationName: Keys.waterNotification)
         saveToPersistentStorage()
     }
     
     /// Waters the plant for now and creates a new notification that is the arguemnt amount of hours away from the fireDate.
     func snoozeWateringFor(plant: Plant,
-                           hoursForSnooze: Int) {
+                           hoursForSnooze: Int,
+                           givenNotificationName: String) {
         let hoursForSnoozeInSeconds = 3600 * hoursForSnooze
         guard let snoozeTimeInterval = TimeInterval(exactly: hoursForSnoozeInSeconds) else { return }
         scheduleUserNotifications(for: plant,
                                   isSnoozed: true,
                                   snoozeTimeInterval: snoozeTimeInterval,
-                                  givenNotificationKey: Keys.waterNotification)
+                                  givenNotificationName: givenNotificationName)
     }
     
     /// Returns a UIColor reflecting the target Plants isWatered property (blue for true, yellow for false).
@@ -194,7 +216,6 @@ class PlantController : AlarmScheduler {
     /// Creates a fertilizer history point for the selected plant at the current date.
     func createFertilizerHistory(forSelectedPlant plant: Plant) {
         FertilizerHistoryController.shared.createFertilizerHistory(givenOccurenceDate: Date(), givenParentPlant: plant)
-        saveToPersistentStorage()
     }
     
     /// Deletes a Fertilizer History point for the selected plant at the current date
@@ -214,42 +235,50 @@ class PlantController : AlarmScheduler {
     }
 }
 
-// MARK: - AlarmScheduler Protocol
+// MARK: - AlarmScheduler Protocol & Extension
 
 protocol AlarmScheduler {
     func scheduleUserNotifications(for plant: Plant,
                                    isSnoozed: Bool,
                                    snoozeTimeInterval: TimeInterval?,
-                                   givenNotificationKey: String)
-    func cancelUserNotifications(for plant: Plant)
+                                   givenNotificationName: String)
+    func cancelUserNotifications(for plant: Plant,
+                                 givenNotificationKey: String)
 }
 
 extension AlarmScheduler {
     func scheduleUserNotifications(for plant: Plant,
                                    isSnoozed: Bool,
                                    snoozeTimeInterval: TimeInterval?,
-                                   givenNotificationKey: String) {
+                                   givenNotificationName: String) {
         let content  = UNMutableNotificationContent()
-        switch givenNotificationKey {
+        content.sound = UNNotificationSound.default
+        content.userInfo = [Keys.userInfoPlantUuid : plant.uuid!.uuidString]
+        switch givenNotificationName {
         case Keys.waterNotification:
             content.title = "Time To Water"
             content.body = "Water your \(plant.name!)."
-            content.categoryIdentifier = Keys.plantNotificationCatagoryIdentifier
+            content.categoryIdentifier = Keys.waterNotificationCatagoryIdentifier
         case Keys.fertilizerNotification:
             content.title = "Time To Fertilize"
             content.body = "Fertilize your \(plant.name!)."
             content.categoryIdentifier = Keys.fertilizerNotificationCatagoryIdentifier
+            if isSnoozed {
+                content.userInfo[Keys.userInfoFertilizerSnooze] = true
+            }
         default:
             return
         }
-        content.sound = UNNotificationSound.default
-        content.userInfo = [Keys.userInfoPlantUuid : plant.uuid!.uuidString]
+        
         if isSnoozed {
-            // Use the snooze time interval for the trigger:
+            // Use the snooze time interval as the notification trigger:
             if let snoozeTime = snoozeTimeInterval {
-                let snoozeTrigger = UNTimeIntervalNotificationTrigger(timeInterval: snoozeTime, repeats: false)
+                let snoozeTrigger = UNTimeIntervalNotificationTrigger(timeInterval: snoozeTime,
+                                                                      repeats: false)
                 let identifier = plant.uuid!.uuidString
-                let request = UNNotificationRequest(identifier: identifier, content: content, trigger: snoozeTrigger)
+                let request = UNNotificationRequest(identifier: identifier,
+                                                    content: content,
+                                                    trigger: snoozeTrigger)
                 UNUserNotificationCenter.current().add(request) { (error) in
                     if let error = error {
                         print("Unable to add notification request. \(error.localizedDescription)")
@@ -258,25 +287,53 @@ extension AlarmScheduler {
                 print("Snooze Notification successfully added for plant \(plant.name!)")
             }
         } else {
-            // Use the fireDate of the plant for the trigger:
+            // Use the fireDate of the plant as the notification trigger:
             let calendar = Calendar.current
-            let dateCompoenents = calendar.dateComponents([.day, .hour, .minute], from: plant.needsWateredFireDate!)
-            let dateTrigger = UNCalendarNotificationTrigger(dateMatching: dateCompoenents, repeats: false)
-            let identifier = plant.uuid!.uuidString
-            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: dateTrigger)
+            var dateComponents: DateComponents?
+            var identifier = ""
+            if givenNotificationName == Keys.fertilizerNotification {
+                dateComponents = calendar.dateComponents([.day,.hour,.minute],
+                                                         from: plant.needsFertilizedFireDate!)
+                identifier += "F"
+            } else {
+                dateComponents = calendar.dateComponents([.day, .hour, .minute],
+                                                          from: plant.needsWateredFireDate!)
+                identifier += "W"
+            }
+            let dateTrigger = UNCalendarNotificationTrigger(dateMatching: dateComponents!,
+                                                            repeats: false)
+            identifier += plant.uuid!.uuidString
+            let request = UNNotificationRequest(identifier: identifier,
+                                                content: content,
+                                                trigger: dateTrigger)
             UNUserNotificationCenter.current().add(request) { (error) in
                 if let error = error {
                     print("Unable to add notification request. \(error.localizedDescription)")
                 }
             }
-            print("Watering Notification successfully added for plant \(plant.name!)")
+            if content.categoryIdentifier == Keys.fertilizePlantNotificationAction {
+                print("Fertilize Notification sucessfully added for plant \(plant.name!)")
+            } else {
+                print("Water Notification successfully added for plant \(plant.name!)")
+            }
         }
     }
     
-    func cancelUserNotifications(for plant: Plant) {
+    func cancelUserNotifications(for plant: Plant,
+                                 givenNotificationKey: String) {
         if let plantID = plant.uuid?.uuidString {
-            let userNotifcations = UNUserNotificationCenter.current()
-            userNotifcations.removePendingNotificationRequests(withIdentifiers: [plantID])
+            var requestId = ""
+            let userNotifications = UNUserNotificationCenter.current()
+            switch givenNotificationKey {
+            case Keys.waterNotificationCatagoryIdentifier:
+                requestId += "W"
+            case Keys.fertilizerNotificationCatagoryIdentifier:
+                requestId += "F"
+            default:
+                print("No notification Key found")
+            }
+            requestId += plantID
+            userNotifications.removePendingNotificationRequests(withIdentifiers: [requestId])
             print("Notification successfully removed for plant \(plant.name!)")
         }
     }
