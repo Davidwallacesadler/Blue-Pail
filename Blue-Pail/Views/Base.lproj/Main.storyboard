@@ -919,22 +919,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle=" Fertilizer Reminder" id="UlP-WB-pQ6">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="70" id="DPx-tX-9NG">
-                                        <rect key="frame" x="0.0" y="490" width="375" height="70"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DPx-tX-9NG" id="0qm-07-tJO">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="Photo" id="tYZ-QD-Vtw">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="150" id="fkv-xv-HxK">
-                                        <rect key="frame" x="0.0" y="616" width="375" height="150"/>
+                                        <rect key="frame" x="0.0" y="490" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fkv-xv-HxK" id="T4k-tm-cfZ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
@@ -977,7 +965,7 @@
                             <tableViewSection headerTitle=" Delete" id="OLx-mg-DAD">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="70" id="GHT-NE-Coc">
-                                        <rect key="frame" x="0.0" y="822" width="375" height="70"/>
+                                        <rect key="frame" x="0.0" y="696" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GHT-NE-Coc" id="cGY-sM-yQk">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
@@ -1039,11 +1027,117 @@
                         <outlet property="plantNameTextField" destination="xxP-HM-uXp" id="Wan-1S-EeW"/>
                         <outlet property="tagPickerView" destination="wfj-5P-Daq" id="78S-Gn-DdT"/>
                         <outlet property="timeDatePicker" destination="EFq-OO-7GR" id="vxP-Mb-dqR"/>
+                        <segue destination="hm1-Ze-2wB" kind="presentation" identifier="toShowReminderCalendar" id="zha-NU-cor"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o57-DN-x20" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="487.5" y="138.75"/>
+        </scene>
+        <!--Calendar Date Selection View Controller-->
+        <scene sceneID="faD-bq-4xc">
+            <objects>
+                <viewController id="hm1-Ze-2wB" customClass="CalendarDateSelectionViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rbL-dt-A9f">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. Select the next day you want to be reminded." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zf1-24-mnO">
+                                <rect key="frame" x="16" y="76" width="343" height="57.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJa-s7-2Hi">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                <color key="backgroundColor" red="0.00088044262929999997" green="0.12703505030000001" blue="0.67009041879999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="umu-4X-a0E"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="21"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title=" Done" image="checkmark.square" catalog="system">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="doneButtonPressed:" destination="hm1-Ze-2wB" eventType="touchUpInside" id="Pn4-8F-kBu"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYH-Xj-Ffp" customClass="FSCalendar">
+                                <rect key="frame" x="0.0" y="197" width="375" height="450"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="DYH-Xj-Ffp" secondAttribute="height" multiplier="15:18" id="W6n-eY-p7t"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="nfV-Wo-AJp">
+                                <rect key="frame" x="16" y="143" width="343" height="44"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="38" translatesAutoresizingMaskIntoConstraints="NO" id="wqh-hR-Iyb">
+                                        <rect key="frame" x="0.0" y="0.0" width="237.5" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnD-df-qsh">
+                                                <rect key="frame" x="0.0" y="0.0" width="40.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Select A Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3n-Op-Rs3">
+                                                <rect key="frame" x="78.5" y="0.0" width="159" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="cbu-cs-gw3">
+                                        <rect key="frame" x="0.0" y="23.5" width="300.5" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interval:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ktx-7H-ES3">
+                                                <rect key="frame" x="0.0" y="0.0" width="61" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Select A Second Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E70-bc-w2A">
+                                                <rect key="frame" x="79" y="0.0" width="221.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="ViH-lY-mbO" firstAttribute="bottom" secondItem="DYH-Xj-Ffp" secondAttribute="bottom" id="0GD-hm-6pr"/>
+                            <constraint firstItem="nfV-Wo-AJp" firstAttribute="leading" secondItem="ViH-lY-mbO" secondAttribute="leading" constant="16" id="7Y2-zx-WnA"/>
+                            <constraint firstItem="ViH-lY-mbO" firstAttribute="trailing" secondItem="zJa-s7-2Hi" secondAttribute="trailing" id="DZe-47-bo7"/>
+                            <constraint firstItem="zJa-s7-2Hi" firstAttribute="top" secondItem="ViH-lY-mbO" secondAttribute="top" id="HQJ-Mp-5zf"/>
+                            <constraint firstItem="DYH-Xj-Ffp" firstAttribute="leading" secondItem="ViH-lY-mbO" secondAttribute="leading" id="Q2u-T9-dkX"/>
+                            <constraint firstItem="zJa-s7-2Hi" firstAttribute="leading" secondItem="ViH-lY-mbO" secondAttribute="leading" id="RFt-Hf-d5g"/>
+                            <constraint firstItem="ViH-lY-mbO" firstAttribute="trailing" secondItem="DYH-Xj-Ffp" secondAttribute="trailing" id="Vsv-cB-Y6N"/>
+                            <constraint firstItem="zf1-24-mnO" firstAttribute="top" secondItem="zJa-s7-2Hi" secondAttribute="bottom" constant="16" id="Yph-dF-B9l"/>
+                            <constraint firstItem="DYH-Xj-Ffp" firstAttribute="top" secondItem="nfV-Wo-AJp" secondAttribute="bottom" constant="10" id="gBn-5z-d2Y"/>
+                            <constraint firstAttribute="trailing" secondItem="zf1-24-mnO" secondAttribute="trailing" constant="16" id="gao-YU-peh"/>
+                            <constraint firstItem="ViH-lY-mbO" firstAttribute="trailing" secondItem="nfV-Wo-AJp" secondAttribute="trailing" constant="16" id="gh7-uH-Fh1"/>
+                            <constraint firstItem="zf1-24-mnO" firstAttribute="leading" secondItem="ViH-lY-mbO" secondAttribute="leading" constant="16" id="vz5-rX-RpM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ViH-lY-mbO"/>
+                    </view>
+                    <connections>
+                        <outlet property="calendar" destination="DYH-Xj-Ffp" id="uwo-gH-SGY"/>
+                        <outlet property="currentIntervalLabel" destination="E70-bc-w2A" id="Ubl-9J-2zL"/>
+                        <outlet property="doneButton" destination="zJa-s7-2Hi" id="fvz-Vc-Q3g"/>
+                        <outlet property="nextDateLabel" destination="a3n-Op-Rs3" id="P5p-1L-qLC"/>
+                        <outlet property="tipLabel" destination="zf1-24-mnO" id="nnI-dR-WJP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4NH-vn-UQA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1262" y="-234"/>
         </scene>
         <!--New Tag-->
         <scene sceneID="Zqn-iI-AOF">
@@ -1316,6 +1410,7 @@
         <image name="Notifications" width="242" height="216"/>
         <image name="WaterAndTimer" width="219" height="220"/>
         <image name="Welcome" width="195" height="251"/>
+        <image name="checkmark.square" catalog="system" width="64" height="56"/>
         <image name="filterButton" width="20.5" height="25.5"/>
         <image name="photoButton-1" width="101.5" height="101"/>
         <image name="selectedPlantTabBarIcon" width="27.5" height="26"/>
