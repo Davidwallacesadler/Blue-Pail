@@ -41,12 +41,12 @@ class ButtonTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        button.backgroundColor = buttonBackgroundColor
-        button.titleLabel?.textColor = buttonTitleLabelColor
-        button.titleLabel?.text = buttonTitle
-        if let image = buttonBackgroundImage {
-            buttonImageView.image = image
-        }
+//        button.backgroundColor = buttonBackgroundColor
+//        button.titleLabel?.textColor = buttonTitleLabelColor
+//        button.titleLabel?.text = buttonTitle
+//        if let image = buttonBackgroundImage {
+//            buttonImageView.image = image
+//        }
         ViewHelper.roundCornersOf(viewLayer: button.layer, withRoundingCoefficient: 5.0)
     }
     

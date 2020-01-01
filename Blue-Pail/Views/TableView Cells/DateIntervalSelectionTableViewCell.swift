@@ -9,13 +9,19 @@
 import UIKit
 
 protocol IntervalSelectionCellDelegate {
-    func segueToUpdateCalendar()
+    func segueToUpdateCalendar(givenCellKey: String)
 }
 
 class DateIntervalSelectionTableViewCell: UITableViewCell {
     
     // MARK: - Internal Properties
     
+    var cellKey: String?
+    var datePickerTag: Int = 0 {
+        didSet {
+            updatePickerTag()
+        }
+    }
     var delegate: IntervalSelectionCellDelegate?
     var selectedInterval: Int?
     var nextReminderDate: Date? {
@@ -26,6 +32,7 @@ class DateIntervalSelectionTableViewCell: UITableViewCell {
     
     // MARK: - Outlets
     
+    @IBOutlet weak var nextLabel: UILabel!
     @IBOutlet weak var setupRemindersButton: UIButton!
     @IBOutlet weak var selectATimeLabel: UILabel!
     @IBOutlet weak var reminderTimeDatePicker: UIDatePicker!
@@ -36,14 +43,25 @@ class DateIntervalSelectionTableViewCell: UITableViewCell {
     // MARK: - Actions
     
     @IBAction func setupRemindersButtonPressed(_ sender: Any) {
-        guard let selectionDelegate = delegate else { return }
-        selectionDelegate.segueToUpdateCalendar()
+        guard let selectionDelegate = delegate, let key = cellKey else { return }
+        selectionDelegate.segueToUpdateCalendar(givenCellKey: key)
     }
     
     // MARK: - Methods
     
+    func updatePickerTag() {
+        reminderTimeDatePicker.tag = datePickerTag
+    }
+    
     func moveSetupButtonToTopRightCornerOfCell() {
-        setupRemindersButton.frame = CGRect(x: frame.width - 100.0, y: 100.0, width: 100.0, height: 100.0)
+        if nextReminderDate != nil {
+            setupRemindersButton.removeFromSuperview()
+            addSubview(setupRemindersButton)
+            setupRemindersButton.setTitle(" Update Reminders", for: .normal)
+            setupRemindersButton.bounds = CGRect(x: frame.width - 150.0, y: 150.0, width: 100.0, height: 100.0)
+            nextReminderLabel.text = nextReminderDate!.stringValue()
+            currentIntervalLabel.text = DayHelper.shared.translateDayIntToWeeks(givenAmountOfDays: selectedInterval!)
+        }
     }
     
     // MARK: - View Lifecycle

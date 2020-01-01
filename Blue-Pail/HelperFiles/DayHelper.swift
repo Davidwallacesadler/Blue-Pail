@@ -94,6 +94,39 @@ struct DayHelper {
         }
     }
     
+    func amountOfDaysBetweenInteger(previousDate dateOne: Date, futureDate dateTwo: Date) -> Int? {
+        var amountOfDaysBetween = Int()
+        let calendar = Calendar.current
+        let previousDateComponents = calendar.dateComponents([.year, .month, .day], from: dateOne)
+        let futureDateComponents = calendar.dateComponents([.year, .month, .day], from: dateTwo)
+        guard let previousDateYear = previousDateComponents.year, let previousDateMonth = previousDateComponents.month, let previousDateDay = previousDateComponents.day, let futureDateYear = futureDateComponents.year, let futureDateMonth = futureDateComponents.month, let futureDateDay = futureDateComponents.day else { return nil }
+        if previousDateYear == futureDateYear {
+            if previousDateMonth == futureDateMonth {
+                if previousDateDay == futureDateDay {
+                    // Day, Month, Year are the same:
+                    let timeOfFutureDate = dateTwo.timeStringValue()
+                    return 1
+                } else {
+                    // Month, Year are the same. day is different:
+                    amountOfDaysBetween = futureDateDay - previousDateDay
+                    return amountOfDaysBetween
+                }
+            } else {
+                // Year is the same. Month, Day is different:
+                let amountOfDaysInPreviousMonth = FunctionHelper.getAmountOfDaysInCurrentMonth(givenMonthNumber: previousDateMonth, givenYearNumber: previousDateYear)
+                let daysUntilTheEndOfTheMonth = amountOfDaysInPreviousMonth - previousDateDay
+                amountOfDaysBetween = futureDateDay + daysUntilTheEndOfTheMonth
+                return amountOfDaysBetween
+            }
+        } else {
+            // Year, Month, Day are different:
+            let amountOfDaysInPreviousMonth = FunctionHelper.getAmountOfDaysInCurrentMonth(givenMonthNumber: previousDateMonth, givenYearNumber: previousDateYear)
+            let daysUntilTheEndOfTheMonth = amountOfDaysInPreviousMonth - previousDateDay
+            amountOfDaysBetween = futureDateDay + daysUntilTheEndOfTheMonth
+            return amountOfDaysBetween
+        }
+    }
+    
     /// Returns a "month day" abbreviation of the argument date. I.E If the argument date is in january 10 2019, then the return string will be "Jan. 10th". Also if the argument date is yesterday (based on Date()) then the return string will be "Yesterday".
     func formatMonthAndDay(givenDate: Date) -> String {
      
@@ -190,6 +223,21 @@ struct DayHelper {
         return todayAtTheCorrectTime
     }
     
+    func getCorrectTimeOnDate(desiredHourMinuteDate: Date, date: Date) -> Date {
+        let calendar = Calendar.current
+        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        let desiredCompnents = calendar.dateComponents([.hour, .minute], from: desiredHourMinuteDate)
+        let correctHour = desiredCompnents.hour!
+        let correctMinute = desiredCompnents.minute!
+        components.hour = correctHour
+        components.minute = correctMinute
+        guard let dateAtTheCorrectTime = calendar.date(from: components) else {
+            print("getCorrectTimeToday: Error instantiating date from components - returning Date()")
+            return Date()
+        }
+        return dateAtTheCorrectTime
+    }
+    
     ///Returns the desired hour/minute on todays date that matches the target dates hour/minute.
     func getSameTimeAsDateToday(targetDate date: Date) -> Date {
         let calendar = Calendar.current
@@ -246,6 +294,62 @@ struct DayHelper {
             return Date()
         }
         return todayAtCorrectTime
+    }
+    
+    func determineReadableIntervalBetweenDates(dateOne: Date, dateTwo: Date) -> String {
+        var secondsFromNowTillEnd = dateTwo.timeIntervalSince(dateOne)
+        let secondsInADay = 86400.0
+        var intervalDays = 1
+        while secondsFromNowTillEnd > secondsInADay {
+            intervalDays += 1
+            secondsFromNowTillEnd -= secondsInADay
+        }
+        var intervalWeeks = 0
+        while intervalDays >= 7 {
+            intervalWeeks += 1
+            intervalDays -= 7
+        }
+        var text = ""
+        if intervalWeeks != 0 {
+            if intervalWeeks == 1 {
+                text.append("1 week ")
+            } else {
+                text.append("\(intervalWeeks) weeks ")
+            }
+        }
+        if intervalDays != 0 {
+            if intervalDays == 1 {
+                text.append("1 day")
+            } else {
+                text.append("\(intervalDays) days")
+            }
+        }
+        return text
+    }
+    
+    func translateDayIntToWeeks(givenAmountOfDays days: Int) -> String {
+        var currentAmountOfDays = days
+        var weekCount = 0
+        var text = ""
+        while currentAmountOfDays >= 7 {
+            currentAmountOfDays -= 7
+            weekCount += 1
+        }
+        if weekCount != 0 {
+            if weekCount == 1 {
+                text.append("1 week ")
+            } else {
+                text.append("\(weekCount) weeks ")
+            }
+        }
+        if currentAmountOfDays != 0 {
+            if currentAmountOfDays == 1 {
+                text.append("1 day")
+            } else {
+                text.append("\(currentAmountOfDays) days")
+            }
+        }
+        return text
     }
     
 }

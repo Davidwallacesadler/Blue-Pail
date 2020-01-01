@@ -64,7 +64,9 @@ class TagController {
             return
         }
         for plant in plants {
-            PlantController.shared.cancelUserNotifications(for: plant as! Plant)
+            PlantController.shared.cancelUserNotifications(for: plant as! Plant,
+                                                           givenNotificationKey: Keys.waterNotification)
+            PlantController.shared.cancelUserNotifications(for: plant as! Plant, givenNotificationKey: Keys.fertilizerNotification)
         }
         // Delete the tag
         let moc = selectedTag.managedObjectContext

@@ -8,6 +8,9 @@
 
 import UIKit
 import FSCalendar
+protocol CalendarDateSelectionDelegate {
+    func updateDates(selectedKey key: String, dateAndInterval: (Date, Int))
+}
 
 class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource {
     
@@ -22,8 +25,7 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
         if firstSelectedDate == nil {
             firstSelectedDate = date
             setupNextReminderDateLabel()
-        }
-        if secondSelectedDate == nil && firstDateWasSelected {
+        } else if secondSelectedDate == nil && firstDateWasSelected {
             secondSelectedDate = date
             setupIntervalLabel()
         }
@@ -43,9 +45,11 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
     
     // MARK: - Properties
     
+    var delegate: CalendarDateSelectionDelegate?
     var firstSelectedDate: Date?
     var secondSelectedDate: Date?
     var firstDateWasSelected = false
+    var reminderKey: String?
     
     // MARK: - Outlets
     
@@ -58,7 +62,13 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
     // MARK: - Actions
     
     @IBAction func doneButtonPressed(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        guard let calendarDelegate = delegate, let key = reminderKey, let dateOne = firstSelectedDate, let dateTwo = secondSelectedDate else { return }
+        if let intervalDays = DayHelper.shared.amountOfDaysBetweenInteger(previousDate: dateOne, futureDate: dateTwo) {
+            calendarDelegate.updateDates(selectedKey: key, dateAndInterval: (dateOne,intervalDays))
+            self.dismiss(animated: true, completion: nil)
+                   
+        }
+       
     }
     
     // MARK: - View Lifecycle
@@ -66,20 +76,29 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCalendarDelegation()
+        if let key = reminderKey {
+            if key == Keys.waterNotification {
+                tipLabel.text?.append(" to water.")
+            } else {
+                tipLabel.text?.append(" to fertilize.")
+                doneButton.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+            }
+        }
     }
     
     // MARK: - Internal Methods
     
     private func setupNextReminderDateLabel() {
         if let firstDate = firstSelectedDate {
-            nextDateLabel.text = firstDate.stringValue()
-            tipLabel.text = "2. Select another date in the future to determine the frequency of fertilizing."
+            nextDateLabel.text = firstDate.dayMonthYearValue()
+            tipLabel.text = "2. Select another date in the future to determine the frequency."
+            firstDateWasSelected = true
         }
     }
     
     private func setupIntervalLabel() {
         if let dateOne = firstSelectedDate, let dateTwo = secondSelectedDate {
-            nextDateLabel.text = determineFertilizerInterval(dateOne: dateOne, dateTwo: dateTwo)
+            currentIntervalLabel.text = DayHelper.shared.determineReadableIntervalBetweenDates(dateOne: dateOne, dateTwo: dateTwo)
             tipLabel.text = "3. Hit Done when you're ready."
         }
     }
@@ -93,37 +112,8 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
     private func displayFutureDateAlert(withSelectedDate date: Date) {
         let futureDateAlert = UIAlertController(title: "Date is in the Past", message: "Please select a day that is tomorrow at the earliest.", preferredStyle: .alert)
         futureDateAlert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+        present(futureDateAlert, animated: true, completion: nil)
         calendar.deselect(date)
     }
     
-    private func determineFertilizerInterval(dateOne: Date, dateTwo: Date) -> String {
-        var secondsFromNowTillEnd = dateTwo.timeIntervalSince(dateOne)
-        let secondsInADay = 86400.0
-        var intervalDays = 1
-        while secondsFromNowTillEnd > secondsInADay {
-            intervalDays += 1
-            secondsFromNowTillEnd -= secondsInADay
-        }
-        var intervalWeeks = 0
-        while intervalDays >= 7 {
-            intervalWeeks += 1
-            intervalDays -= 7
-        }
-        var text = "Interval: "
-        if intervalWeeks != 0 {
-            if intervalWeeks == 1 {
-                text.append("1 week ")
-            } else {
-                text.append("\(intervalWeeks) weeks ")
-            }
-        }
-        if intervalDays != 0 {
-            if intervalDays == 1 {
-                text.append("1 day")
-            } else {
-                text.append("\(intervalDays) days")
-            }
-        }
-        return text
-    }
 }
