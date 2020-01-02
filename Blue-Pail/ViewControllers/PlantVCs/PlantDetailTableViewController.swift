@@ -96,12 +96,25 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             // Title
             guard let titleCell = tableView.dequeueReusableCell(withIdentifier: "textFieldCell") as? TextFieldTableViewCell else { return UITableViewCell()}
             titleCell.textField.delegate = self
+            if plantTitle.isEmpty == false {
+                titleCell.textField.text = plantTitle
+            }
             cell = titleCell
         case 1:
             // Tag
             guard let tagPickerCell = tableView.dequeueReusableCell(withIdentifier: "pickerViewCell") as? PickerViewTableViewCell else { return UITableViewCell() }
             tagPickerCell.pickerView.delegate = self
             tagPickerCell.pickerView.dataSource = self
+            if let selectedTagTitle = tag?.title {
+                var index = 0
+                for title in tagPickerTitles {
+                    if title == selectedTagTitle {
+                        break
+                    }
+                    index += 1
+                }
+                tagPickerCell.pickerView.selectRow(index, inComponent: 0, animated: false)
+            }
             cell = tagPickerCell
         case 2,3:
             // Watering
@@ -112,6 +125,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
                 intervalCell.selectedInterval = wateringDayInteger
                 intervalCell.nextReminderDate = wateringReminderNext
                 intervalCell.setupRemindersButton.backgroundColor = .deepBlue
+                intervalCell.setupRemindersButton.setTitle("Setup Watering Reminders", for: .normal)
                 intervalCell.nextLabel.text = "Next Watering:"
                 intervalCell.nextLabel.tintColor = .deepBlue 
             default:
@@ -119,8 +133,9 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
                 intervalCell.selectedInterval = fertilizerDayInteger
                 intervalCell.nextReminderDate = fertilizerReminderNext
                 intervalCell.setupRemindersButton.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+                intervalCell.setupRemindersButton.setTitle("Setup Fertilizing Reminders", for: .normal)
                 intervalCell.nextLabel.text = "Next Fertilizing:"
-                intervalCell.nextLabel.tintColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+                //intervalCell.nextLabel.tintColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
             }
             intervalCell.reminderTimeDatePicker.addTarget(self, action: #selector(updateReminderTime(sender:)), for: .allEvents)
             intervalCell.datePickerTag = indexPath.section
@@ -191,11 +206,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     // MARK: - PickerView Delegate Methods
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        if pickerView == dayPickerView {
-            return pickerData.count
-        } else {
-            return 1
-        }
+        return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -251,106 +262,35 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         if tagPickerTitles.isEmpty == false {
             updateTag(selectedTag: TagController.shared.getSelectedTag(givenTagTitle: tagPickerTitles[0]))
         }
-        
-        // Rounding Corners:
-        //ViewHelper.roundCornersOf(viewLayer: deletePlantButton.layer, withRoundingCoefficient: 20.0)
-        // NavigationBar Setup:
-        //NavigationBarHelper.setupNativationBar(viewController: self)
-        
         // Gesture recognizer Setup:
-//        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
-//        tap.cancelsTouchesInView = false
-//        self.view.addGestureRecognizer(tap)
-//
-//        // Segued Data Setup:
-//        #warning("update this method")
-//        updateViews()
-//
-//        // DayPicker Setup:
-//        self.dayPickerView.delegate = self
-//        self.dayPickerView.dataSource = self
-//        pickerData = [
-//            pickerDays
-//        ]
-//        self.dayPickerView.selectRow(0, inComponent: 0, animated: false)
-//
-//        // TagPicker Setup:
-//        self.tagPickerView.delegate = self
-//        self.tagPickerView.dataSource = self
-//
-//        // TextField Setup:
-//        self.plantNameTextField.delegate = self
-//
-//        // UpdatePicker Setup:
-//        updateDayPickerValue()
-//        updateTagPickerValue()
-//        updateTimeValues()
-//
-//        // didChangeThemeModeNotification observer:
-//        NotificationCenter.default.addObserver(self, selector: #selector(didChangeThemeMode), name: .didChangeThemeMode, object: nil)
-//
-//        // Theme Setup:
-//        self.isDarkMode = UserDefaults.standard.bool(forKey: Keys.themeMode)
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
     }
 
-    
     override func viewDidAppear(_ animated: Bool) {
         // TODO: - Is there a better way of refreshing the data?
         //tagPickerView.reloadAllComponents()
     }
     
-    override func viewDidLayoutSubviews() {
-       // swapColorsToDarkForTableViewIfNeeded()
-//        if isDarkMode {
-//            // PickerViews
-//            tagPickerView.subviews[1].backgroundColor = .white
-//            tagPickerView.subviews[2].backgroundColor = .white
-//            dayPickerView.subviews[1].backgroundColor = .white
-//            dayPickerView.subviews[2].backgroundColor = .white
-//        }
-    }
-    
     // MARK: - Stored Properties
-    #warning("setting this = to Darkmode.shared.isDarkmode is not working for me")
-//    private var isDarkMode: Bool = UserDefaults.standard.bool(forKey: Keys.themeMode) {
-//        didSet {
-//            tableView.reloadData()
-//            swapColorsIfNeeded()
-//        }
-//    }
     var wateringDatePicker: UIDatePicker?
     var fertilizingDatePicker: UIDatePicker?
     var calendarKey: String?
-    var plantTitle = ""
     let sectionTitles = ["Title","Tag","Watering Reminder","Fertilizer Reminder", "Photo", "Delete"]
+    
+    // PLANT PROPERTIES
     var plant: Plant?
+    var tag: Tag?
+    var plantTitle = ""
     var wateringReminderNext: Date?
     var wateringDayInteger: Int?
     var fertilizerReminderNext: Date?
     var fertilizerDayInteger: Int?
     var image: UIImage?
-    var tag: Tag?
-    var pickerDays = [
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-        11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-        21, 22, 24, 25, 26, 27, 28, 29, 30, 31
-    ]
-    var pickerData = [[Int]]()
-    var selectedHour: Int?
-    var selectedMinute: Int?
     
     // MARK: - Computed Properties
     
-    // For Consistent rounding:
-    var photoImageViewWidth: CGFloat {
-        return self.photoImageView.frame.width
-    }
-    var deleteButtonViewHeight: CGFloat {
-        guard let deletePlantButtonImageView = self.deletePlantButton.imageView else {
-            return 50.0
-        }
-        return deletePlantButtonImageView.frame.height
-    }
     var tagPickerTitles: [String] {
         get {
             let tags = TagController.shared.tags
@@ -362,43 +302,10 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             return tagTitles
         }
     }
-
-    // MARK: - Outlets
-    
-    @IBOutlet var dayPickerView: UIPickerView!
-    @IBOutlet weak var plantNameTextField: UITextField!
-    @IBOutlet weak var notifcationDateLabel: UILabel!
-    @IBOutlet weak var deletePlantButton: UIButton!
-    @IBOutlet weak var imageButton: UIButton!
-    @IBOutlet weak var tagPickerView: UIPickerView!
-    @IBOutlet weak var timeDatePicker: UIDatePicker!
-    @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var dayPickerLabel: UILabel!
-    @IBOutlet weak var nextLabel: UILabel!
     
     // MARK: - Actions
     
     // Navigation Controller Buttons:
-    @IBAction func timeDatePickerChanged(_ sender: Any) {
-        let selectedDate = timeDatePicker.date
-        let calendar = Calendar.current
-        let desiredComponents = calendar.dateComponents([.hour, .minute], from: selectedDate)
-        guard let hour = desiredComponents.hour, let minute = desiredComponents.minute else {
-            return
-        }
-        selectedHour = hour
-        selectedMinute = minute
-        var day = 0
-        if wateringDayInteger != nil {
-            day = wateringDayInteger ?? 0
-        }
-        let desiredNotificationTimeToday = DayHelper.shared.getCorrectTimeToday(desiredHourMinute: (hour, minute))
-        let notificationDate = DayHelper.shared.futureDateFromADate(givenDate: desiredNotificationTimeToday, numberOfDays: day)
-        wateringReminderNext = notificationDate
-      //  self.notifcationDateLabel.text = notificationDate.stringValue()
-    }
-    
-    
     @IBAction func cancelButtonPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -406,16 +313,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     @IBAction func saveButtonPressed(_ sender: Any) {
         #warning("first check if the plant name is unique - since i have no other unique identifiers for plant objects")
         updatePlantObject()
-    }
-    
-    // TableView Buttons:
-    @IBAction func imageButtonPressed(_ sender: Any) {
-        #warning("fix the breaking constriants that are causing lag here")
-        
-    }
-    
-    @IBAction func deleteButtonPressed(_ sender: Any) {
-       
     }
     
     // MARK: - Internal Methods
@@ -434,116 +331,100 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     
      /// Updates the plant object if there was one passed in, otherwise creates a new plant object with the components from the view.
     private func updatePlantObject() {
-        guard let plantName = plantNameTextField.text.nilIfEmpty else {
-            let noNameAlert = UIAlertController(title: "No Title Entered", message: "Please enter a title for your plant.", preferredStyle: .alert)
+        if plantTitle.isEmpty {
+            let noNameAlert = UIAlertController(title: "No Title Entered", message: "Please enter a title for your plant before saving.", preferredStyle: .alert)
             noNameAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
             self.present(noNameAlert, animated: true)
             return
         }
-        guard let selectedTag = tag else {
-            let noTagAlert = UIAlertController(title: "No Tag Selected", message: "Please choose a tag for your plant.", preferredStyle: .alert)
+        if tag == nil {
+            let noTagAlert = UIAlertController(title: "No Tag Selected", message: "Please choose a tag for your plant before saving.", preferredStyle: .alert)
             noTagAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
             self.present(noTagAlert, animated: true)
             return
         }
-        guard let wateringDate = wateringReminderNext, let dayInt = wateringDayInteger else {
-            let noDateAlert = UIAlertController(title: "No Day or Time Selected", message: "Please select a notifcation day & time for your plant.", preferredStyle: .alert)
+        guard let wateringDate = wateringReminderNext, let wateringDayInt = wateringDayInteger else {
+            let noDateAlert = UIAlertController(title: "No Watering Reminder", message: "Please setup a reminder for watering your plant before saving.", preferredStyle: .alert)
             noDateAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
             self.present(noDateAlert, animated: true)
             return
         }
         guard let selectedPlant = plant, let plantImage = image else {
             // CREATE
-            //PlantController.shared.createPlant(name: plantName, image: image ?? UIImage(named: Keys.noImage), needsWaterFireDate: wateringDate, tag: selectedTag, dayInteger: dayInt)
+            PlantController.shared.createPlant(name: plantTitle,
+                                               image: UIImage(named: Keys.noImage),
+                                               needsWateredFireDate: wateringDate,
+                                               tag: tag!,
+                                               wateringDayInteger: wateringDayInt,
+                                               fertilizingDayInteger: fertilizerDayInteger,
+                                               needsFertilizedFireDate: fertilizerReminderNext)
             self.navigationController?.popViewController(animated: true)
             return
         }
         //UPDATE
-        //PlantController.shared.updatePlant(plant: selectedPlant, newName: plantName, newImage: plantImage, newFireDate: wateringDate, newTag: selectedTag, dayInteger: dayInt)
+        PlantController.shared.updatePlant(plant: selectedPlant,
+                                           newName: plantTitle,
+                                           newImage: plantImage,
+                                           newWateringFireDate: wateringReminderNext,
+                                           newTag: tag!,
+                                           daysToNextWater: wateringDayInt,
+                                           newFertilizerFireDate: fertilizerReminderNext,
+                                           daysToNextFertilizing: fertilizerDayInteger)
         self.navigationController?.popViewController(animated: true)
-        
     }
     
     /// Updates the components of the view with the properties of the passed in plant.
-    private func updateViews() {
-        guard let selectedPlant = plant, let plantTag = plant?.tag, let plantImage = plant?.photo, let fireDate = plant?.needsWateredFireDate, let plantDay = plant?.dayToNextWater else { return }
-        plantNameTextField.text = selectedPlant.name
-        updateTag(selectedTag: plantTag)
-        image = plantImage
-        wateringDayInteger = Int(plantDay)
-        checkDayValue()
-        wateringReminderNext = fireDate
-        if Date() <= fireDate {
-            notifcationDateLabel.text = "\(fireDate.stringValue())"
-            notifcationDateLabel.textColor = UIColor.darkBlue
-        } else {
-            notifcationDateLabel.text = "\(fireDate.stringValue())(Past Due)"
-            notifcationDateLabel.textColor = UIColor.redOrange
-        }
-        photoImageView.image = plantImage
-        photoImageView.contentMode = .scaleAspectFill
-        // 3.0 7 plus
-        //
-            ViewHelper.roundCornersOf(viewLayer: photoImageView.layer, withRoundingCoefficient: Double(photoImageViewWidth * 0.2))
-        updateDatePickerValue()
-    }
+//    private func updateViews() {
+//        guard let selectedPlant = plant, let plantTag = plant?.tag, let plantImage = plant?.photo, let fireDate = plant?.needsWateredFireDate, let plantDay = plant?.dayToNextWater else { return }
+//        plantNameTextField.text = selectedPlant.name
+//        updateTag(selectedTag: plantTag)
+//        image = plantImage
+//        wateringDayInteger = Int(plantDay)
+//        checkDayValue()
+//        wateringReminderNext = fireDate
+//        if Date() <= fireDate {
+//            notifcationDateLabel.text = "\(fireDate.stringValue())"
+//            notifcationDateLabel.textColor = UIColor.darkBlue
+//        } else {
+//            notifcationDateLabel.text = "\(fireDate.stringValue())(Past Due)"
+//            notifcationDateLabel.textColor = UIColor.redOrange
+//        }
+//        photoImageView.image = plantImage
+//        photoImageView.contentMode = .scaleAspectFill
+//        // 3.0 7 plus
+//        //
+//            ViewHelper.roundCornersOf(viewLayer: photoImageView.layer, withRoundingCoefficient: Double(photoImageViewWidth * 0.2))
+//        updateDatePickerValue()
+//    }
     
     /// Updates the selected Tag reference, and related label and color view elements.
     private func updateTag(selectedTag: Tag) {
         tag = selectedTag
     }
     
-    /// Updates the DayPickerView selected row if there is a dayInteger passed in.
-    private func updateDayPickerValue() {
-        guard let day = wateringDayInteger else {
-            wateringDayInteger = 1
-            return
-        }
-        var index = 0
-        for integer in pickerDays {
-            if integer == day {
-                break
-            }
-            index += 1
-        }
-        dayPickerView.selectRow(index, inComponent: 0, animated: false)
-    }
-    
     /// Updates the tagPickerView selected row if there is a tag passed in.
-    private func updateTagPickerValue() {
-        guard let selectedTagTitle = tag?.title else { return }
-        var index = 0
-        for title in tagPickerTitles {
-            if title == selectedTagTitle {
-                break
-            }
-            index += 1
-        }
-        tagPickerView.selectRow(index, inComponent: 0, animated: false)
-    }
+//    private func updateTagPickerValue() {
+//        guard let selectedTagTitle = tag?.title else { return }
+//        var index = 0
+//        for title in tagPickerTitles {
+//            if title == selectedTagTitle {
+//                break
+//            }
+//            index += 1
+//        }
+//        tagPickerView.selectRow(index, inComponent: 0, animated: false)
+//    }
     
     /// Sets the selectedHour and selectedMinute to the current time if there is no needsWateringDateValue passed in.
-    private func updateTimeValues() {
-        guard let wateringDate = wateringReminderNext else {
-            wateringReminderNext = Date()
-            selectedHour = Date().hourOfCurrentDate()
-            selectedMinute = Date().minuteOfCurrentDate()
-            return
-        }
-        selectedHour = wateringDate.hourOfCurrentDate()
-        selectedMinute = wateringDate.minuteOfCurrentDate()
-    }
-    
-     /// Updates the timeDatePickerView selected row if there is a notification date passed in.
-    private func updateDatePickerValue() {
-        guard let fireDate = wateringReminderNext else { return }
-        timeDatePicker.setDate(fireDate, animated: false)
-    }
-    
-    /// Updates the size of the imageView to corrospond with the size of the view
-//    private func tableSetup() {
-//        self.tableView.rowHeight = UITableView.automaticDimension
-//        self.tableView.estimatedRowHeight = 44.0
+//    private func updateTimeValues() {
+//        guard let wateringDate = wateringReminderNext else {
+//            wateringReminderNext = Date()
+//            selectedHour = Date().hourOfCurrentDate()
+//            selectedMinute = Date().minuteOfCurrentDate()
+//            return
+//        }
+//        selectedHour = wateringDate.hourOfCurrentDate()
+//        selectedMinute = wateringDate.minuteOfCurrentDate()
 //    }
     
     /// Removes the selected plant from its tag collecton, deletes it, and pops the viewController.
@@ -554,113 +435,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         PlantController.shared.deletePlant(plant: selectedPlant)
         self.navigationController?.popViewController(animated: true)
     }
-    
-    /// Checks if the DayInteger is greater than one - if so it will update the DayPickerLabel to "Days".
-    private func checkDayValue() {
-        if wateringDayInteger == 1 {
-            dayPickerLabel.text = "Day"
-        } else {
-           dayPickerLabel.text = "Days"
-        }
-    }
-    
-//    @objc private func didChangeThemeMode() {
-//        isDarkMode = UserDefaults.standard.bool(forKey: Keys.themeMode)
-//    }
-    
-    #warning("see if UIcolor.darkGray and UIColor.tableViewSectionDarkGray are the same - if so delete the latter")
-    
-//    private func swapColorsToDarkForTableViewIfNeeded() {
-//        if isDarkMode {
-//            // TableView Cells:
-//            for view in self.tableView.subviews {
-//                if view is UITableViewHeaderFooterView == false {
-//                    view.backgroundColor = .black
-//                }
-//            }
-//            // TableView Sections:
-//            self.tableView.backgroundColor = .black
-//            for section in 0..<tableView.numberOfSections {
-//                guard let tableViewSection = tableView.headerView(forSection: section) else {
-//                    return
-//                }
-//                let backgroundView = UIView(frame:tableViewSection.bounds)
-//                backgroundView.backgroundColor = .darkModeGray
-//                tableViewSection.backgroundView = backgroundView
-//                tableViewSection.textLabel?.textColor = .white
-//            }
-//        } else {
-//            // TableView Cells:
-//            for view in self.tableView.subviews {
-//                if view is UITableViewHeaderFooterView == false {
-//                    view.backgroundColor = .white
-//                }
-//            }
-//            // TableView Sections:
-//            self.tableView.backgroundColor = .white
-//            for section in 0..<tableView.numberOfSections {
-//                guard let tableViewSection = tableView.headerView(forSection: section) else {
-//                    return
-//                }
-//                let backgroundView = UIView(frame:tableViewSection.bounds)
-//                backgroundView.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
-//                tableViewSection.backgroundView = backgroundView
-//                tableViewSection.textLabel?.textColor = .darkGrayBlue
-//            }
-//        }
-//    }
-    
-    
-    /// Swaps the colors of all the elements in the view to their dark mode versions.
-//    func swapColorsToDark() {
-//        // Self:
-//        self.view.backgroundColor = .black
-//        // Navigation Controller:
-//        NavigationBarHelper.setupDarkModeNavigationBar(viewController: self)
-//        self.navigationItem.leftBarButtonItem?.tintColor = .white
-//        self.navigationItem.rightBarButtonItem?.tintColor = .white
-//        self.navigationController?.navigationBar.barStyle = .black
-//        //Outlets:
-//        #warning("TODO: Autocomplete block is black - see how to fix this")
-//        let placeholderAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.white]
-//        let placeholder = NSAttributedString(string: "Please enter a title...", attributes: placeholderAttributes)
-//        self.plantNameTextField.attributedPlaceholder = placeholder
-//        self.plantNameTextField.backgroundColor = .gray
-//        self.plantNameTextField.textColor = .white
-//        self.plantNameTextField.keyboardAppearance = .dark
-//        self.notifcationDateLabel.textColor = .skyBlue
-//        self.dayPickerLabel.textColor = .white
-//        self.nextLabel.textColor = .white
-//        self.timeDatePicker.setValue(UIColor.white, forKey: "textColor")
-//        if plant == nil {
-//            self.photoImageView.tintColor = .white
-//        }
-//        //        pickerView.subviews[1].backgroundColor = UIColor.whiteColor()
-//        //        pickerView.subviews[2].backgroundColor = UIColor.whiteColor()
-//
-//
-//    }
-//
-//    /// Swaps the colors of all the elements in the view to their defualt (light) versions.
-//    func swapColorsToLight() {
-//        //  NavigationBar:
-//        NavigationBarHelper.setupNativationBar(viewController: self)
-//        self.navigationItem.leftBarButtonItem?.tintColor = .darkGrayBlue
-//        self.navigationItem.rightBarButtonItem?.tintColor = .darkGrayBlue
-//        self.navigationController?.navigationBar.barStyle = .default
-//        // TableView:
-//        self.tableView.backgroundColor = .white
-//
-//    }
-//
-//    /// Calls swapColorsToLight or swapColorsToDark depending on the set themeMode.
-//    func swapColorsIfNeeded() {
-//        if UserDefaults.standard.bool(forKey: Keys.themeMode) {
-//            swapColorsToDark()
-//        } else {
-//            swapColorsToLight()
-//        }
-//    }
 }
 
 // MARK: - UIImagePickerControllerDelegate Extension
@@ -709,15 +483,8 @@ extension PlantDetailTableViewController: UIImagePickerControllerDelegate, UINav
         guard let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
             return
         }
-//        photoImageView.image = originalImage
-//        photoImageView.contentMode = .scaleAspectFill
-//        if photoImageViewWidth < 193.0 {
-//            ViewHelper.roundCornersOf(viewLayer: photoImageView.layer, withRoundingCoefficient: Double(photoImageViewWidth / 4.0))
-//        } else {
-//            ViewHelper.roundCornersOf(viewLayer: photoImageView.layer, withRoundingCoefficient: Double(photoImageViewWidth / 3.0))
-//        }
         image = originalImage
-        tableView.reloadSections(IndexSet([4]), with: .fade)
+        tableView.reloadSections(IndexSet([4]), with: .none)
         picker.dismiss(animated: true, completion: nil)
     }
 }

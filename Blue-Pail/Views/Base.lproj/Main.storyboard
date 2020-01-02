@@ -33,6 +33,56 @@
             </objects>
             <point key="canvasLocation" x="-968" y="139"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="rI3-DL-xdu">
+            <objects>
+                <viewController id="eQd-fI-IBh" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Wkm-b2-AKe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jea-0M-t1p" customClass="FSCalendar">
+                                <rect key="frame" x="0.0" y="47" width="375" height="600"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleDefaultColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="headerTitleColor">
+                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
+                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="todaySelectionColor">
+                                        <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yx7-15-CGU">
+                                <rect key="frame" x="152" y="16" width="71" height="15"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="71" id="fLv-d4-P9a"/>
+                                    <constraint firstAttribute="height" constant="15" id="lV0-Sm-XPx"/>
+                                </constraints>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="kHQ-nq-pOn" firstAttribute="trailing" secondItem="Jea-0M-t1p" secondAttribute="trailing" id="Tsc-j1-dPV"/>
+                            <constraint firstItem="yx7-15-CGU" firstAttribute="top" secondItem="kHQ-nq-pOn" secondAttribute="top" constant="16" id="UUf-3A-aaT"/>
+                            <constraint firstItem="kHQ-nq-pOn" firstAttribute="bottom" secondItem="Jea-0M-t1p" secondAttribute="bottom" id="W4E-mf-NBW"/>
+                            <constraint firstItem="Jea-0M-t1p" firstAttribute="top" secondItem="yx7-15-CGU" secondAttribute="bottom" constant="16" id="vIv-Gs-D5s"/>
+                            <constraint firstItem="Jea-0M-t1p" firstAttribute="leading" secondItem="kHQ-nq-pOn" secondAttribute="leading" id="vs0-9b-nac"/>
+                            <constraint firstItem="yx7-15-CGU" firstAttribute="centerX" secondItem="Wkm-b2-AKe" secondAttribute="centerX" id="zhh-1T-ED7"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="kHQ-nq-pOn"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ngH-eS-Jfa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-250" y="-556"/>
+        </scene>
         <!--My Plants-->
         <scene sceneID="k1Y-lE-fEa">
             <objects>
@@ -387,6 +437,7 @@
                     <connections>
                         <outlet property="tagFilterPickerView" destination="6I5-hd-Ean" id="Vbm-X4-p7N"/>
                         <segue destination="ADt-cV-qID" kind="show" identifier="toEditPlant" id="pGJ-Ms-J0E"/>
+                        <segue destination="eQd-fI-IBh" kind="presentation" id="ML7-P5-CLQ"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RfU-ke-gy2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -873,6 +924,26 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="DYH-Xj-Ffp" secondAttribute="height" multiplier="15:18" id="W6n-eY-p7t"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="todaySelectionColor">
+                                        <color key="value" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
+                                        <color key="value" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="headerTitleColor">
+                                        <color key="value" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleDefaultColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleSelectionColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="selectionColor">
+                                        <color key="value" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="nfV-Wo-AJp">
                                 <rect key="frame" x="16" y="143" width="343" height="44"/>

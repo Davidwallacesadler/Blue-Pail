@@ -73,5 +73,7 @@ class DateIntervalSelectionTableViewCell: UITableViewCell {
             moveSetupButtonToTopRightCornerOfCell()
         }
         ViewHelper.roundCornersOf(viewLayer: setupRemindersButton.layer, withRoundingCoefficient: 5.0)
+        setupRemindersButton.titleLabel?.numberOfLines = 0
+        setupRemindersButton.titleLabel?.textAlignment = .center
     }
 }

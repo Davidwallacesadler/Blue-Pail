@@ -455,6 +455,14 @@ extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
     if segue.identifier == "toEditPlant" {
         guard let detailVC = segue.destination as? PlantDetailTableViewController else { return }
         detailVC.plant = selectedPlant
+        detailVC.plantTitle = (selectedPlant?.name)!
+        detailVC.tag = selectedPlant?.tag
+        detailVC.wateringReminderNext = selectedPlant?.needsWateredFireDate
+        detailVC.wateringDayInteger = Int(selectedPlant!.dayToNextWater)
+        if selectedPlant!.daysToNextFertilize != 0 {
+            detailVC.fertilizerDayInteger = Int(selectedPlant!.daysToNextFertilize)
+            detailVC.fertilizerReminderNext = selectedPlant?.needsFertilizedFireDate
+        }
         detailVC.navigationItem.title = selectedPlant?.name
         }
     }

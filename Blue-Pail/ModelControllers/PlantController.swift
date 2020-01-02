@@ -174,6 +174,7 @@ class PlantController : AlarmScheduler {
                                   isSnoozed: false,
                                   snoozeTimeInterval: nil,
                                   givenNotificationName: Keys.waterNotification)
+        #warning("Getting error about notifications on save()")
         saveToPersistentStorage()
     }
     
@@ -282,7 +283,6 @@ extension AlarmScheduler {
         default:
             return
         }
-        
         if isSnoozed {
             // Use the snooze time interval as the notification trigger:
             if let snoozeTime = snoozeTimeInterval {

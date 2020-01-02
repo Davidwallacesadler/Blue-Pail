@@ -20,31 +20,65 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
         let timeSinceNow = date.timeIntervalSinceNow
         if timeSinceNow < 0 {
             displayFutureDateAlert(withSelectedDate: date)
+            calendar.deselect(date)
+            calendar.reloadData()
             return
         }
-        if firstSelectedDate == nil {
-            firstSelectedDate = date
-            setupNextReminderDateLabel()
-        } else if secondSelectedDate == nil && firstDateWasSelected {
-            secondSelectedDate = date
-            setupIntervalLabel()
+        if selectedDateCount < 2 {
+            if firstSelectedDate == nil {
+                firstSelectedDate = date
+                selectedDateCount += 1
+                setupNextReminderDateLabel()
+            } else if secondSelectedDate == nil && firstDateWasSelected {
+                secondSelectedDate = date
+                selectedDateCount += 1
+                setupIntervalLabel()
+            }
+        } else {
+            let deselectAlert = UIAlertController(title: "Deselect A Previous Date", message: "Tap one of the previously selected days before selecting another day.", preferredStyle: .alert)
+            deselectAlert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+            present(deselectAlert, animated: true, completion: nil)
+            calendar.deselect(date)
+            calendar.reloadData()
+            return
         }
     }
     
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        if let firstDate = firstSelectedDate, let secondDate = secondSelectedDate {
+        if let firstDate = firstSelectedDate {
+            selectedDateCount -= 1
             if date == firstDate {
-                firstSelectedDate = secondDate
-                secondSelectedDate = nil
+                if let secondDate = secondSelectedDate {
+                    firstSelectedDate = secondDate
+                    secondSelectedDate = nil
+                    tipLabel.text = "2. Select another date in the future to determine the frequency."
+                    currentIntervalLabel.text = ""
+                    nextDateLabel.text = firstSelectedDate!.dayMonthYearValue()
+                } else {
+                    firstSelectedDate = nil
+                    nextDateLabel.text = ""
+                    tipLabel.text = "1. Select the next day you want to be reminded"
+                    switch reminderKey {
+                    case Keys.fertilizerNotification:
+                        tipLabel.text?.append(contentsOf: " to fertilize.")
+                    default:
+                        tipLabel.text?.append(contentsOf: " to water.")
+                    }
+                }
             }
+        }
+        if let secondDate = secondSelectedDate {
             if date == secondDate {
                 secondSelectedDate = nil
+                currentIntervalLabel.text = ""
+                tipLabel.text = "2. Select another date in the future to determine the frequency."
             }
         }
     }
     
     // MARK: - Properties
     
+    var selectedDateCount = 0
     var delegate: CalendarDateSelectionDelegate?
     var firstSelectedDate: Date?
     var secondSelectedDate: Date?
@@ -110,10 +144,10 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
     }
     
     private func displayFutureDateAlert(withSelectedDate date: Date) {
-        let futureDateAlert = UIAlertController(title: "Date is in the Past", message: "Please select a day that is tomorrow at the earliest.", preferredStyle: .alert)
+        let futureDateAlert = UIAlertController(title: "Date is in the Past", message: "Please select a day starting with tomorrow.", preferredStyle: .alert)
         futureDateAlert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
         present(futureDateAlert, animated: true, completion: nil)
-        calendar.deselect(date)
+       
     }
     
 }
