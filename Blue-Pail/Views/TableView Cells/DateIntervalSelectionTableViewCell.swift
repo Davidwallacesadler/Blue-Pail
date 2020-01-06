@@ -64,6 +64,9 @@ class DateIntervalSelectionTableViewCell: UITableViewCell {
             setupRemindersButton.updateConstraints()
             nextReminderLabel.text = nextReminderDate!.stringValue()
             currentIntervalLabel.text = DayHelper.shared.translateDayIntToWeeks(givenAmountOfDays: selectedInterval!)
+        } else {
+            remindersButtonBottomConstraint.constant = 16.0
+            setupRemindersButton.titleLabel?.numberOfLines = 0
         }
     }
     

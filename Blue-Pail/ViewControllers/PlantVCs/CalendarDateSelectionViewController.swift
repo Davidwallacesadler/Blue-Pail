@@ -123,6 +123,8 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
             } else {
                 tipLabel.text?.append(" to fertilize.")
                 doneButton.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+                calendar.appearance.selectionColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
+                calendar.configureAppearance()
             }
         }
     }

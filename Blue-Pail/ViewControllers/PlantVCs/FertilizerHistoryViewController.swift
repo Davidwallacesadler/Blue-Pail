@@ -38,13 +38,7 @@ class FertilizerHistoryViewController: UIViewController, FSCalendarDataSource, F
     // MARK: - Outlets
 
     @IBOutlet weak var calendar: FSCalendar!
-    @IBOutlet weak var doneButtonHandle: UIButton!
     
-    // MARK: - Actions
-    
-    @IBAction func doneButtonHandlePressed(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
     
     // MARK: - View Lifecycle
     
@@ -52,7 +46,6 @@ class FertilizerHistoryViewController: UIViewController, FSCalendarDataSource, F
         super.viewDidLoad()
         setupCalendarDatasource()
         //updateDataSource()
-        ViewHelper.roundCornersOf(viewLayer: doneButtonHandle.layer, withRoundingCoefficient: 4.0)
         calendar.allowsSelection = false
     }
     

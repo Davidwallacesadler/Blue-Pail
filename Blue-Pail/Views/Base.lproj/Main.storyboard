@@ -42,17 +42,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jea-0M-t1p" customClass="FSCalendar">
-                                <rect key="frame" x="0.0" y="47" width="375" height="677"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="0.0" y="367" width="375" height="357"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Jea-0M-t1p" secondAttribute="height" multiplier="21:20" id="OYf-mc-epS"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="titleDefaultColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="value" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="headerTitleColor">
-                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="value" red="0.37647058820000001" green="0.30980392159999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
-                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="value" red="0.37647058820000001" green="0.30980392159999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="todaySelectionColor">
                                         <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -63,42 +66,30 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="selectionColor">
                                         <color key="value" red="0.30840110780000002" green="0.5618229508" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleWeekendColor">
+                                        <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="todayColor">
-                                        <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="value" red="1" green="0.23245367004568152" blue="0.29884679813551007" alpha="0.57879387842465757" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yx7-15-CGU">
-                                <rect key="frame" x="152" y="16" width="71" height="15"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="71" id="fLv-d4-P9a"/>
-                                    <constraint firstAttribute="height" constant="15" id="lV0-Sm-XPx"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="doneButtonHandlePressed:" destination="eQd-fI-IBh" eventType="touchUpInside" id="fvy-BL-xMW"/>
-                                </connections>
-                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.71021511130000003" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="kHQ-nq-pOn" firstAttribute="trailing" secondItem="Jea-0M-t1p" secondAttribute="trailing" id="Tsc-j1-dPV"/>
-                            <constraint firstItem="yx7-15-CGU" firstAttribute="top" secondItem="kHQ-nq-pOn" secondAttribute="top" constant="16" id="UUf-3A-aaT"/>
-                            <constraint firstItem="kHQ-nq-pOn" firstAttribute="bottom" secondItem="Jea-0M-t1p" secondAttribute="bottom" id="W4E-mf-NBW"/>
-                            <constraint firstItem="Jea-0M-t1p" firstAttribute="top" secondItem="yx7-15-CGU" secondAttribute="bottom" constant="16" id="vIv-Gs-D5s"/>
-                            <constraint firstItem="Jea-0M-t1p" firstAttribute="leading" secondItem="kHQ-nq-pOn" secondAttribute="leading" id="vs0-9b-nac"/>
-                            <constraint firstItem="yx7-15-CGU" firstAttribute="centerX" secondItem="Wkm-b2-AKe" secondAttribute="centerX" id="zhh-1T-ED7"/>
+                            <constraint firstItem="Jea-0M-t1p" firstAttribute="trailing" secondItem="kHQ-nq-pOn" secondAttribute="trailing" id="QIl-cy-yXJ"/>
+                            <constraint firstItem="Jea-0M-t1p" firstAttribute="leading" secondItem="kHQ-nq-pOn" secondAttribute="leading" id="UM4-qe-h65"/>
+                            <constraint firstItem="Jea-0M-t1p" firstAttribute="bottom" secondItem="kHQ-nq-pOn" secondAttribute="bottom" id="u1I-lc-gD9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kHQ-nq-pOn"/>
                     </view>
                     <connections>
                         <outlet property="calendar" destination="Jea-0M-t1p" id="Zh3-Mb-rYQ"/>
-                        <outlet property="doneButtonHandle" destination="yx7-15-CGU" id="eB2-bZ-kXV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ngH-eS-Jfa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-250" y="-556"/>
+            <point key="canvasLocation" x="-250.40000000000001" y="-556.4039408866995"/>
         </scene>
         <!--My Plants-->
         <scene sceneID="k1Y-lE-fEa">
@@ -764,7 +755,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.83529411764705885" green="0.84705882352941175" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="MR0-u3-QWE" firstAttribute="leading" secondItem="pdn-Yf-QI5" secondAttribute="leading" constant="15" id="Ad0-Og-7aF"/>
                             <constraint firstItem="MR0-u3-QWE" firstAttribute="top" secondItem="vWI-sW-pLr" secondAttribute="bottom" id="ChL-8F-yIY"/>
@@ -816,7 +807,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.83529411764705885" green="0.84705882352941175" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="skr-pA-wrD" firstAttribute="leading" secondItem="87m-cD-ccN" secondAttribute="leading" constant="50" id="8WE-cP-fGc"/>
                             <constraint firstItem="0YI-H1-Bb2" firstAttribute="centerY" secondItem="5K6-KN-9Cj" secondAttribute="centerY" constant="-75" id="ECo-nd-2hq"/>
@@ -940,9 +931,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. Select the next day you want to be reminded" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zf1-24-mnO">
-                                <rect key="frame" x="16" y="76" width="343" height="44"/>
+                                <rect key="frame" x="16" y="76" width="343" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="Oqf-66-Ov6"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJa-s7-2Hi">
@@ -961,78 +954,77 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYH-Xj-Ffp" customClass="FSCalendar">
-                                <rect key="frame" x="0.0" y="274" width="375" height="450"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="DYH-Xj-Ffp" secondAttribute="height" multiplier="15:18" id="W6n-eY-p7t"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="201" width="375" height="523"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="todaySelectionColor">
                                         <color key="value" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
-                                        <color key="value" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="value" red="0.37647058820000001" green="0.30980392159999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="headerTitleColor">
-                                        <color key="value" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="value" red="0.37647058820000001" green="0.30980392159999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="titleDefaultColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="value" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="titleSelectionColor">
                                         <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="selectionColor">
-                                        <color key="value" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="value" red="0.00088044262929999997" green="0.12703505030000001" blue="0.67009041879999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="nfV-Wo-AJp">
-                                <rect key="frame" x="16" y="220.33333333333334" width="343" height="43.666666666666657"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="nfV-Wo-AJp">
+                                <rect key="frame" x="16" y="141" width="343" height="50"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="38" translatesAutoresizingMaskIntoConstraints="NO" id="wqh-hR-Iyb">
-                                        <rect key="frame" x="0.0" y="0.0" width="83" height="20.333333333333332"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="83" height="23.666666666666668"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnD-df-qsh">
-                                                <rect key="frame" x="0.0" y="0.0" width="40.333333333333336" height="20.333333333333332"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="40.333333333333336" height="23.666666666666668"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3n-Op-Rs3">
-                                                <rect key="frame" x="78.333333333333329" y="0.0" width="4.6666666666666714" height="20.333333333333332"/>
+                                                <rect key="frame" x="78.333333333333329" y="0.0" width="4.6666666666666714" height="23.666666666666668"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="cbu-cs-gw3">
-                                        <rect key="frame" x="0.0" y="23.333333333333314" width="83.666666666666671" height="20.333333333333329"/>
+                                        <rect key="frame" x="0.0" y="26.666666666666657" width="83.666666666666671" height="23.333333333333329"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interval:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ktx-7H-ES3">
-                                                <rect key="frame" x="0.0" y="0.0" width="61" height="20.333333333333332"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="61" height="23.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E70-bc-w2A">
-                                                <rect key="frame" x="79" y="0.0" width="4.6666666666666714" height="20.333333333333332"/>
+                                                <rect key="frame" x="79" y="0.0" width="4.6666666666666714" height="23.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="f7d-vn-pBe"/>
+                                </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ViH-lY-mbO" firstAttribute="bottom" secondItem="DYH-Xj-Ffp" secondAttribute="bottom" id="0GD-hm-6pr"/>
                             <constraint firstItem="nfV-Wo-AJp" firstAttribute="leading" secondItem="ViH-lY-mbO" secondAttribute="leading" constant="16" id="7Y2-zx-WnA"/>
                             <constraint firstItem="ViH-lY-mbO" firstAttribute="trailing" secondItem="zJa-s7-2Hi" secondAttribute="trailing" id="DZe-47-bo7"/>
                             <constraint firstItem="zJa-s7-2Hi" firstAttribute="top" secondItem="ViH-lY-mbO" secondAttribute="top" id="HQJ-Mp-5zf"/>
+                            <constraint firstItem="nfV-Wo-AJp" firstAttribute="top" secondItem="zf1-24-mnO" secondAttribute="bottom" id="Kl3-f8-Kjn"/>
                             <constraint firstItem="DYH-Xj-Ffp" firstAttribute="leading" secondItem="ViH-lY-mbO" secondAttribute="leading" id="Q2u-T9-dkX"/>
                             <constraint firstItem="zJa-s7-2Hi" firstAttribute="leading" secondItem="ViH-lY-mbO" secondAttribute="leading" id="RFt-Hf-d5g"/>
                             <constraint firstItem="ViH-lY-mbO" firstAttribute="trailing" secondItem="DYH-Xj-Ffp" secondAttribute="trailing" id="Vsv-cB-Y6N"/>

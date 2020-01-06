@@ -20,11 +20,11 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         case Keys.waterNotification:
             wateringReminderNext = dateAndInterval.0
             wateringDayInteger = dateAndInterval.1
-            tableView.reloadSections(IndexSet([2]), with: .fade)
+            tableView.reloadSections(IndexSet([2]), with: .none)
         case Keys.fertilizerNotification:
             fertilizerReminderNext = dateAndInterval.0
             fertilizerDayInteger = dateAndInterval.1
-            tableView.reloadSections(IndexSet([3]), with: .fade)
+            tableView.reloadSections(IndexSet([3]), with: .none)
         default:
             return
         }

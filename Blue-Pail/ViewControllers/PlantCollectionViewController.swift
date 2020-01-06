@@ -135,7 +135,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     }
     
     // MARK: - Stored Properties
-    
+    lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     private let spacing: CGFloat = 16.0
     var tempInput: UITextField?
     var plantCollection: [Plant] = []
@@ -286,7 +286,8 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     /// If isDirty is true checkIfPlantsAreDry() is called and isDirty is reset to false.
     private func cleanIfNeeded() {
         if isDirty == true {
-            checkIfPlantsAreDryOrNeedFertilizing()
+            //checkIfPlantsAreDryOrNeedFertilizing()
+            self.collectionView.reloadData()
             isDirty = false
         }
     }
@@ -304,6 +305,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
                     cell.waterNotificationStatusImageView.tintColor = .dryRed
                 } else {
                     cell.waterNotificationStatusImageView.image = UIImage(named: Keys.clockIcon)
+                    cell.waterNotificationStatusImageView.tintColor = .defaultBlue
                     //cell.backgroundColor = UIColor.wateredBlue
                     //cell.plantNameLabel.backgroundColor = .mintGreen
                 }
@@ -328,15 +330,12 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             cell.detailsBackgroundView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.7914972175)
             cell.tagTitleLabel.textColor = .white
             cell.waterNotificationStatusLabel.textColor = .white
-            //cell.waterNotificationStatusImageView.tintColor = .skyBlue
-            cell.tagNameIconImageView.tintColor = .defaultBlue
         } else {
             cell.detailsBackgroundView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8112425085)
             cell.tagTitleLabel.textColor = .darkGrayBlue
             cell.waterNotificationStatusLabel.textColor = .darkGrayBlue
-            //cell.waterNotificationStatusImageView.tintColor = .deepBlue
-            cell.tagNameIconImageView.tintColor = .defaultBlue
         }
+        cell.tagNameIconImageView.tintColor = .defaultBlue
         ViewHelper.roundCornersOf(viewLayer: cell.detailsBackgroundView.layer, withRoundingCoefficient: 9.0)
         ViewHelper.roundCornersOf(viewLayer: cell.contentView.layer, withRoundingCoefficient: 6.0)
         ViewHelper.roundCornersOf(viewLayer: cell.layer, withRoundingCoefficient: 6.0)
@@ -463,6 +462,9 @@ extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
     } else if segue.identifier == "toShowFertilizerHistory" {
         guard let historyVC = segue.destination as? FertilizerHistoryViewController, let plant = selectedPlant else { return }
         historyVC.plant = plant
+        slideInTransitioningDelegate.direction = .bottom
+        historyVC.transitioningDelegate = slideInTransitioningDelegate
+        historyVC.modalPresentationStyle = .custom
         }
     }
 }

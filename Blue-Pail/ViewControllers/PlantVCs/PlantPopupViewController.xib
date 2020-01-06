@@ -90,7 +90,7 @@
                                 <constraint firstAttribute="height" constant="19.5" id="MGp-Z3-FEk"/>
                             </constraints>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                            <nil key="textColor"/>
+                            <color key="textColor" red="0.13534036820000001" green="0.14402191189999999" blue="0.19565032930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="xButton" translatesAutoresizingMaskIntoConstraints="NO" id="NlL-fO-twQ">

@@ -64,6 +64,8 @@
 		9093A02D23BA733C00EB831B /* ButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9093A02B23BA733C00EB831B /* ButtonTableViewCell.xib */; };
 		9093A02F23BA80B000EB831B /* CalendarDateSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9093A02E23BA80B000EB831B /* CalendarDateSelectionViewController.swift */; };
 		9093A03123C29A4300EB831B /* FertilizerHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9093A03023C29A4300EB831B /* FertilizerHistoryViewController.swift */; };
+		9093A03323C3CCA200EB831B /* SlideInPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9093A03223C3CCA200EB831B /* SlideInPresentationManager.swift */; };
+		9093A03523C3CCC900EB831B /* SlideInPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9093A03423C3CCC900EB831B /* SlideInPresentationController.swift */; };
 		90B086D523B6D42F005C1F9F /* FertilizerHistory+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B086D423B6D42F005C1F9F /* FertilizerHistory+Convenience.swift */; };
 		90B086D723B6D53F005C1F9F /* FertilizerHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B086D623B6D53F005C1F9F /* FertilizerHistoryController.swift */; };
 		90FB9098174876E087AEE55A /* Pods_Blue_Pail.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF09B32FB55DB9CC1338971D /* Pods_Blue_Pail.framework */; };
@@ -130,6 +132,8 @@
 		9093A02B23BA733C00EB831B /* ButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonTableViewCell.xib; sourceTree = "<group>"; };
 		9093A02E23BA80B000EB831B /* CalendarDateSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateSelectionViewController.swift; sourceTree = "<group>"; };
 		9093A03023C29A4300EB831B /* FertilizerHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FertilizerHistoryViewController.swift; sourceTree = "<group>"; };
+		9093A03223C3CCA200EB831B /* SlideInPresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationManager.swift; sourceTree = "<group>"; };
+		9093A03423C3CCC900EB831B /* SlideInPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationController.swift; sourceTree = "<group>"; };
 		90B086D423B6D42F005C1F9F /* FertilizerHistory+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FertilizerHistory+Convenience.swift"; sourceTree = "<group>"; };
 		90B086D623B6D53F005C1F9F /* FertilizerHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FertilizerHistoryController.swift; sourceTree = "<group>"; };
 		DF09B32FB55DB9CC1338971D /* Pods_Blue_Pail.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Blue_Pail.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -253,6 +257,8 @@
 				63DAAD9F22EF5E3F009DC288 /* ViewHelper.swift */,
 				6394A3B822F5F24A00A00FF4 /* NotificationName.swift */,
 				6394A3BA22F7670800A00FF4 /* DarkMode.swift */,
+				9093A03223C3CCA200EB831B /* SlideInPresentationManager.swift */,
+				9093A03423C3CCC900EB831B /* SlideInPresentationController.swift */,
 			);
 			path = HelperFiles;
 			sourceTree = "<group>";
@@ -515,7 +521,9 @@
 				63DAAD9B22E90669009DC288 /* ToggleTableViewCell.swift in Sources */,
 				90B086D523B6D42F005C1F9F /* FertilizerHistory+Convenience.swift in Sources */,
 				63DAAD9622E8C2F9009DC288 /* DisclosureTableViewCell.swift in Sources */,
+				9093A03323C3CCA200EB831B /* SlideInPresentationManager.swift in Sources */,
 				63265027228141D70025E10C /* TagController.swift in Sources */,
+				9093A03523C3CCC900EB831B /* SlideInPresentationController.swift in Sources */,
 				63DAADA022EF5E3F009DC288 /* ViewHelper.swift in Sources */,
 				63D4547F22B9986F00E74B1B /* WelcomeOnboardingViewController.swift in Sources */,
 				6311C0E322D1641E009A815E /* FunctionHelper.swift in Sources */,
