@@ -41,7 +41,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             let tag = TagController.shared.getSelectedTag(givenTagTitle: tagTitle)
             var title = NSAttributedString(string: tagTitle, attributes: [NSAttributedString.Key.foregroundColor: ColorHelper.colorFrom(colorNumber: tag.colorNumber)])
             if row == 0 {
-                if UserDefaults.standard.bool(forKey: Keys.themeMode) {
+                if self.traitCollection.userInterfaceStyle == .dark {
                     title = NSAttributedString(string: tagTitle, attributes: [NSAttributedString.Key.foregroundColor: UIColor.mintGreen])
                 } else {
                     title = NSAttributedString(string: tagTitle, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
@@ -74,12 +74,34 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     func fertilizePlant() {
         print("Fertilize Plant")
         guard let plant = selectedPlant, let targetIndex = collectionView.indexPathsForSelectedItems else { return }
-        PlantController.shared.fertilizePlant(plant: plant)
-        self.collectionView.reloadItems(at: targetIndex)
+        if plant.needsFertilizedFireDate! > Date() {
+            selectedIndex = targetIndex
+            let todayAtFireHourMinute = DayHelper.shared.getSameTimeAsDateToday(targetDate: plant.needsFertilizedFireDate!)
+            let nextWateringDay = DayHelper.shared.futureDateFromADate(givenDate: todayAtFireHourMinute,
+                                                                       numberOfDays: Int(plant.daysToNextFertilize))
+            let weeks = DayHelper.shared.translateDayIntToWeeks(givenAmountOfDays: Int(plant.daysToNextFertilize))
+            var alarmMessage = String()
+            switch plant.daysToNextFertilize {
+            case 1:
+                alarmMessage = "Your \(plant.name!) will have its fertilizer reminder moved to tomorrow: \(DayHelper.shared.formatMonthAndDay(givenDate: nextWateringDay)) at \(nextWateringDay.timeStringValue())"
+            default:
+                alarmMessage = "Your \(plant.name!) will have its fertilizer reminder moved \(weeks)from today: \(DayHelper.shared.formatMonthAndDay(givenDate: nextWateringDay)) at \(nextWateringDay.timeStringValue())"
+            }
+            let earlyWateringAlert = UIAlertController(title: "Early Fertilizing", message: alarmMessage, preferredStyle: .alert)
+            earlyWateringAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            earlyWateringAlert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: fertilizePlantEarly(action:)))
+            self.present(earlyWateringAlert, animated: true, completion: nil)
+            self.collectionView.reloadItems(at: targetIndex)
+        } else {
+            PlantController.shared.fertilizePlant(plant: plant)
+            self.collectionView.reloadItems(at: targetIndex)
+        }
     }
+    
     func showPlantFertilizerHistory() {
         performSegue(withIdentifier: "toShowFertilizerHistory", sender: self)
     }
+    
     func editPlant() {
         performSegue(withIdentifier: "toEditPlant", sender: self)
     }
@@ -99,9 +121,9 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             var alarmMessage = String()
             switch targetPlant.dayToNextWater {
             case 1:
-                alarmMessage = "Your \(targetPlantName) will have its watering notification moved to tomorrow: \(DayHelper.shared.formatMonthAndDay(givenDate: nextWateringDay)) at \(nextWateringDay.timeStringValue())"
+                alarmMessage = "Your \(targetPlantName) will have its watering reminder moved to tomorrow: \(DayHelper.shared.formatMonthAndDay(givenDate: nextWateringDay)) at \(nextWateringDay.timeStringValue())"
             default:
-                alarmMessage = "Your \(targetPlantName) will have its watering notification moved \(targetPlant.dayToNextWater) days from today: \(DayHelper.shared.formatMonthAndDay(givenDate: nextWateringDay)) at \(nextWateringDay.timeStringValue())"
+                alarmMessage = "Your \(targetPlantName) will have its watering reminder moved \(targetPlant.dayToNextWater) days from today: \(DayHelper.shared.formatMonthAndDay(givenDate: nextWateringDay)) at \(nextWateringDay.timeStringValue())"
             }
             let earlyWateringAlert = UIAlertController(title: "Early Watering", message: alarmMessage, preferredStyle: .alert)
             earlyWateringAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -115,12 +137,6 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     // MARK: - Stored Properties
     
     private let spacing: CGFloat = 16.0
-    private var isDarkMode: Bool = false {
-        didSet {
-            self.collectionView.reloadData()
-            swapColorColorsIfNeeded()
-        }
-    }
     var tempInput: UITextField?
     var plantCollection: [Plant] = []
     var selectedPlant: Plant?
@@ -158,15 +174,6 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         // WillEnterForegroundNotification observer:
         NotificationCenter.default.addObserver(self, selector: #selector(enterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
-        // didChangeThemeModeNotification observer:
-        NotificationCenter.default.addObserver(self, selector: #selector(didChangeThemeMode), name: .didChangeThemeMode, object: nil)
-        
-        // Theme Setup:
-        self.isDarkMode = DarkMode.shared.isDarkMode
-        
-        // Notification Actions:
-        //configureUserNotificationsCenter()
- 
         // PickerView Setup:
         self.tagFilterPickerView.delegate = self
         self.tagFilterPickerView.dataSource = self
@@ -183,9 +190,6 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
-        
-        // FORCE TAP:
-       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -262,10 +266,6 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         isDirty = true
     }
     
-    @objc private func didChangeThemeMode() {
-        isDarkMode = UserDefaults.standard.bool(forKey: Keys.themeMode)
-    }
-    
     /// Reloads the collection view if the current date is at or passed the fireDate for all plants in the Plant Collection Array.
     private func checkIfPlantsAreDryOrNeedFertilizing() {
         for plant in plantCollection {
@@ -301,19 +301,18 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
                 PlantController.shared.checkIfDry(plant: selectedPlant)
                 if PlantController.shared.isPlantDry(plant: selectedPlant) {
                     cell.waterNotificationStatusImageView.image = UIImage(named: Keys.wateringPailIcon)
-                    //cell.backgroundColor = UIColor.dryYellow
-                    cell.plantNameLabel.backgroundColor = .dryRed
+                    cell.waterNotificationStatusImageView.tintColor = .dryRed
                 } else {
                     cell.waterNotificationStatusImageView.image = UIImage(named: Keys.clockIcon)
                     //cell.backgroundColor = UIColor.wateredBlue
-                    cell.plantNameLabel.backgroundColor = .mintGreen
+                    //cell.plantNameLabel.backgroundColor = .mintGreen
                 }
             } else {
                 // The current Date has passed the notification date:
                 daysToNextWater = DayHelper.shared.formatMonthAndDay(givenDate: fireDate)
                 cell.waterNotificationStatusImageView.image = UIImage(named: Keys.wateringPailIcon)
-                cell.waterNotificationStatusImageView.tintColor = .red
-                cell.plantNameLabel.backgroundColor = .dryRed
+                cell.waterNotificationStatusImageView.tintColor = .dryRed
+               // cell.plantNameLabel.backgroundColor = .dryRed
             }
         }
         let selectedPlantTagColor = ColorHelper.colorFrom(colorNumber: selectedPlant.tag?.colorNumber ?? Double(Int.random(in: 1...6)))
@@ -325,18 +324,18 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         cell.waterNotificationStatusLabel.text = daysToNextWater
         cell.tagNameIconImageView.image = UIImage(named: Keys.tagIcon)
         // Check if isDarkMode is true - if so change the background details view to a darker gray and its text to white:
-        if isDarkMode {
+        if self.traitCollection.userInterfaceStyle == .dark {
             cell.detailsBackgroundView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.7914972175)
             cell.tagTitleLabel.textColor = .white
             cell.waterNotificationStatusLabel.textColor = .white
-            cell.waterNotificationStatusImageView.tintColor = .skyBlue
-            cell.tagNameIconImageView.tintColor = .skyBlue
+            //cell.waterNotificationStatusImageView.tintColor = .skyBlue
+            cell.tagNameIconImageView.tintColor = .defaultBlue
         } else {
             cell.detailsBackgroundView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8112425085)
             cell.tagTitleLabel.textColor = .darkGrayBlue
             cell.waterNotificationStatusLabel.textColor = .darkGrayBlue
-            cell.waterNotificationStatusImageView.tintColor = .deepBlue
-            cell.tagNameIconImageView.tintColor = .deepBlue
+            //cell.waterNotificationStatusImageView.tintColor = .deepBlue
+            cell.tagNameIconImageView.tintColor = .defaultBlue
         }
         ViewHelper.roundCornersOf(viewLayer: cell.detailsBackgroundView.layer, withRoundingCoefficient: 9.0)
         ViewHelper.roundCornersOf(viewLayer: cell.contentView.layer, withRoundingCoefficient: 6.0)
@@ -347,10 +346,10 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             cell.tagNameIconImageView.image = #imageLiteral(resourceName: "notTimeToWaterIcon")
             if !selectedPlant.isFertilized {
                 cell.tagNameIconImageView.image = #imageLiteral(resourceName: "fertilizerIcon")
-                cell.tagNameIconImageView.tintColor = .red
+                cell.tagNameIconImageView.tintColor = .dryRed
                 cell.tagTitleLabel.text =  selectedPlant.needsFertilizedFireDate?.dayMonthYearValue()
             } else {
-                cell.tagNameIconImageView.tintColor = UIColor(red: 145/255, green: 200/255, blue: 30/255, alpha: 1.0)
+                cell.tagNameIconImageView.tintColor = .fertilizerGreen
                 cell.tagTitleLabel.text =  DayHelper.shared.amountOfDaysBetween(previousDate: Date(), futureDate: selectedPlant.needsFertilizedFireDate!)
             }
            } else {
@@ -380,10 +379,17 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     
     /// Handler for watering plants early: Grabs the selected plant and waters it (resets the notification fireDate) and reloads the collectionView.
     func waterPlantEarly(action: UIAlertAction) {
-        guard let targetPlant = selectedPlant else { return }
-        PlantController.shared.waterPlant(plant: targetPlant)
-        guard let targetIndex = selectedIndex else { return }
-        self.collectionView.reloadItems(at: targetIndex)
+        guard let plant = selectedPlant else { return }
+        PlantController.shared.waterPlant(plant: plant)
+        guard let index = selectedIndex else { return }
+        self.collectionView.reloadItems(at: index)
+    }
+    
+    func fertilizePlantEarly(action: UIAlertAction) {
+        guard let plant = selectedPlant else { return }
+        PlantController.shared.fertilizePlant(plant: plant)
+        guard let index = selectedIndex else { return }
+        self.collectionView.reloadItems(at: index)
     }
     
     /// Generates the notification access request alert if access has not been given.
@@ -420,51 +426,6 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             }
         return truthValue
     }
-
-    /// Swaps the colors of all the elements in the view to their dark mode versions.
-    private func swapColorsToDark() {
-        // Navigation Bar:
-        NavigationBarHelper.setupDarkModeNavigationBar(viewController: self)
-        self.navigationItem.leftBarButtonItem?.tintColor = .white
-        self.navigationItem.rightBarButtonItem?.tintColor = .white
-        self.navigationController?.navigationBar.barStyle = .black
-        // Collection View:
-        self.collectionView.backgroundColor = .black
-        // Tab Bar:
-        self.tabBarController?.tabBar.tintColor = .white
-        self.tabBarController?.tabBar.barTintColor = .darkModeGray
-        // Filter Picker View:
-        self.tagFilterPickerView.backgroundColor = .darkModeGray
-    }
-    
-    /// Swaps the colors of all the elements in the view to their default (light) versions.
-    private func swapColorsToLight() {
-        // Navigation Bar:
-        NavigationBarHelper.setupNativationBar(viewController: self)
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.darkGrayBlue
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGrayBlue
-        self.navigationController?.navigationBar.barStyle = .default
-        // Collection View:
-        self.collectionView.backgroundColor = UIColor.white
-        // Tab Bar:
-        self.tabBarController?.tabBar.tintColor = UIColor.darkGrayBlue
-        self.tabBarController?.tabBar.barTintColor = UIColor.mintGreen
-        self.tagFilterPickerView.backgroundColor = UIColor.lightGray
-    }
-    
-    /// Calls swapColorsToLight or swapColorsToDark depending on the set themeMode.
-    private func swapColorColorsIfNeeded() {
-        if isDarkMode {
-            swapColorsToDark()
-        } else {
-            swapColorsToLight()
-        }
-    }
-    
-    /// Sets the notification center delegate to the VC.
-//    private func configureUserNotificationsCenter() {
-//        UNUserNotificationCenter.current().delegate = self
-//    }
 }
 
 // MARK: - Delegate Flow Layout Extension

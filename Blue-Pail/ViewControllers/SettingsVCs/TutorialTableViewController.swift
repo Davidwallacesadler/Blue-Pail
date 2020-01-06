@@ -14,12 +14,6 @@ import AVKit
 class TutorialTableViewController: UITableViewController {
     
     // MARK: - Internal Properties
-    private var isDarkMode: Bool = false {
-        didSet {
-            self.tableView.reloadData()
-            swapColorThemeIfNeeded()
-        }
-    }
     private let sectionLabels: [String] = [
         "Creating A Plant",
         "Creating A Tag",
@@ -42,34 +36,6 @@ class TutorialTableViewController: UITableViewController {
     }
     
     // MARK: - Internal Methods
-    
-    /// Swaps the the colors of the onscreen elements to their dark versions.
-    func swapColorsToDark() {
-        // Navigation Controller:
-        NavigationBarHelper.setupDarkModeNavigationBar(viewController: self)
-        self.navigationController?.navigationBar.barStyle = .black
-        self.navigationItem.leftBarButtonItem?.tintColor = .white
-        // TableView:
-        self.tableView.backgroundColor = .black
-    }
-    
-    /// Swaps the colors of all the elements in the view to their defualt versions (light).
-    func swapColorsToLight() {
-        NavigationBarHelper.setupNativationBar(viewController: self)
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.darkGrayBlue
-    }
-    
-    /// Checks UserDefaults for the current themeMode
-    func swapColorThemeIfNeeded() {
-        if isDarkMode {
-            // Dark Mode Enabled:
-            swapColorsToDark()
-        } else {
-            // Dark Mode Disabled:
-            swapColorsToLight()
-        }
-        
-    }
     
     /// Sets up the tableView Delegate/Datasource, also registers custom cell nibs.
     func setupTableView() {
@@ -101,26 +67,8 @@ class TutorialTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        
-        // didChangeThemeModeNotification observer:
-        NotificationCenter.default.addObserver(self, selector: #selector(didChangeThemeMode), name: .didChangeThemeMode, object: nil)
-        
-        // Theme Setup:
-        self.isDarkMode = UserDefaults.standard.bool(forKey: Keys.themeMode)
     }
     
-    override func viewDidLayoutSubviews() {
-        for view in tableView.subviews {
-            if isDarkMode {
-                if let viewAsSectionHeader = view as? UITableViewHeaderFooterView {
-                    let backgroundView = UIView(frame: viewAsSectionHeader.bounds)
-                    backgroundView.backgroundColor = .darkModeGray
-                    viewAsSectionHeader.backgroundView = backgroundView
-                    viewAsSectionHeader.textLabel?.textColor = .white
-                }
-            }
-        }
-    }
     
     // MARK: - TableView DataSource Methods
 
@@ -143,18 +91,7 @@ class TutorialTableViewController: UITableViewController {
         }
         videoCell.setupCell(delegate: self, id: cellId)
         cellId += 1
-        if isDarkMode {
-            videoCell.playButton.imageView?.tintColor = .white
-            videoCell.backgroundColor = .black
-        } else {
-            videoCell.playButton.imageView?.tintColor = UIColor.deepBlue
-            videoCell.backgroundColor = .white
-        }
         return videoCell
-    }
-    
-    @objc private func didChangeThemeMode() {
-        isDarkMode = UserDefaults.standard.bool(forKey: Keys.themeMode)
     }
     
 }
@@ -174,5 +111,4 @@ extension TutorialTableViewController: PlayButtonPressedDelegate {
             playVideo(givenVideoKey: Keys.waterPlantTutorialVideo)
         }
     }
-    
 }

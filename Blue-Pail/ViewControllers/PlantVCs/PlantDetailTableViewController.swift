@@ -125,15 +125,23 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
                 intervalCell.selectedInterval = wateringDayInteger
                 intervalCell.nextReminderDate = wateringReminderNext
                 intervalCell.setupRemindersButton.backgroundColor = .deepBlue
-                intervalCell.setupRemindersButton.setTitle("Setup Watering Reminders", for: .normal)
+                if wateringReminderNext != nil {
+                     intervalCell.setupRemindersButton.setTitle(" Update Watering", for: .normal)
+                } else {
+                     intervalCell.setupRemindersButton.setTitle(" Setup Watering Reminders", for: .normal)
+                }
                 intervalCell.nextLabel.text = "Next Watering:"
                 intervalCell.nextLabel.tintColor = .deepBlue 
             default:
                 intervalCell.cellKey = Keys.fertilizerNotification
                 intervalCell.selectedInterval = fertilizerDayInteger
                 intervalCell.nextReminderDate = fertilizerReminderNext
-                intervalCell.setupRemindersButton.backgroundColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
-                intervalCell.setupRemindersButton.setTitle("Setup Fertilizing Reminders", for: .normal)
+                intervalCell.setupRemindersButton.backgroundColor = .fertilizerGreen
+                if fertilizerReminderNext != nil {
+                    intervalCell.setupRemindersButton.setTitle(" Update Fertilizing", for: .normal)
+                } else {
+                    intervalCell.setupRemindersButton.setTitle(" Setup Fertilizing Reminders", for: .normal)
+                }
                 intervalCell.nextLabel.text = "Next Fertilizing:"
                 //intervalCell.nextLabel.tintColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)
             }
@@ -250,8 +258,6 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
                 let selectedTag = TagController.shared.getSelectedTag(givenTagTitle: selectedTagTitle)
                 updateTag(selectedTag: selectedTag)
                 print("\(selectedTag.title)")
-                
-                
             }
     }
     
@@ -262,7 +268,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         registerCustomCells()
         setupTableViewDelegation()
         // Selecting the first Tag by default, if there is one:
-        if tagPickerTitles.isEmpty == false  && tag == nil {
+        if tagPickerTitles.isEmpty == false && tag == nil {
             updateTag(selectedTag: TagController.shared.getSelectedTag(givenTagTitle: tagPickerTitles[0]))
         }
         // Gesture recognizer Setup:

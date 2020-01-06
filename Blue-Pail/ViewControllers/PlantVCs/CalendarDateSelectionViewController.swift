@@ -108,7 +108,6 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
         if let intervalDays = DayHelper.shared.amountOfDaysBetweenInteger(previousDate: dateOne, futureDate: dateTwo) {
             calendarDelegate.updateDates(selectedKey: key, dateAndInterval: (dateOne,intervalDays))
             self.dismiss(animated: true, completion: nil)
-                   
         }
        
     }
@@ -129,6 +128,12 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
     }
     
     // MARK: - Internal Methods
+    
+    private func showIntervalOnCalendar() {
+        if secondSelectedDate != nil {
+            calendar.configureAppearance()
+        }
+    }
     
     private func setupNextReminderDateLabel() {
         if let firstDate = firstSelectedDate {

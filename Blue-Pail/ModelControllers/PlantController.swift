@@ -178,7 +178,7 @@ class PlantController : AlarmScheduler {
         saveToPersistentStorage()
     }
     
-    /// Waters the plant for now and creates a new notification that is the arguemnt amount of hours away from the fireDate.
+    /// Creates a new notification that is the arguemnt amount of hours away from the fireDate.
     func snoozeReminderFor(plant: Plant,
                            hoursForSnooze: Int,
                            givenNotificationName: String) {

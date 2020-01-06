@@ -26,7 +26,7 @@ class DateIntervalSelectionTableViewCell: UITableViewCell {
     var selectedInterval: Int?
     var nextReminderDate: Date? {
         didSet {
-            moveSetupButtonToTopRightCornerOfCell()
+            moveButtonAndPrepareCellContents()
         }
     }
     
@@ -38,6 +38,10 @@ class DateIntervalSelectionTableViewCell: UITableViewCell {
     @IBOutlet weak var reminderTimeDatePicker: UIDatePicker!
     @IBOutlet weak var nextReminderLabel: UILabel!
     @IBOutlet weak var currentIntervalLabel: UILabel!
+    @IBOutlet weak var remindersButtonTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var remindersButtonLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var remindersButtonBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var remindersButtonTrailingConstraint: NSLayoutConstraint!
     
     
     // MARK: - Actions
@@ -53,12 +57,11 @@ class DateIntervalSelectionTableViewCell: UITableViewCell {
         reminderTimeDatePicker.tag = datePickerTag
     }
     
-    func moveSetupButtonToTopRightCornerOfCell() {
+    func moveButtonAndPrepareCellContents() {
         if nextReminderDate != nil {
-            setupRemindersButton.removeFromSuperview()
-            addSubview(setupRemindersButton)
-            setupRemindersButton.setTitle(" Update Reminders", for: .normal)
-            setupRemindersButton.bounds = CGRect(x: frame.width - 150.0, y: 150.0, width: 100.0, height: 100.0)
+            remindersButtonBottomConstraint.constant = 275.0
+            setupRemindersButton.titleLabel?.numberOfLines = 1
+            setupRemindersButton.updateConstraints()
             nextReminderLabel.text = nextReminderDate!.stringValue()
             currentIntervalLabel.text = DayHelper.shared.translateDayIntToWeeks(givenAmountOfDays: selectedInterval!)
         }
@@ -70,7 +73,7 @@ class DateIntervalSelectionTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         if selectedInterval != nil && nextReminderDate != nil {
-            moveSetupButtonToTopRightCornerOfCell()
+            moveButtonAndPrepareCellContents()
         }
         ViewHelper.roundCornersOf(viewLayer: setupRemindersButton.layer, withRoundingCoefficient: 5.0)
         setupRemindersButton.titleLabel?.numberOfLines = 0

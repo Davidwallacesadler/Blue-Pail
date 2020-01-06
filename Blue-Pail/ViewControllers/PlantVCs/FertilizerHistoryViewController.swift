@@ -14,15 +14,6 @@ class FertilizerHistoryViewController: UIViewController, FSCalendarDataSource, F
     // MARK: - Calendar Datasource
     #warning("make selection color clear -- if the user selects a day maybe display a popup with the time at which the fertilzing was done.")
     
-     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
-        //set dates with events to Green
-        let dateString = date.dayMonthYearValue()
-        if self.fertilizerHistory.contains(dateString){
-            return UIColor.green
-        }
-        return nil
-    }
-    
     func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at monthPosition: FSCalendarMonthPosition) {
         if fertilizerHistory.contains(date.dayMonthYearValue()) {
             cell.preferredBorderDefaultColor = .green

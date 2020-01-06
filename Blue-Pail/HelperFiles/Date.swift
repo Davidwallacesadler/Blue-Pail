@@ -49,4 +49,18 @@ extension Date {
         guard let minute = component.minute else { return 0  }
         return minute
     }
+    
+    func dayOfCurrentDate() -> Int {
+        let calendar = Calendar.current
+        let component = calendar.dateComponents([.day], from: self)
+        guard let day = component.day else { return 0 }
+        return day
+    }
+    
+    func dayMonthYearInts() -> [Int] {
+        let calendar = Calendar.current
+        let component = calendar.dateComponents([.day,.month,.year], from: self)
+        guard let day = component.day, let month = component.month, let year = component.year else { return [] }
+        return [day,month,year]
+    }
 }

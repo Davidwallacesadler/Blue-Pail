@@ -14,15 +14,15 @@
                 <navigationController id="k4e-au-GIC" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Plants" image="unselectedPlantTabBarIcon" selectedImage="selectedPlantTabBarIcon" id="JyM-9F-hXS">
                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
-                        <color key="badgeColor" red="0.81539498730000004" green="0.4076848247" blue="0.58853223830000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="badgeColor" red="0.37647058823529411" green="0.30980392156862746" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="1OM-ZJ-b4Y">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.86855201199999998" green="0.97134524830000002" blue="0.95657641270000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                            <color key="textColor" red="0.00017265004789999999" green="0.27222367730000002" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" red="0.37647058823529411" green="0.30980392156862746" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <connections>
@@ -107,7 +107,7 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="SN5-5T-U5W">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="619"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="safeArea" id="sRX-ug-pGe">
                             <size key="itemSize" width="500" height="490"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -184,9 +184,11 @@
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q17-fk-Wn5" userLabel="waterNotificationStatusIcon">
                                                             <rect key="frame" x="15" y="0.0" width="50" height="85"/>
+                                                            <color key="tintColor" red="0.090196078431372548" green="0.31764705882352939" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ghu-q7-fJO" userLabel="tagNameIcon">
                                                             <rect key="frame" x="15" y="95" width="50" height="85"/>
+                                                            <color key="tintColor" red="0.090196078430000007" green="0.31764705879999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </imageView>
                                                     </subviews>
                                                     <constraints>
@@ -451,13 +453,13 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="My Plants" id="1Ib-8Z-yFM">
                         <barButtonItem key="leftBarButtonItem" image="filterButton" id="asQ-AM-aLb">
-                            <color key="tintColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="filterButtonPressed:" destination="2UV-ic-ecl" id="Ol8-gc-VLS"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="thinPlusButton" id="0qu-mb-qCe">
-                            <color key="tintColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="ADt-cV-qID" kind="show" identifier="toAddPlant" id="c7h-ve-Bcd"/>
                             </connections>
@@ -489,7 +491,7 @@
                                 <rect key="frame" x="0.0" y="150" width="375" height="319"/>
                             </pickerView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="p3o-LE-2jD" firstAttribute="top" secondItem="l3O-nD-Dm7" secondAttribute="top" constant="150" id="7bw-ue-BIo"/>
                             <constraint firstItem="p3o-LE-2jD" firstAttribute="trailing" secondItem="l3O-nD-Dm7" secondAttribute="trailing" id="Lwr-7T-cfR"/>
@@ -500,13 +502,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Plant Tags" id="lL1-Nf-oaG">
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="fdK-fH-9t2">
-                            <color key="tintColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.37647058820000001" green="0.30980392159999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="b65-br-3s4" kind="show" identifier="toEditTag" id="PRb-gc-mEE"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="thinPlusButton" id="fN1-Jk-pQN">
-                            <color key="tintColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.37647058820000001" green="0.30980392159999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="b65-br-3s4" kind="show" identifier="toAddTag" id="3GU-Od-XAH"/>
                             </connections>
@@ -546,10 +548,10 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jg3-Vd-Ax8" userLabel="Setting Label">
                                             <rect key="frame" x="55" y="14.666666666666664" width="270" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                     <constraints>
                                         <constraint firstItem="hW5-px-BNy" firstAttribute="leading" secondItem="9Ef-zh-2zl" secondAttribute="leadingMargin" id="81P-hl-fUx"/>
                                         <constraint firstItem="Jg3-Vd-Ax8" firstAttribute="centerY" secondItem="hW5-px-BNy" secondAttribute="centerY" id="cMN-at-o52"/>
@@ -604,7 +606,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Tutorials" id="KFc-be-Z0N">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="Ltn-l5-SIf">
-                            <color key="tintColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.37647058820000001" green="0.30980392159999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="doneButtonPressed:" destination="bxb-re-bXK" id="IxA-lD-yEw"/>
                             </connections>
@@ -619,11 +621,17 @@
         <scene sceneID="TAS-ww-S90">
             <objects>
                 <navigationController id="6ti-46-CA9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="unselectedSettingsIcon" selectedImage="selectedSettingsIcon" id="ebZ-8n-F75"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="unselectedSettingsIcon" selectedImage="selectedSettingsIcon" id="ebZ-8n-F75">
+                        <color key="badgeColor" red="0.37647058823529411" green="0.30980392156862746" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="8ac-xA-aHI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.86782318353652954" green="0.97280329465866089" blue="0.9569123387336731" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <color key="textColor" red="0.37647058820000001" green="0.30980392159999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="esg-bB-kfb" kind="relationship" relationship="rootViewController" id="OU8-89-bGE"/>
@@ -639,12 +647,17 @@
                 <navigationController id="qZA-uf-OJD" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Plant Tags" image="unselectedTagTabBarIcon" selectedImage="selectedTagTabBarIcon" id="bkm-Zu-S3W">
                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
-                        <color key="badgeColor" red="0.81539498730000004" green="0.4076848247" blue="0.58853223830000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="badgeColor" red="0.37647058823529411" green="0.30980392156862746" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="efv-i6-jqE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.86855201199999998" green="0.97134524830000002" blue="0.95657641270000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.090196078430000007" green="0.31764705879999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <color key="textColor" red="0.37647058820000001" green="0.30980392159999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="3Vh-K7-EZW" kind="relationship" relationship="rootViewController" id="vby-F8-VuM"/>
@@ -662,10 +675,10 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" itemPositioning="fill" id="RYD-da-9Qf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="tintColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.86855201198630139" green="0.97134524828767121" blue="0.95657641267123283" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="selectedImageTintColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="selectedImageTintColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="k4e-au-GIC" kind="relationship" relationship="viewControllers" id="bQj-ug-J0D"/>
@@ -696,20 +709,20 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Blue Pail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sf-UM-kt6">
                                 <rect key="frame" x="66" y="488.66666666666669" width="243" height="35.000000000000057"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
-                                <color key="textColor" red="0.22836515065233182" green="0.24235388903581728" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Welcome" translatesAutoresizingMaskIntoConstraints="NO" id="nVQ-8c-x3W">
-                                <rect key="frame" x="90" y="205.66666666666663" width="195" height="251"/>
+                                <rect key="frame" x="187" y="330.66666666666669" width="1" height="1"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The best way to keep your plants watered and happy!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cW-h5-aRP">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The best way to keep your plants watered and happy!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cW-h5-aRP">
                                 <rect key="frame" x="23" y="523.66666666666663" width="329" height="46.666666666666629"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
-                                <color key="textColor" red="0.22836515065233182" green="0.24235388903581728" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.96854287390000005" green="0.96868163350000003" blue="0.96851247549999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="nVQ-8c-x3W" firstAttribute="centerX" secondItem="T9R-Wv-nSL" secondAttribute="centerX" id="GxY-cV-acQ"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0cW-h5-aRP" secondAttribute="trailing" constant="15" id="Mi8-4l-iB2"/>
@@ -735,23 +748,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All you need to know for setup is how many days your plant needs between waterings to get accurate reminders." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MR0-u3-QWE">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All you need to know for setup is how many days your plant needs between watering and fertilizing to get accurate reminders." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MR0-u3-QWE">
                                 <rect key="frame" x="15" y="523.66666666666663" width="345" height="69.666666666666629"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
-                                <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Notifications" translatesAutoresizingMaskIntoConstraints="NO" id="Rwi-VG-eu9">
-                                <rect key="frame" x="66.666666666666686" y="223" width="242" height="216"/>
+                                <rect key="frame" x="187" y="330.66666666666669" width="1" height="1"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep Up To Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vWI-sW-pLr">
                                 <rect key="frame" x="90.666666666666686" y="488.66666666666669" width="194" height="35.000000000000057"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
-                                <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.96854287390000005" green="0.96868163350000003" blue="0.96851247549999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="MR0-u3-QWE" firstAttribute="leading" secondItem="pdn-Yf-QI5" secondAttribute="leading" constant="15" id="Ad0-Og-7aF"/>
                             <constraint firstItem="MR0-u3-QWE" firstAttribute="top" secondItem="vWI-sW-pLr" secondAttribute="bottom" id="ChL-8F-yIY"/>
@@ -779,21 +792,21 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get Started" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NP5-bG-A0N">
                                 <rect key="frame" x="121.66666666666669" y="488.66666666666669" width="132" height="35.000000000000057"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
-                                <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the button to get started and make sure to enable notifications to get the most out of Blue Pail." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WxN-O7-ld3">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the button to get started and make sure to enable notifications to get the most out of Blue Pail." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WxN-O7-ld3">
                                 <rect key="frame" x="15" y="523.66666666666663" width="345" height="69.666666666666629"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
-                                <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GetStarted" translatesAutoresizingMaskIntoConstraints="NO" id="0YI-H1-Bb2">
-                                <rect key="frame" x="55" y="210" width="265" height="242"/>
+                                <rect key="frame" x="187" y="330.66666666666669" width="1" height="1"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="skr-pA-wrD">
                                 <rect key="frame" x="50" y="603.33333333333337" width="275" height="36"/>
-                                <color key="backgroundColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
                                 <state key="normal" title="Next">
                                     <color key="titleColor" red="0.96854287390000005" green="0.96868163350000003" blue="0.96851247549999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -803,7 +816,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.96854287390000005" green="0.96868163350000003" blue="0.96851247549999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="skr-pA-wrD" firstAttribute="leading" secondItem="87m-cD-ccN" secondAttribute="leading" constant="50" id="8WE-cP-fGc"/>
                             <constraint firstItem="0YI-H1-Bb2" firstAttribute="centerY" secondItem="5K6-KN-9Cj" secondAttribute="centerY" constant="-75" id="ECo-nd-2hq"/>
@@ -839,21 +852,21 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simple Setup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p96-1D-RLI">
                                 <rect key="frame" x="111" y="488.66666666666669" width="153" height="35.000000000000057"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
-                                <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WaterAndTimer" translatesAutoresizingMaskIntoConstraints="NO" id="Kfh-Gq-4Wm">
-                                <rect key="frame" x="78" y="221" width="219" height="220"/>
+                                <rect key="frame" x="187" y="330.66666666666669" width="1" height="1"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aNM-zd-Z8N">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aNM-zd-Z8N">
                                 <rect key="frame" x="15" y="523.66666666666663" width="345" height="93"/>
                                 <string key="text">Get straight to managing your plant watering schedules without the need to sign-in to an account or deal with unnecessary features.</string>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
-                                <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.96854287390000005" green="0.96868163350000003" blue="0.96851247549999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="aNM-zd-Z8N" firstAttribute="top" secondItem="p96-1D-RLI" secondAttribute="bottom" id="HYJ-g6-U9I"/>
                             <constraint firstItem="Kfh-Gq-4Wm" firstAttribute="centerY" secondItem="YLh-08-gWZ" secondAttribute="centerY" constant="-75" id="S9M-E8-tb7"/>
@@ -898,13 +911,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="New Plant" id="1q3-CN-DIN">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="SsB-CW-pzs">
-                            <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="ADt-cV-qID" id="UOQ-sa-tRV"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Y4f-Tr-KDW">
-                            <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="saveButtonPressed:" destination="ADt-cV-qID" id="PyM-rw-zjF"/>
                             </connections>
@@ -1273,13 +1286,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="New Tag" id="D5G-Eb-RFx">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="wY0-sK-hQZ">
-                            <color key="tintColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.37647058820000001" green="0.30980392159999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="b65-br-3s4" id="s9b-yy-mqA"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="uFH-xX-gf0">
-                            <color key="tintColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.37647058820000001" green="0.30980392159999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="saveButtonPressed:" destination="b65-br-3s4" id="IIB-eu-WLa"/>
                             </connections>

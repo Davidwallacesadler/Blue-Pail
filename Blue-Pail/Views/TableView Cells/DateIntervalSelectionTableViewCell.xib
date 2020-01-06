@@ -27,7 +27,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <datePicker contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="umm-nb-ReL">
-                                <rect key="frame" x="0.0" y="26" width="240" height="74"/>
+                                <rect key="frame" x="0.0" y="25.5" width="240" height="74.5"/>
                             </datePicker>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fmZ-CH-Kib">
                                 <rect key="frame" x="16.5" y="105" width="207.5" height="20.5"/>
@@ -70,7 +70,7 @@
                         <color key="backgroundColor" red="0.00088044262929999997" green="0.12703505030000001" blue="0.67009041879999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <state key="normal" title=" Setup Reminders" image="calendar.badge.plus" catalog="system"/>
+                        <state key="normal" image="calendar.badge.plus" catalog="system"/>
                         <connections>
                             <action selector="setupRemindersButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qwZ-R0-xpJ"/>
                         </connections>
@@ -93,6 +93,10 @@
                 <outlet property="nextLabel" destination="Lnb-2c-Cox" id="TTT-ja-PTD"/>
                 <outlet property="nextReminderLabel" destination="J2U-XH-CO4" id="sEB-Xz-GOO"/>
                 <outlet property="reminderTimeDatePicker" destination="umm-nb-ReL" id="Rbk-uL-rau"/>
+                <outlet property="remindersButtonBottomConstraint" destination="KC1-PA-L56" id="9pt-mb-UU6"/>
+                <outlet property="remindersButtonLeadingConstraint" destination="8t8-YC-HcX" id="dWP-7S-qZ0"/>
+                <outlet property="remindersButtonTopConstraint" destination="ufB-f2-lUa" id="4Hl-K0-Ruh"/>
+                <outlet property="remindersButtonTrailingConstraint" destination="x2P-zJ-1Rb" id="0ou-EH-psv"/>
                 <outlet property="selectATimeLabel" destination="ZTe-Bv-qwd" id="5SX-yN-mcR"/>
                 <outlet property="setupRemindersButton" destination="az6-3y-GcN" id="nre-WD-tj5"/>
             </connections>
