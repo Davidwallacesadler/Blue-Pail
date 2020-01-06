@@ -11,6 +11,8 @@ import UIKit
 protocol PopupDelegate: UICollectionViewController {
     func editPlant()
     func waterPlant()
+    func fertilizePlant()
+    func showPlantFertilizerHistory()
 }
 
 class PlantPopupViewController: UIViewController {
@@ -18,6 +20,7 @@ class PlantPopupViewController: UIViewController {
     // MARK: - Delegate Reference - Weak Association
     
     weak var delegate: PopupDelegate?
+    var plantHasFertilizerReminder = false
     
     // MARK: - View Lifecycle
     
@@ -26,7 +29,10 @@ class PlantPopupViewController: UIViewController {
         
     }
     override func viewDidAppear(_ animated: Bool) {
-        self.xButton.tintColor = UIColor.white
+        if !plantHasFertilizerReminder {
+            fertilizeButton.isHidden = true
+            viewFertilizerLogButton.isHidden = true
+        }
     }
     
     // MARK: - Outlets
@@ -35,6 +41,9 @@ class PlantPopupViewController: UIViewController {
     @IBOutlet weak var waterButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var xButton: UIImageView!
+    @IBOutlet weak var fertilizeButton: UIButton!
+    @IBOutlet weak var viewFertilizerLogButton: UIButton!
+    
     
     // MARK: - Actions
     
@@ -53,9 +62,20 @@ class PlantPopupViewController: UIViewController {
         self.view.isHidden = true
         self.removeFromParent()
     }
-    @IBAction func backButtonPressed(_ sender: Any) {
+    @IBAction func fertilizeButtonTapped(_ sender: Any) {
+        delegate?.fertilizePlant()
         self.view.isHidden = true
         self.removeFromParent()
     }
+    @IBAction func fertilizerLogButtonTapped(_ sender: Any) {
+        delegate?.showPlantFertilizerHistory()
+        self.view.isHidden = true
+        self.removeFromParent()
+    }
+    
+//    @IBAction func backButtonPressed(_ sender: Any) {
+//        self.view.isHidden = true
+//        self.removeFromParent()
+//    }
 }
 

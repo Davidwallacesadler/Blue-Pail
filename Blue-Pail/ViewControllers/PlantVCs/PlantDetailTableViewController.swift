@@ -249,6 +249,9 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
                 let selectedTagTitle = tagPickerTitles[row]
                 let selectedTag = TagController.shared.getSelectedTag(givenTagTitle: selectedTagTitle)
                 updateTag(selectedTag: selectedTag)
+                print("\(selectedTag.title)")
+                
+                
             }
     }
     
@@ -259,7 +262,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         registerCustomCells()
         setupTableViewDelegation()
         // Selecting the first Tag by default, if there is one:
-        if tagPickerTitles.isEmpty == false {
+        if tagPickerTitles.isEmpty == false  && tag == nil {
             updateTag(selectedTag: TagController.shared.getSelectedTag(givenTagTitle: tagPickerTitles[0]))
         }
         // Gesture recognizer Setup:
@@ -373,59 +376,10 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         self.navigationController?.popViewController(animated: true)
     }
     
-    /// Updates the components of the view with the properties of the passed in plant.
-//    private func updateViews() {
-//        guard let selectedPlant = plant, let plantTag = plant?.tag, let plantImage = plant?.photo, let fireDate = plant?.needsWateredFireDate, let plantDay = plant?.dayToNextWater else { return }
-//        plantNameTextField.text = selectedPlant.name
-//        updateTag(selectedTag: plantTag)
-//        image = plantImage
-//        wateringDayInteger = Int(plantDay)
-//        checkDayValue()
-//        wateringReminderNext = fireDate
-//        if Date() <= fireDate {
-//            notifcationDateLabel.text = "\(fireDate.stringValue())"
-//            notifcationDateLabel.textColor = UIColor.darkBlue
-//        } else {
-//            notifcationDateLabel.text = "\(fireDate.stringValue())(Past Due)"
-//            notifcationDateLabel.textColor = UIColor.redOrange
-//        }
-//        photoImageView.image = plantImage
-//        photoImageView.contentMode = .scaleAspectFill
-//        // 3.0 7 plus
-//        //
-//            ViewHelper.roundCornersOf(viewLayer: photoImageView.layer, withRoundingCoefficient: Double(photoImageViewWidth * 0.2))
-//        updateDatePickerValue()
-//    }
-    
     /// Updates the selected Tag reference, and related label and color view elements.
     private func updateTag(selectedTag: Tag) {
         tag = selectedTag
     }
-    
-    /// Updates the tagPickerView selected row if there is a tag passed in.
-//    private func updateTagPickerValue() {
-//        guard let selectedTagTitle = tag?.title else { return }
-//        var index = 0
-//        for title in tagPickerTitles {
-//            if title == selectedTagTitle {
-//                break
-//            }
-//            index += 1
-//        }
-//        tagPickerView.selectRow(index, inComponent: 0, animated: false)
-//    }
-    
-    /// Sets the selectedHour and selectedMinute to the current time if there is no needsWateringDateValue passed in.
-//    private func updateTimeValues() {
-//        guard let wateringDate = wateringReminderNext else {
-//            wateringReminderNext = Date()
-//            selectedHour = Date().hourOfCurrentDate()
-//            selectedMinute = Date().minuteOfCurrentDate()
-//            return
-//        }
-//        selectedHour = wateringDate.hourOfCurrentDate()
-//        selectedMinute = wateringDate.minuteOfCurrentDate()
-//    }
     
     /// Removes the selected plant from its tag collecton, deletes it, and pops the viewController.
     private func deletePlant(action: UIAlertAction) {

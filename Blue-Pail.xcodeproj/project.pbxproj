@@ -63,6 +63,7 @@
 		9093A02C23BA733C00EB831B /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9093A02A23BA733C00EB831B /* ButtonTableViewCell.swift */; };
 		9093A02D23BA733C00EB831B /* ButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9093A02B23BA733C00EB831B /* ButtonTableViewCell.xib */; };
 		9093A02F23BA80B000EB831B /* CalendarDateSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9093A02E23BA80B000EB831B /* CalendarDateSelectionViewController.swift */; };
+		9093A03123C29A4300EB831B /* FertilizerHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9093A03023C29A4300EB831B /* FertilizerHistoryViewController.swift */; };
 		90B086D523B6D42F005C1F9F /* FertilizerHistory+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B086D423B6D42F005C1F9F /* FertilizerHistory+Convenience.swift */; };
 		90B086D723B6D53F005C1F9F /* FertilizerHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B086D623B6D53F005C1F9F /* FertilizerHistoryController.swift */; };
 		90FB9098174876E087AEE55A /* Pods_Blue_Pail.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF09B32FB55DB9CC1338971D /* Pods_Blue_Pail.framework */; };
@@ -128,6 +129,7 @@
 		9093A02A23BA733C00EB831B /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		9093A02B23BA733C00EB831B /* ButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonTableViewCell.xib; sourceTree = "<group>"; };
 		9093A02E23BA80B000EB831B /* CalendarDateSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateSelectionViewController.swift; sourceTree = "<group>"; };
+		9093A03023C29A4300EB831B /* FertilizerHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FertilizerHistoryViewController.swift; sourceTree = "<group>"; };
 		90B086D423B6D42F005C1F9F /* FertilizerHistory+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FertilizerHistory+Convenience.swift"; sourceTree = "<group>"; };
 		90B086D623B6D53F005C1F9F /* FertilizerHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FertilizerHistoryController.swift; sourceTree = "<group>"; };
 		DF09B32FB55DB9CC1338971D /* Pods_Blue_Pail.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Blue_Pail.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -284,6 +286,7 @@
 				635AEFED229B198100A9026F /* PlantPopupViewController.swift */,
 				635AEFEE229B198100A9026F /* PlantPopupViewController.xib */,
 				9093A02E23BA80B000EB831B /* CalendarDateSelectionViewController.swift */,
+				9093A03023C29A4300EB831B /* FertilizerHistoryViewController.swift */,
 			);
 			path = PlantVCs;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				63D4548122B9989400E74B1B /* SetupOnboardingViewController.swift in Sources */,
 				6326501F228118240025E10C /* Blue-Pail.xcdatamodeld in Sources */,
 				6326502F228216F60025E10C /* ColorHelper.swift in Sources */,
+				9093A03123C29A4300EB831B /* FertilizerHistoryViewController.swift in Sources */,
 				63265031228217710025E10C /* PlantDetailTableViewController.swift in Sources */,
 				639E39B122A87926005A8407 /* Optional.swift in Sources */,
 				9093A02C23BA733C00EB831B /* ButtonTableViewCell.swift in Sources */,

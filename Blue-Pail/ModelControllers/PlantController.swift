@@ -62,7 +62,7 @@ class PlantController : AlarmScheduler {
         }
         let uuid = UUID()
         let plant = Plant(name: name,
-                          image: imageData,
+                          needsWateredFireDate: needsWateredFireDate, image: imageData,
                           uuid: uuid,
                           dayToNextWater: Int16(wateringDayInteger),
                           daysToNextFertilize: Int16(fertilizingDayInteger ?? 0),
@@ -179,7 +179,7 @@ class PlantController : AlarmScheduler {
     }
     
     /// Waters the plant for now and creates a new notification that is the arguemnt amount of hours away from the fireDate.
-    func snoozeWateringFor(plant: Plant,
+    func snoozeReminderFor(plant: Plant,
                            hoursForSnooze: Int,
                            givenNotificationName: String) {
         let hoursForSnoozeInSeconds = 3600 * hoursForSnooze
@@ -267,7 +267,7 @@ extension AlarmScheduler {
                                    givenNotificationName: String) {
         let content  = UNMutableNotificationContent()
         content.sound = UNNotificationSound.default
-        content.userInfo = [Keys.userInfoPlantUuid : plant.uuid!]
+        content.userInfo = [Keys.userInfoPlantUuid : plant.uuid!.uuidString]
         switch givenNotificationName {
         case Keys.waterNotification:
             content.title = "Time To Water"
@@ -324,7 +324,7 @@ extension AlarmScheduler {
                     print("Unable to add notification request. \(error.localizedDescription)")
                 }
             }
-            if content.categoryIdentifier == Keys.fertilizePlantNotificationAction {
+            if content.categoryIdentifier == Keys.fertilizerNotificationCatagoryIdentifier {
                 print("Fertilize Notification sucessfully added for plant \(plant.name!)")
             } else {
                 print("Water Notification successfully added for plant \(plant.name!)")
@@ -346,7 +346,8 @@ extension AlarmScheduler {
                 print("No notification Key found")
             }
             requestId += plantID
-            userNotifications.removePendingNotificationRequests(withIdentifiers: [requestId])
+            #warning("Maybe to try to account for old notifications before this build I should pass in the plant ID into the removePendingRequests method to cover bases -- is this overkill though?")
+            userNotifications.removePendingNotificationRequests(withIdentifiers: [requestId, plantID])
             print("Notification successfully removed for plant \(plant.name!)")
         }
     }

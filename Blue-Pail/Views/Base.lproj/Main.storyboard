@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="12c-Me-TSd">
-    <device id="retina4_7" orientation="portrait" appearance="dark"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
@@ -33,16 +33,16 @@
             </objects>
             <point key="canvasLocation" x="-968" y="139"/>
         </scene>
-        <!--View Controller-->
+        <!--Fertilizer History View Controller-->
         <scene sceneID="rI3-DL-xdu">
             <objects>
-                <viewController id="eQd-fI-IBh" sceneMemberID="viewController">
+                <viewController id="eQd-fI-IBh" customClass="FertilizerHistoryViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wkm-b2-AKe">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jea-0M-t1p" customClass="FSCalendar">
-                                <rect key="frame" x="0.0" y="47" width="375" height="600"/>
+                                <rect key="frame" x="0.0" y="47" width="375" height="677"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="titleDefaultColor">
@@ -57,6 +57,15 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="todaySelectionColor">
                                         <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleSelectionColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="selectionColor">
+                                        <color key="value" red="0.30840110780000002" green="0.5618229508" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="todayColor">
+                                        <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yx7-15-CGU">
@@ -66,8 +75,12 @@
                                     <constraint firstAttribute="width" constant="71" id="fLv-d4-P9a"/>
                                     <constraint firstAttribute="height" constant="15" id="lV0-Sm-XPx"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="doneButtonHandlePressed:" destination="eQd-fI-IBh" eventType="touchUpInside" id="fvy-BL-xMW"/>
+                                </connections>
                             </button>
                         </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.71021511130000003" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="kHQ-nq-pOn" firstAttribute="trailing" secondItem="Jea-0M-t1p" secondAttribute="trailing" id="Tsc-j1-dPV"/>
                             <constraint firstItem="yx7-15-CGU" firstAttribute="top" secondItem="kHQ-nq-pOn" secondAttribute="top" constant="16" id="UUf-3A-aaT"/>
@@ -78,6 +91,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kHQ-nq-pOn"/>
                     </view>
+                    <connections>
+                        <outlet property="calendar" destination="Jea-0M-t1p" id="Zh3-Mb-rYQ"/>
+                        <outlet property="doneButtonHandle" destination="yx7-15-CGU" id="eB2-bZ-kXV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ngH-eS-Jfa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -88,7 +105,7 @@
             <objects>
                 <collectionViewController id="2UV-ic-ecl" customClass="PlantCollectionViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="SN5-5T-U5W">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="542"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="619"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="safeArea" id="sRX-ug-pGe">
@@ -99,14 +116,14 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="TopLeft" reuseIdentifier="plantCell" id="Hnf-ui-sqk" customClass="PlantCollectionViewCell" customModule="Blue_Pail" customModuleProvider="target">
-                                <rect key="frame" x="-62.5" y="0.0" width="500" height="490"/>
+                                <rect key="frame" x="-62.666666666666664" y="0.0" width="500" height="490"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="500" height="490"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AVd-6q-9BN">
-                                            <rect key="frame" x="0.0" y="0.0" width="500" height="12.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="500" height="12.666666666666666"/>
                                             <color key="backgroundColor" red="1" green="0.27078195360000001" blue="0.2239404931" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="AVd-6q-9BN" secondAttribute="height" multiplier="40:1" id="Frk-zW-Dfr"/>
@@ -130,10 +147,10 @@
                                             </variation>
                                         </view>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ppU-ww-hyx">
-                                            <rect key="frame" x="0.0" y="12.5" width="500" height="477.5"/>
+                                            <rect key="frame" x="0.0" y="12.666666666666657" width="500" height="477.33333333333337"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plant Name Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0sx-xN-8fP">
-                                            <rect key="frame" x="0.0" y="12.5" width="500" height="65"/>
+                                            <rect key="frame" x="0.0" y="12.666666666666664" width="500" height="65"/>
                                             <color key="backgroundColor" red="0.86855201199999998" green="0.97134524830000002" blue="0.95657641270000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="0sx-xN-8fP" secondAttribute="height" multiplier="500:41" id="OnY-nh-Yaj"/>
@@ -163,7 +180,7 @@
                                             <rect key="frame" x="5" y="295" width="490" height="190"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wkj-eo-4zT">
-                                                    <rect key="frame" x="8" y="5" width="79.5" height="180"/>
+                                                    <rect key="frame" x="8" y="5" width="79.666666666666671" height="180"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q17-fk-Wn5" userLabel="waterNotificationStatusIcon">
                                                             <rect key="frame" x="15" y="0.0" width="50" height="85"/>
@@ -194,7 +211,7 @@
                                                     </variation>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plant Tag Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IeW-fS-6N3">
-                                                    <rect key="frame" x="92.5" y="135" width="392.5" height="14.5"/>
+                                                    <rect key="frame" x="92.666666666666657" y="135.33333333333331" width="392.33333333333337" height="14.333333333333343"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="IeW-fS-6N3" secondAttribute="height" multiplier="72:7" id="d8W-r9-Qog"/>
                                                     </constraints>
@@ -212,7 +229,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PyJ-Xy-1HX">
-                                                    <rect key="frame" x="93.5" y="40" width="391.5" height="14.5"/>
+                                                    <rect key="frame" x="93.666666666666657" y="40.333333333333314" width="391.33333333333337" height="14.333333333333336"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="PyJ-Xy-1HX" secondAttribute="height" multiplier="143:14" id="WT0-Zz-gpo"/>
                                                     </constraints>
@@ -307,6 +324,15 @@
                                                 </mask>
                                             </variation>
                                         </view>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fertilizerIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ELg-jE-URD">
+                                            <rect key="frame" x="-2" y="72.666666666666671" width="35" height="35"/>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="tintColor" red="0.569301011169008" green="1" blue="0.0074285916021298304" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="35" id="eh5-im-K3t"/>
+                                                <constraint firstAttribute="width" constant="35" id="msm-I9-MxH"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                 </view>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -316,6 +342,7 @@
                                     <constraint firstAttribute="trailing" secondItem="e04-sv-hAF" secondAttribute="trailing" constant="5" id="6dy-TH-ZH6"/>
                                     <constraint firstAttribute="bottom" secondItem="e04-sv-hAF" secondAttribute="bottom" constant="5" id="7IT-NS-P3z"/>
                                     <constraint firstItem="0sx-xN-8fP" firstAttribute="leading" secondItem="Hnf-ui-sqk" secondAttribute="leading" id="9cN-wG-5Ht"/>
+                                    <constraint firstItem="ELg-jE-URD" firstAttribute="top" secondItem="0sx-xN-8fP" secondAttribute="bottom" constant="-5" id="Dd9-Zq-xZb"/>
                                     <constraint firstItem="0sx-xN-8fP" firstAttribute="top" secondItem="AVd-6q-9BN" secondAttribute="bottom" id="Fyd-ZX-AH3"/>
                                     <constraint firstItem="e04-sv-hAF" firstAttribute="leading" secondItem="Hnf-ui-sqk" secondAttribute="leadingMargin" constant="15" id="GbG-Wu-Pjx"/>
                                     <constraint firstItem="AVd-6q-9BN" firstAttribute="top" secondItem="Hnf-ui-sqk" secondAttribute="top" id="HlG-SH-k2M"/>
@@ -328,6 +355,7 @@
                                     <constraint firstAttribute="trailing" secondItem="AVd-6q-9BN" secondAttribute="trailing" id="Xve-vn-sMN"/>
                                     <constraint firstItem="ppU-ww-hyx" firstAttribute="leading" secondItem="Hnf-ui-sqk" secondAttribute="leading" id="Xvt-Gz-WIg"/>
                                     <constraint firstItem="AVd-6q-9BN" firstAttribute="leading" secondItem="Hnf-ui-sqk" secondAttribute="leading" id="ah8-hp-F5o"/>
+                                    <constraint firstItem="ELg-jE-URD" firstAttribute="leading" secondItem="Hnf-ui-sqk" secondAttribute="leadingMargin" constant="-10" id="cuo-7f-grn"/>
                                     <constraint firstItem="0sx-xN-8fP" firstAttribute="top" secondItem="AVd-6q-9BN" secondAttribute="bottom" id="edR-dE-trg"/>
                                     <constraint firstAttribute="trailing" secondItem="ppU-ww-hyx" secondAttribute="trailing" id="mk1-IT-5Ro"/>
                                     <constraint firstItem="e04-sv-hAF" firstAttribute="leading" secondItem="Hnf-ui-sqk" secondAttribute="leading" constant="5" id="mrt-sg-d0f"/>
@@ -405,6 +433,7 @@
                                 </variation>
                                 <connections>
                                     <outlet property="detailsBackgroundView" destination="e04-sv-hAF" id="edh-Lq-EqU"/>
+                                    <outlet property="fertilizerStatusImageView" destination="ELg-jE-URD" id="Thr-0Q-23m"/>
                                     <outlet property="plantImageView" destination="ppU-ww-hyx" id="mYO-S6-HsN"/>
                                     <outlet property="plantNameLabel" destination="0sx-xN-8fP" id="Sbi-D2-bkL"/>
                                     <outlet property="tagColorView" destination="AVd-6q-9BN" id="JfX-wZ-fGi"/>
@@ -437,7 +466,7 @@
                     <connections>
                         <outlet property="tagFilterPickerView" destination="6I5-hd-Ean" id="Vbm-X4-p7N"/>
                         <segue destination="ADt-cV-qID" kind="show" identifier="toEditPlant" id="pGJ-Ms-J0E"/>
-                        <segue destination="eQd-fI-IBh" kind="presentation" id="ML7-P5-CLQ"/>
+                        <segue destination="eQd-fI-IBh" kind="presentation" identifier="toShowFertilizerHistory" id="ML7-P5-CLQ"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RfU-ke-gy2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -446,18 +475,18 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                 </pickerView>
             </objects>
-            <point key="canvasLocation" x="-252.53906249999997" y="136.16398243045387"/>
+            <point key="canvasLocation" x="-253.125" y="135.9375"/>
         </scene>
         <!--Plant Tags-->
         <scene sceneID="8IY-5M-gj9">
             <objects>
                 <viewController id="3Vh-K7-EZW" customClass="TagCreationViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gf5-cM-9r7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="542"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="619"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p3o-LE-2jD">
-                                <rect key="frame" x="0.0" y="150" width="375" height="242"/>
+                                <rect key="frame" x="0.0" y="150" width="375" height="319"/>
                             </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -496,13 +525,13 @@
             <objects>
                 <tableViewController id="esg-bB-kfb" customClass="SettingsTableViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="waI-If-Teg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="542"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="619"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" red="0.39963616315815664" green="0.40359295685279184" blue="0.40359295685279184" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="disclosureTableViewCell" rowHeight="50" id="ThU-hF-fT1" customClass="DisclosureTableViewCell" customModule="Blue_Pail" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="55.333332061767578" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ThU-hF-fT1" id="9Ef-zh-2zl">
                                     <rect key="frame" x="0.0" y="0.0" width="348" height="50"/>
@@ -515,7 +544,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jg3-Vd-Ax8" userLabel="Setting Label">
-                                            <rect key="frame" x="55" y="14.5" width="270" height="21"/>
+                                            <rect key="frame" x="55" y="14.666666666666664" width="270" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -555,7 +584,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="TutorialTableViewController" title="Tutorials" id="bxb-re-bXK" customClass="TutorialTableViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="TGV-LM-HYK">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="542"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="619"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -661,20 +690,20 @@
             <objects>
                 <viewController storyboardIdentifier="WelcomeOnboardingViewController" id="b2u-8k-r9j" customClass="WelcomeOnboardingViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="T9R-Wv-nSL">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Blue Pail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sf-UM-kt6">
-                                <rect key="frame" x="66" y="416" width="243" height="35"/>
+                                <rect key="frame" x="66" y="488.66666666666669" width="243" height="35.000000000000057"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
                                 <color key="textColor" red="0.22836515065233182" green="0.24235388903581728" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Welcome" translatesAutoresizingMaskIntoConstraints="NO" id="nVQ-8c-x3W">
-                                <rect key="frame" x="90" y="133" width="195" height="251"/>
+                                <rect key="frame" x="90" y="205.66666666666663" width="195" height="251"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The best way to keep your plants watered and happy!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cW-h5-aRP">
-                                <rect key="frame" x="23" y="451" width="329" height="46.5"/>
+                                <rect key="frame" x="23" y="523.66666666666663" width="329" height="46.666666666666629"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                 <color key="textColor" red="0.22836515065233182" green="0.24235388903581728" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -703,20 +732,20 @@
             <objects>
                 <viewController storyboardIdentifier="NotificationOnboardingViewController" id="6gk-k6-Fcr" customClass="NotificationOnboardingViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pdn-Yf-QI5">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All you need to know for setup is how many days your plant needs between waterings to get accurate reminders." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MR0-u3-QWE">
-                                <rect key="frame" x="15" y="451" width="345" height="70"/>
+                                <rect key="frame" x="15" y="523.66666666666663" width="345" height="69.666666666666629"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                 <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Notifications" translatesAutoresizingMaskIntoConstraints="NO" id="Rwi-VG-eu9">
-                                <rect key="frame" x="66.5" y="150.5" width="242" height="216"/>
+                                <rect key="frame" x="66.666666666666686" y="223" width="242" height="216"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep Up To Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vWI-sW-pLr">
-                                <rect key="frame" x="90.5" y="416" width="194" height="35"/>
+                                <rect key="frame" x="90.666666666666686" y="488.66666666666669" width="194" height="35.000000000000057"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
                                 <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -744,26 +773,26 @@
             <objects>
                 <viewController storyboardIdentifier="GetStartedOnboardingViewController" modalPresentationStyle="fullScreen" id="Ujd-0u-hsq" customClass="GetStartedOnboardingViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5K6-KN-9Cj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get Started" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NP5-bG-A0N">
-                                <rect key="frame" x="121.5" y="416" width="132" height="35"/>
+                                <rect key="frame" x="121.66666666666669" y="488.66666666666669" width="132" height="35.000000000000057"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
                                 <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the button to get started and make sure to enable notifications to get the most out of Blue Pail." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WxN-O7-ld3">
-                                <rect key="frame" x="15" y="451" width="345" height="70"/>
+                                <rect key="frame" x="15" y="523.66666666666663" width="345" height="69.666666666666629"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                 <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GetStarted" translatesAutoresizingMaskIntoConstraints="NO" id="0YI-H1-Bb2">
-                                <rect key="frame" x="55" y="137.5" width="265" height="242"/>
+                                <rect key="frame" x="55" y="210" width="265" height="242"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="skr-pA-wrD">
-                                <rect key="frame" x="50" y="531" width="275" height="36"/>
+                                <rect key="frame" x="50" y="603.33333333333337" width="275" height="36"/>
                                 <color key="backgroundColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
                                 <state key="normal" title="Next">
@@ -804,20 +833,20 @@
             <objects>
                 <viewController storyboardIdentifier="SetupOnboardingViewController" id="lti-k2-MMW" customClass="SetupOnboardingViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YLh-08-gWZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simple Setup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p96-1D-RLI">
-                                <rect key="frame" x="111" y="416" width="153" height="35"/>
+                                <rect key="frame" x="111" y="488.66666666666669" width="153" height="35.000000000000057"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
                                 <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WaterAndTimer" translatesAutoresizingMaskIntoConstraints="NO" id="Kfh-Gq-4Wm">
-                                <rect key="frame" x="78" y="148.5" width="219" height="220"/>
+                                <rect key="frame" x="78" y="221" width="219" height="220"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aNM-zd-Z8N">
-                                <rect key="frame" x="15" y="451" width="345" height="93"/>
+                                <rect key="frame" x="15" y="523.66666666666663" width="345" height="93"/>
                                 <string key="text">Get straight to managing your plant watering schedules without the need to sign-in to an account or deal with unnecessary features.</string>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                 <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -846,7 +875,7 @@
             <objects>
                 <tableViewController id="ADt-cV-qID" customClass="PlantDetailTableViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wXO-01-eqa">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="542"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="619"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" red="0.00017265004789999999" green="0.27222367730000002" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -894,7 +923,7 @@
             <objects>
                 <viewController id="hm1-Ze-2wB" customClass="CalendarDateSelectionViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rbL-dt-A9f">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. Select the next day you want to be reminded" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zf1-24-mnO">
@@ -919,7 +948,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYH-Xj-Ffp" customClass="FSCalendar">
-                                <rect key="frame" x="0.0" y="197" width="375" height="450"/>
+                                <rect key="frame" x="0.0" y="274" width="375" height="450"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="DYH-Xj-Ffp" secondAttribute="height" multiplier="15:18" id="W6n-eY-p7t"/>
@@ -946,19 +975,19 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="nfV-Wo-AJp">
-                                <rect key="frame" x="16" y="143" width="343" height="44"/>
+                                <rect key="frame" x="16" y="220.33333333333334" width="343" height="43.666666666666657"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="38" translatesAutoresizingMaskIntoConstraints="NO" id="wqh-hR-Iyb">
-                                        <rect key="frame" x="0.0" y="0.0" width="83" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="83" height="20.333333333333332"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnD-df-qsh">
-                                                <rect key="frame" x="0.0" y="0.0" width="40.5" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="40.333333333333336" height="20.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3n-Op-Rs3">
-                                                <rect key="frame" x="78.5" y="0.0" width="4.5" height="20.5"/>
+                                                <rect key="frame" x="78.333333333333329" y="0.0" width="4.6666666666666714" height="20.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -966,16 +995,16 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="cbu-cs-gw3">
-                                        <rect key="frame" x="0.0" y="23.5" width="83.5" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="23.333333333333314" width="83.666666666666671" height="20.333333333333329"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interval:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ktx-7H-ES3">
-                                                <rect key="frame" x="0.0" y="0.0" width="61" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="61" height="20.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E70-bc-w2A">
-                                                <rect key="frame" x="79" y="0.0" width="4.5" height="20.5"/>
+                                                <rect key="frame" x="79" y="0.0" width="4.6666666666666714" height="20.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1019,7 +1048,7 @@
             <objects>
                 <tableViewController id="b65-br-3s4" customClass="TagCreationTableViewController" customModule="Blue_Pail" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="jKL-lU-jhL">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="542"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="619"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1169,13 +1198,13 @@
                                                     </constraints>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected Color:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Urm-KS-5o4">
-                                                    <rect key="frame" x="94" y="178.5" width="117.5" height="20.5"/>
+                                                    <rect key="frame" x="93.666666666666657" y="178.66666666666666" width="117.66666666666666" height="20.333333333333343"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.22836515069999999" green="0.24235388899999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nfc-T8-So7">
-                                                    <rect key="frame" x="236.5" y="164" width="50" height="50"/>
+                                                    <rect key="frame" x="236.33333333333337" y="164" width="50" height="50"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="Fde-Mt-q1I"/>
@@ -1212,7 +1241,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9L-Yt-DAS">
-                                                    <rect key="frame" x="87.5" y="25" width="200" height="50"/>
+                                                    <rect key="frame" x="87.666666666666686" y="25" width="200" height="50"/>
                                                     <color key="backgroundColor" red="0.73502934639999995" green="0.1645194767" blue="0.1609443565" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="M9L-Yt-DAS" secondAttribute="height" multiplier="100:25" id="MyG-Ym-QAg"/>
@@ -1286,14 +1315,15 @@
         <image name="WaterAndTimer" width="219" height="220"/>
         <image name="Welcome" width="195" height="251"/>
         <image name="checkmark.square" catalog="system" width="64" height="56"/>
-        <image name="filterButton" width="20.5" height="25.5"/>
-        <image name="selectedPlantTabBarIcon" width="27.5" height="26"/>
-        <image name="selectedSettingsIcon" width="28.5" height="28.5"/>
+        <image name="fertilizerIcon" width="200" height="200"/>
+        <image name="filterButton" width="20.333333969116211" height="25"/>
+        <image name="selectedPlantTabBarIcon" width="27.666666030883789" height="26"/>
+        <image name="selectedSettingsIcon" width="28" height="28.333333969116211"/>
         <image name="selectedTagTabBarIcon" width="28" height="28"/>
-        <image name="thinPlusButton" width="23" height="23"/>
-        <image name="unselectedPlantTabBarIcon" width="27.5" height="26"/>
-        <image name="unselectedSettingsIcon" width="29" height="29"/>
-        <image name="unselectedTagTabBarIcon" width="28" height="28"/>
+        <image name="thinPlusButton" width="22.666666030883789" height="22.666666030883789"/>
+        <image name="unselectedPlantTabBarIcon" width="27.333333969116211" height="26"/>
+        <image name="unselectedSettingsIcon" width="29" height="28.666666030883789"/>
+        <image name="unselectedTagTabBarIcon" width="27.666666030883789" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="3GU-Od-XAH"/>

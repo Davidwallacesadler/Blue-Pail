@@ -38,7 +38,7 @@ extension Plant {
     // Note that isWatered defaults to true, needsWateredFireDate defaults to curent date
     convenience init(name: String?,
                      isWatered: Bool = true,
-                     needsWateredFireDate: Date = Date(),
+                     needsWateredFireDate: Date,
                      image: Data?,
                      uuid: UUID,
                      dayToNextWater: Int16,

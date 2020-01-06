@@ -70,6 +70,16 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     
     // MARK: - PopupDelegate Methods
     // TODO: - Want to just reload a single item in waterPlant() -- not the whole collectionView.
+    
+    func fertilizePlant() {
+        print("Fertilize Plant")
+        guard let plant = selectedPlant, let targetIndex = collectionView.indexPathsForSelectedItems else { return }
+        PlantController.shared.fertilizePlant(plant: plant)
+        self.collectionView.reloadItems(at: targetIndex)
+    }
+    func showPlantFertilizerHistory() {
+        performSegue(withIdentifier: "toShowFertilizerHistory", sender: self)
+    }
     func editPlant() {
         performSegue(withIdentifier: "toEditPlant", sender: self)
     }
@@ -237,15 +247,14 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     
     /// Returns an array that is populated with every Plant object.
     func getAllPlants() -> [Plant] {
-        var collection = [Plant]()
-        let allTags = TagController.shared.tags
-        for tag in allTags {
-            guard let tagPlants = tag.plants?.array as? [Plant] else { return []}
-            for plant in tagPlants {
-                collection.append(plant)
+        let intialResult: [Plant] = []
+        return TagController.shared.tags.reduce(into: intialResult) { (plants, tag) in
+            for plant in tag.plants!.array {
+                if let plantObject = plant as? Plant {
+                    plants.append(plantObject)
+                }
             }
         }
-        return collection
     }
     
     /// Selector Method for the applicationWillEnterForeground: Sets the isDirty property to true.
@@ -258,10 +267,16 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     }
     
     /// Reloads the collection view if the current date is at or passed the fireDate for all plants in the Plant Collection Array.
-    private func checkIfPlantsAreDry() {
+    private func checkIfPlantsAreDryOrNeedFertilizing() {
         for plant in plantCollection {
-            guard let fireDate = plant.needsWateredFireDate else { return }
-            if fireDate == Date() || fireDate > Date()  {
+            #warning("Need to check fertilizer dates as well")
+            guard let wateringFireDate = plant.needsWateredFireDate else { return }
+            if wateringFireDate <= Date()  {
+                self.collectionView.reloadData()
+                break
+            }
+            guard let fertilizingFireDate = plant.needsFertilizedFireDate else { return }
+            if fertilizingFireDate <= Date() {
                 self.collectionView.reloadData()
                 break
             }
@@ -271,7 +286,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     /// If isDirty is true checkIfPlantsAreDry() is called and isDirty is reset to false.
     private func cleanIfNeeded() {
         if isDirty == true {
-            checkIfPlantsAreDry()
+            checkIfPlantsAreDryOrNeedFertilizing()
             isDirty = false
         }
     }
@@ -297,6 +312,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
                 // The current Date has passed the notification date:
                 daysToNextWater = DayHelper.shared.formatMonthAndDay(givenDate: fireDate)
                 cell.waterNotificationStatusImageView.image = UIImage(named: Keys.wateringPailIcon)
+                cell.waterNotificationStatusImageView.tintColor = .red
                 cell.plantNameLabel.backgroundColor = .dryRed
             }
         }
@@ -322,16 +338,33 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             cell.waterNotificationStatusImageView.tintColor = .deepBlue
             cell.tagNameIconImageView.tintColor = .deepBlue
         }
-        
         ViewHelper.roundCornersOf(viewLayer: cell.detailsBackgroundView.layer, withRoundingCoefficient: 9.0)
         ViewHelper.roundCornersOf(viewLayer: cell.contentView.layer, withRoundingCoefficient: 6.0)
         ViewHelper.roundCornersOf(viewLayer: cell.layer, withRoundingCoefficient: 6.0)
+        if selectedPlant.needsFertilizedFireDate != nil {
+            PlantController.shared.checkIfFertilized(plant: selectedPlant)
+            cell.fertilizerStatusImageView.isHidden = true
+            cell.tagNameIconImageView.image = #imageLiteral(resourceName: "notTimeToWaterIcon")
+            if !selectedPlant.isFertilized {
+                cell.tagNameIconImageView.image = #imageLiteral(resourceName: "fertilizerIcon")
+                cell.tagNameIconImageView.tintColor = .red
+                cell.tagTitleLabel.text =  selectedPlant.needsFertilizedFireDate?.dayMonthYearValue()
+            } else {
+                cell.tagNameIconImageView.tintColor = UIColor(red: 145/255, green: 200/255, blue: 30/255, alpha: 1.0)
+                cell.tagTitleLabel.text =  DayHelper.shared.amountOfDaysBetween(previousDate: Date(), futureDate: selectedPlant.needsFertilizedFireDate!)
+            }
+           } else {
+               cell.fertilizerStatusImageView.isHidden = true
+           }
     }
     
     /// Displays the watering and editing Popup for the selected plant object.
     private func displayPopupChildView(forSelectedPlant plant: Plant) {
         let plantPopupViewController = PlantPopupViewController(nibName: "PlantPopupViewController", bundle: nil)
         plantPopupViewController.delegate = self
+        if plant.needsFertilizedFireDate != nil {
+            plantPopupViewController.plantHasFertilizerReminder = true
+        }
         self.addChild(plantPopupViewController)
         plantPopupViewController.view.frame = self.view.bounds
         self.view.addSubview(plantPopupViewController.view)
@@ -453,17 +486,22 @@ extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
      
  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "toEditPlant" {
-        guard let detailVC = segue.destination as? PlantDetailTableViewController else { return }
-        detailVC.plant = selectedPlant
-        detailVC.plantTitle = (selectedPlant?.name)!
-        detailVC.tag = selectedPlant?.tag
-        detailVC.wateringReminderNext = selectedPlant?.needsWateredFireDate
-        detailVC.wateringDayInteger = Int(selectedPlant!.dayToNextWater)
+        
+        guard let detailVC = segue.destination as? PlantDetailTableViewController, let plant = selectedPlant else { return }
+        detailVC.plant = plant
+        detailVC.plantTitle = (plant.name)!
+        detailVC.tag = plant.tag
+        detailVC.wateringReminderNext = plant.needsWateredFireDate
+        detailVC.wateringDayInteger = Int(plant.dayToNextWater)
+        detailVC.image = plant.photo
         if selectedPlant!.daysToNextFertilize != 0 {
             detailVC.fertilizerDayInteger = Int(selectedPlant!.daysToNextFertilize)
             detailVC.fertilizerReminderNext = selectedPlant?.needsFertilizedFireDate
         }
         detailVC.navigationItem.title = selectedPlant?.name
+    } else if segue.identifier == "toShowFertilizerHistory" {
+        guard let historyVC = segue.destination as? FertilizerHistoryViewController, let plant = selectedPlant else { return }
+        historyVC.plant = plant
         }
     }
 }

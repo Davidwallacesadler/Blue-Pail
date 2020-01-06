@@ -30,9 +30,17 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
                 selectedDateCount += 1
                 setupNextReminderDateLabel()
             } else if secondSelectedDate == nil && firstDateWasSelected {
-                secondSelectedDate = date
-                selectedDateCount += 1
-                setupIntervalLabel()
+                if date < firstSelectedDate! {
+                    secondSelectedDate = firstSelectedDate!
+                    firstSelectedDate = date
+                    selectedDateCount += 1
+                    setupNextReminderDateLabel()
+                    setupIntervalLabel()
+                } else {
+                    secondSelectedDate = date
+                    selectedDateCount += 1
+                    setupIntervalLabel()
+                }
             }
         } else {
             let deselectAlert = UIAlertController(title: "Deselect A Previous Date", message: "Tap one of the previously selected days before selecting another day.", preferredStyle: .alert)

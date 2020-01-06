@@ -30,11 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        let plantId = userInfo[Keys.userInfoPlantUuid] as! UUID
+        let plantId = userInfo[Keys.userInfoPlantUuid] as! String
         #warning("replace this for loop with a NSFetchRequest with a predicate string == 'uuid == plantId'")
         var plantAssociatedWithNotification : Plant?
         for plant in PlantController.shared.plants {
-            if plant.uuid?.uuidString == plantId.uuidString {
+            if plant.uuid?.uuidString == plantId {
                 plantAssociatedWithNotification = plant
                 break
             }
@@ -50,22 +50,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 break
             case Keys.oneHourSnoozeNotificationAction:
                 if userInfo[Keys.userInfoFertilizerSnooze] != nil {
-                    PlantController.shared.snoozeWateringFor(plant: plant,
+                    PlantController.shared.snoozeReminderFor(plant: plant,
                                                              hoursForSnooze: 1,
                                                              givenNotificationName: Keys.fertilizerNotification)
                 } else {
-                    PlantController.shared.snoozeWateringFor(plant: plant,
+                    PlantController.shared.snoozeReminderFor(plant: plant,
                                                              hoursForSnooze: 1,
                                                              givenNotificationName: Keys.waterNotification)
                 }
                 break
             case Keys.oneDaySnoozeNotificationAction:
                 if userInfo[Keys.userInfoFertilizerSnooze] != nil {
-                    PlantController.shared.snoozeWateringFor(plant: plant,
+                    PlantController.shared.snoozeReminderFor(plant: plant,
                                                              hoursForSnooze: 24,
                                                              givenNotificationName: Keys.fertilizerNotification)
                 }
-                PlantController.shared.snoozeWateringFor(plant: plant,
+                PlantController.shared.snoozeReminderFor(plant: plant,
                                                          hoursForSnooze: 24,
                                                          givenNotificationName: Keys.waterNotification)
                 break
@@ -110,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let fertilizeAction = UNNotificationAction(identifier: Keys.fertilizePlantNotificationAction,
                                                    title: "Fertilize Plant",
                                                    options: UNNotificationActionOptions(rawValue: 0))
-        let plantFertilizingCatagory = UNNotificationCategory(identifier: Keys.fertilizePlantNotificationAction,
+        let plantFertilizingCatagory = UNNotificationCategory(identifier: Keys.fertilizerNotificationCatagoryIdentifier,
                                                               actions: [fertilizeAction, oneHourSnoozeAction, oneDaySnoozeAction],
                                                               intentIdentifiers: [],
                                                               hiddenPreviewsBodyPlaceholder: "",
