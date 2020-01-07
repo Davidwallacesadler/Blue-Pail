@@ -18,7 +18,8 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         let timeSinceNow = date.timeIntervalSinceNow
-        if timeSinceNow < 0 {
+        let currentDayMonthYear = date.dayMonthYearValue()
+        if timeSinceNow < 0 && currentDayMonthYear != Date().dayMonthYearValue() {
             displayFutureDateAlert(withSelectedDate: date)
             calendar.deselect(date)
             calendar.reloadData()
@@ -159,7 +160,7 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
     }
     
     private func displayFutureDateAlert(withSelectedDate date: Date) {
-        let futureDateAlert = UIAlertController(title: "Date is in the Past", message: "Please select a day starting with tomorrow.", preferredStyle: .alert)
+        let futureDateAlert = UIAlertController(title: "Date is in the Past", message: "Please select a day starting with today.", preferredStyle: .alert)
         futureDateAlert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
         present(futureDateAlert, animated: true, completion: nil)
        

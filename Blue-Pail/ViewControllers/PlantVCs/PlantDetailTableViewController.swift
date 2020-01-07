@@ -18,10 +18,12 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
                      dateAndInterval: (Date, Int)) {
         switch key {
         case Keys.waterNotification:
+            print("updating watering data")
             wateringReminderNext = dateAndInterval.0
             wateringDayInteger = dateAndInterval.1
             tableView.reloadSections(IndexSet([2]), with: .none)
         case Keys.fertilizerNotification:
+             print("updating fertilizing data")
             fertilizerReminderNext = dateAndInterval.0
             fertilizerDayInteger = dateAndInterval.1
             tableView.reloadSections(IndexSet([3]), with: .none)
@@ -68,6 +70,8 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         switch indexPath.section {
         case 1:
             return CGFloat(integerLiteral: 100)
+        case 2,3:
+            return CGFloat(integerLiteral: 250)
         case 4:
             return CGFloat(integerLiteral: 200)
         default:
@@ -292,9 +296,17 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     var plant: Plant?
     var tag: Tag?
     var plantTitle = ""
-    var wateringReminderNext: Date?
+    var wateringReminderNext: Date? = nil {
+        didSet {
+            print("watering reminder set")
+        }
+    }
     var wateringDayInteger: Int?
-    var fertilizerReminderNext: Date?
+    var fertilizerReminderNext: Date? = nil {
+        didSet {
+            print("Fertilizer reminder set")
+        }
+    }
     var fertilizerDayInteger: Int?
     var image: UIImage?
     

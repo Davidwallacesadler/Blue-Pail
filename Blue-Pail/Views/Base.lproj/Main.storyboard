@@ -713,7 +713,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="nVQ-8c-x3W" firstAttribute="centerX" secondItem="T9R-Wv-nSL" secondAttribute="centerX" id="GxY-cV-acQ"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0cW-h5-aRP" secondAttribute="trailing" constant="15" id="Mi8-4l-iB2"/>
@@ -755,7 +755,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.83529411764705885" green="0.84705882352941175" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="MR0-u3-QWE" firstAttribute="leading" secondItem="pdn-Yf-QI5" secondAttribute="leading" constant="15" id="Ad0-Og-7aF"/>
                             <constraint firstItem="MR0-u3-QWE" firstAttribute="top" secondItem="vWI-sW-pLr" secondAttribute="bottom" id="ChL-8F-yIY"/>
@@ -807,7 +807,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.83529411764705885" green="0.84705882352941175" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="skr-pA-wrD" firstAttribute="leading" secondItem="87m-cD-ccN" secondAttribute="leading" constant="50" id="8WE-cP-fGc"/>
                             <constraint firstItem="0YI-H1-Bb2" firstAttribute="centerY" secondItem="5K6-KN-9Cj" secondAttribute="centerY" constant="-75" id="ECo-nd-2hq"/>
@@ -857,7 +857,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="aNM-zd-Z8N" firstAttribute="top" secondItem="p96-1D-RLI" secondAttribute="bottom" id="HYJ-g6-U9I"/>
                             <constraint firstItem="Kfh-Gq-4Wm" firstAttribute="centerY" secondItem="YLh-08-gWZ" secondAttribute="centerY" constant="-75" id="S9M-E8-tb7"/>
@@ -1252,7 +1252,7 @@
                                                         <constraint firstAttribute="width" secondItem="M9L-Yt-DAS" secondAttribute="height" multiplier="100:25" id="MyG-Ym-QAg"/>
                                                         <constraint firstAttribute="height" constant="50" id="j5A-Ob-iPd"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <state key="normal" title="Delete Tag">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>

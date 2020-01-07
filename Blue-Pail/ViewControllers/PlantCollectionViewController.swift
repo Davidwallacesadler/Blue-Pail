@@ -344,7 +344,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             cell.fertilizerStatusImageView.isHidden = true
             cell.tagNameIconImageView.image = #imageLiteral(resourceName: "notTimeToWaterIcon")
             if !selectedPlant.isFertilized {
-                cell.tagNameIconImageView.image = #imageLiteral(resourceName: "fertilizerIcon")
+                cell.tagNameIconImageView.image = #imageLiteral(resourceName: "waterPlantIcon-1")
                 cell.tagNameIconImageView.tintColor = .dryRed
                 cell.tagTitleLabel.text =  selectedPlant.needsFertilizedFireDate?.dayMonthYearValue()
             } else {

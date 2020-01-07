@@ -7,54 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EEB3B95D-3679-4D4A-B9A2-83FEEEC9AA13"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "203D80D0-C362-44F3-99D7-50CAF23C208D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "segueToUpdateCalendar(givenCellKey:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4AC1E4E4-C1D1-43A2-B50F-E9CE84C84D21"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "updateDates(selectedKey:dateAndInterval:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "82EA0686-BE8C-4C2C-87D8-B2862DA6F40B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -119,22 +71,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9ACCF334-A2F5-418A-953C-7E2791288C36"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "324"
-            endingLineNumber = "324"
-            landmarkName = "saveButtonPressed(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "C1B0335A-3405-4DEA-B7CA-8756E778B8E3"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -152,7 +88,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "98C5F78D-2F28-4BA7-96DC-D83E84EC07EB"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Blue-Pail/ViewControllers/PlantCollectionViewController.swift"
@@ -215,38 +151,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "898A0F2A-A151-4AAC-ADF6-7848AFBCB294"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E811EF08-FBDF-434A-A53E-8D3B200C8EF6"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "725EC7BF-571F-463D-B789-EE1D4EF481A0"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -258,6 +162,163 @@
             endingLineNumber = "61"
             landmarkName = "moveButtonAndPrepareCellContents()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EF5A30D4-CE2F-44D8-9715-3F1FA0204514"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Blue-Pail/ViewControllers/PlantVCs/CalendarDateSelectionViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "doneButtonPressed(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1F69E30E-8CF7-44E1-BDB9-58002CFF5825"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "66904738-B3D0-48E2-B992-8E2F9C7C356B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "63FE445E-7FFA-4955-84C5-6E68A9820713"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9170828E-0597-4B7D-939B-84986C03A89F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "299"
+            endingLineNumber = "299"
+            landmarkName = "wateringReminderNext"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "9170828E-0597-4B7D-939B-84986C03A89F - d52ae53075dde51"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Blue_Pail.PlantDetailTableViewController.wateringReminderNext.modify : Swift.Optional&lt;Foundation.Date&gt;"
+                  moduleName = "Blue-Pail"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davidsadler/SwiftCoding/Creating/Blue-Pail/%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "29">
+               </Location>
+               <Location
+                  uuid = "9170828E-0597-4B7D-939B-84986C03A89F - b524366b8a505216"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Blue_Pail.PlantDetailTableViewController.wateringReminderNext.modify : Swift.Optional&lt;Foundation.Date&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Blue-Pail"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davidsadler/SwiftCoding/Creating/Blue-Pail/Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "299"
+                  endingLineNumber = "299"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "9170828E-0597-4B7D-939B-84986C03A89F - 3e5d896829f6a785"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Blue_Pail.PlantDetailTableViewController.init(style: __C.UITableViewStyle) -&gt; Blue_Pail.PlantDetailTableViewController"
+                  moduleName = "Blue-Pail"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davidsadler/SwiftCoding/Creating/Blue-Pail/Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "299"
+                  endingLineNumber = "299"
+                  offsetFromSymbolStart = "1198">
+               </Location>
+               <Location
+                  uuid = "9170828E-0597-4B7D-939B-84986C03A89F - c580c93357e8338f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Blue_Pail.PlantDetailTableViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; Blue_Pail.PlantDetailTableViewController"
+                  moduleName = "Blue-Pail"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davidsadler/SwiftCoding/Creating/Blue-Pail/Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "299"
+                  endingLineNumber = "299"
+                  offsetFromSymbolStart = "1105">
+               </Location>
+               <Location
+                  uuid = "9170828E-0597-4B7D-939B-84986C03A89F - 3e39cec78e6a8f8a"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Blue_Pail.PlantDetailTableViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Blue_Pail.PlantDetailTableViewController&gt;"
+                  moduleName = "Blue-Pail"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davidsadler/SwiftCoding/Creating/Blue-Pail/Blue-Pail/ViewControllers/PlantVCs/PlantDetailTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "299"
+                  endingLineNumber = "299"
+                  offsetFromSymbolStart = "1055">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

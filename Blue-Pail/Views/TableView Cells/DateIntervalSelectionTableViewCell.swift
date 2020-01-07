@@ -59,7 +59,7 @@ class DateIntervalSelectionTableViewCell: UITableViewCell {
     
     func moveButtonAndPrepareCellContents() {
         if nextReminderDate != nil {
-            remindersButtonBottomConstraint.constant = 275.0
+            remindersButtonBottomConstraint.constant = 200.0
             setupRemindersButton.titleLabel?.numberOfLines = 1
             setupRemindersButton.updateConstraints()
             nextReminderLabel.text = nextReminderDate!.stringValue()
@@ -67,6 +67,8 @@ class DateIntervalSelectionTableViewCell: UITableViewCell {
         } else {
             remindersButtonBottomConstraint.constant = 16.0
             setupRemindersButton.titleLabel?.numberOfLines = 0
+//            nextReminderDate = nil
+//            selectedInterval = nil
         }
     }
     

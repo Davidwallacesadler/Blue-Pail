@@ -55,7 +55,7 @@ extension Plant {
         self.dayToNextWater = dayToNextWater
         self.daysToNextFertilize = daysToNextFertilize ?? 0
         self.isFertilized = isFertilized ?? true
-        self.needsFertilizedFireDate = needsFertilizedFireDate ?? Date()
+        self.needsFertilizedFireDate = needsFertilizedFireDate
     }
     
 }
