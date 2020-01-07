@@ -42,7 +42,13 @@ extension UIColor {
         return UIColor(red: 221/255, green: 248/255, blue: 244/255, alpha: 1.0)
     }
     static var dryRed: UIColor {
-        return UIColor(red: 232/255, green: 154/255, blue: 157/255, alpha: 1.0)
+        return UIColor(red: 232/255, green: 25/255, blue: 32/255, alpha: 1.0)
+    }
+    static var fertilizerGreen: UIColor {
+        return UIColor(red: 90/255, green: 150/255, blue: 60/255, alpha: 1.0)
+    }
+    static var defaultBlue: UIColor {
+        return UIColor(red: 23/255, green: 81/255, blue: 255/255, alpha: 1.0)
     }
     
     // MARK: - Custom Tag Colors

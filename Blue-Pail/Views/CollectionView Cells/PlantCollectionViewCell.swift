@@ -68,6 +68,7 @@ class PlantCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Outlets
     
+    @IBOutlet weak var fertilizerStatusImageView: UIImageView!
     @IBOutlet weak var tagColorView: UIView!
     @IBOutlet weak var plantImageView: UIImageView!
     @IBOutlet weak var plantNameLabel: UILabel!

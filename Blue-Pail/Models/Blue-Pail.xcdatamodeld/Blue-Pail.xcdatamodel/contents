@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.98" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FertilizerHistory" representedClassName="FertilizerHistory" syncable="YES" codeGenerationType="class">
+        <attribute name="occurenceDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="plant" maxCount="1" deletionRule="Nullify" destinationEntity="Plant" inverseName="fertilzerHistory" inverseEntity="Plant"/>
+    </entity>
     <entity name="Plant" representedClassName="Plant" syncable="YES" codeGenerationType="class">
-        <attribute name="dayToNextWater" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="isWatered" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="needsWateredFireDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="tag" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Tag" inverseName="plants" inverseEntity="Tag" syncable="YES"/>
+        <attribute name="daysToNextFertilize" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dayToNextWater" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="isFertilized" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isWatered" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="needsFertilizedFireDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="needsWateredFireDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="fertilzerHistory" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="FertilizerHistory" inverseName="plant" inverseEntity="FertilizerHistory"/>
+        <relationship name="tag" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Tag" inverseName="plants" inverseEntity="Tag"/>
     </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
-        <attribute name="colorNumber" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="plants" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Plant" inverseName="tag" inverseEntity="Plant" syncable="YES"/>
+        <attribute name="colorNumber" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="plants" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Plant" inverseName="tag" inverseEntity="Plant"/>
     </entity>
     <elements>
-        <element name="Plant" positionX="-148.7109375" positionY="-116.53125" width="128" height="150"/>
+        <element name="Plant" positionX="-148.7109375" positionY="-116.53125" width="128" height="208"/>
         <element name="Tag" positionX="-357.0859375" positionY="-15.859375" width="128" height="88"/>
+        <element name="FertilizerHistory" positionX="-252" positionY="-36" width="128" height="73"/>
     </elements>
 </model>

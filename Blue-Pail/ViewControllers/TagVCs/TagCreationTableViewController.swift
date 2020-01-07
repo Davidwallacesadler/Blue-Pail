@@ -39,9 +39,6 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
         ViewHelper.roundCornersOf(viewLayer: pinkButton.layer, withRoundingCoefficient: 5.0)
         ViewHelper.roundCornersOf(viewLayer: selectedColorView.layer, withRoundingCoefficient: 5.0)
         
-        // NavigationBar Setup:
-        NavigationBarHelper.setupNativationBar(viewController: self)
-        
         // Gesture recognizer Setup:
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         tap.cancelsTouchesInView = false
@@ -55,24 +52,6 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
             updateElements()
         }
         
-        // didChangeThemeModeNotification observer:
-        NotificationCenter.default.addObserver(self, selector: #selector(didChangeThemeMode), name: .didChangeThemeMode, object: nil)
-        
-        self.isDarkMode = UserDefaults.standard.bool(forKey: Keys.themeMode)
-        
-    }
-    
-    override func viewDidLayoutSubviews() {
-        swapColorsToDarkForTableViewIfNeeded()
-    }
-    
-    #warning("How to relaod data with cell for rowAt with a static (interfacebuilder) tableView")
-    // MARK: - Properties
-    private var isDarkMode: Bool = UserDefaults.standard.bool(forKey: Keys.themeMode) {
-        didSet {
-            swapColorThemeIfNeeded()
-            self.tableView.reloadData()
-        }
     }
     var tagTitle: String?
     var tagColorNumber: Double?
@@ -219,92 +198,6 @@ class TagCreationTableViewController: UITableViewController, UITextFieldDelegate
         updateColorChoice(colorID: selectedTag.colorNumber)
         tagTextField.text = selectedTag.title
         self.navigationItem.title = selectedTag.title
-    }
-    
-    /// Swaps the colors of the tableView sections and cells if dark mode is enabled.
-    func swapColorsToDarkForTableViewIfNeeded() {
-        if isDarkMode {
-            for section in 0..<tableView.numberOfSections {
-                guard let tableViewSection = tableView.headerView(forSection: section) else {
-                    return
-                }
-                let headerBackgroundView = UIView(frame: tableViewSection.frame)
-                headerBackgroundView.backgroundColor = .darkModeGray
-                tableViewSection.backgroundView = headerBackgroundView
-                tableViewSection.textLabel?.textColor = .white
-            }
-            for view in self.tableView.subviews {
-                if view is UITableViewHeaderFooterView == false {
-                    view.backgroundColor = .black
-                }
-            }
-        } else {
-            for section in 0..<tableView.numberOfSections {
-                guard let tableViewSection = tableView.headerView(forSection: section) else {
-                    return
-                }
-                let headerBackgroundView = UIView(frame: tableViewSection.frame)
-                headerBackgroundView.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
-                tableViewSection.backgroundView = headerBackgroundView
-                tableViewSection.textLabel?.textColor = .black
-            }
-            for view in self.tableView.subviews {
-                if view is UITableViewHeaderFooterView == false {
-                    view.backgroundColor = .white
-                }
-            }
-        }
-    }
-    
-    /// Swaps the colors of all the elements in the view to their dark mode versions.
-    func swapColorsToDark() {
-        // Self:
-        self.view.backgroundColor = .black
-        // Navigation Bar:
-        NavigationBarHelper.setupDarkModeNavigationBar(viewController: self)
-        self.navigationItem.leftBarButtonItem?.tintColor = .white
-        self.navigationItem.rightBarButtonItem?.tintColor = .white
-        self.navigationController?.navigationBar.barStyle = .black
-        // Outlets:
-        self.tagTextField.backgroundColor = .gray
-        self.tagTextField.textColor = .white
-        let placeholderAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.white ]
-        let placeholder = NSAttributedString(string: "Please enter a title...", attributes: placeholderAttributes)
-        self.tagTextField.attributedPlaceholder = placeholder
-        self.tagTextField.keyboardAppearance = .dark
-        self.selectedColorLabel.textColor = .white
-    }
-    
-    /// Swaps the colors of all the elements in the view to their default (light) versions.
-    func swapColorsToLight() {
-        // Self:
-        self.view.backgroundColor = UIColor.white
-        // Navigation Bar:
-        NavigationBarHelper.setupNativationBar(viewController: self)
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.darkGrayBlue
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGrayBlue
-        self.navigationController?.navigationBar.barStyle = .default
-        // TableView:
-        self.tableView.backgroundColor = UIColor.white
-        // Outlets:
-        self.tagTextField.backgroundColor = UIColor.white
-        self.tagTextField.textColor = UIColor.darkGrayBlue
-        let placeHolderAttributes = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
-        let placeholder = NSAttributedString(string: "Please enter a title...", attributes: placeHolderAttributes)
-        self.tagTextField.attributedPlaceholder = placeholder
-    }
-    
-    /// Calls swapColorsToLight or swapColorsToDark depending on the set themeMode.
-    func swapColorThemeIfNeeded() {
-        if UserDefaults.standard.bool(forKey: Keys.themeMode) {
-            swapColorsToDark()
-        } else {
-            swapColorsToLight()
-        }
-    }
-    
-    @objc private func didChangeThemeMode() {
-        isDarkMode = UserDefaults.standard.bool(forKey: Keys.themeMode)
     }
 }
 

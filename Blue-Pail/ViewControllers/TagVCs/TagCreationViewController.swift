@@ -58,26 +58,16 @@ class TagCreationViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // PickerView Setup:
         self.tagCollectionPickerView.delegate = self
         self.tagCollectionPickerView.dataSource = self
         self.tagCollectionPickerView.reloadComponent(0)
-        
-        // NavigationBar Setup:
-        NavigationBarHelper.setupNativationBar(viewController: self)
         
         // Check if Tag Collection is empty:
         if tagPickerTitles.isEmpty == false {
             selectedTag = TagController.shared.getSelectedTag(givenTagTitle: tagPickerTitles[0])
             tagCollectionPickerView.selectRow(0, inComponent: 0, animated: false)
         }
-        
-        // didChangeThemeModeNotification observer:
-        NotificationCenter.default.addObserver(self, selector: #selector(didChangeThemeMode), name: .didChangeThemeMode, object: nil)
-        
-        // Theme Setup:
-        self.isDarkMode = DarkMode.shared.isDarkMode
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,11 +76,6 @@ class TagCreationViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     // MARK: - Stored Properties
     
-    private var isDarkMode: Bool = false {
-        didSet {
-            swapColorThemeIfNeeded()
-        }
-    }
     var selectedTag: Tag?
     
     // MARK: - Computed Properties
@@ -112,47 +97,6 @@ class TagCreationViewController: UIViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet weak var tagCollectionPickerView: UIPickerView!
     
     // MARK: - Methods
-    
-    /// Swaps the colors of all the elements in the view to their dark mode versions.
-    func swapColorsToDark() {
-        // Self:
-        self.view.backgroundColor = .black
-        // Navigation Controller:
-        NavigationBarHelper.setupDarkModeNavigationBar(viewController: self)
-        self.navigationItem.leftBarButtonItem?.tintColor = .white
-        self.navigationItem.rightBarButtonItem?.tintColor = .white
-        self.navigationController?.navigationBar.barStyle = .black
-        // Tab Bar:
-        self.tabBarController?.tabBar.tintColor = .white
-        self.tabBarController?.tabBar.barTintColor = .darkModeGray
-    }
-    
-    /// Swaps the colors of all the elements in the view to their default (light) versions.
-    func swapColorsToLight() {
-        // Self:
-        self.view.backgroundColor = UIColor.white
-        // Navigation Bar:
-        NavigationBarHelper.setupNativationBar(viewController: self)
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.darkGrayBlue
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGrayBlue
-        self.navigationController?.navigationBar.barStyle = .default
-        // Tab Bar:
-        self.tabBarController?.tabBar.tintColor = UIColor.darkGrayBlue
-        self.tabBarController?.tabBar.barTintColor = UIColor.mintGreen
-    }
-    
-    /// Calls swapColorsToLight or swapColorsToDark depending on the set themeMode.
-    func swapColorThemeIfNeeded() {
-        if UserDefaults.standard.bool(forKey: Keys.themeMode) {
-            swapColorsToDark()
-        } else {
-            swapColorsToLight()
-        }
-    }
-    
-    @objc private func didChangeThemeMode() {
-        isDarkMode = UserDefaults.standard.bool(forKey: Keys.themeMode)
-    }
     
     // MARK: - Navigation
     

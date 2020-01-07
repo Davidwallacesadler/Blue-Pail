@@ -38,19 +38,24 @@ extension Plant {
     // Note that isWatered defaults to true, needsWateredFireDate defaults to curent date
     convenience init(name: String?,
                      isWatered: Bool = true,
-                     needsWateredFireDate: Date = Date(),
+                     needsWateredFireDate: Date,
                      image: Data?,
                      uuid: UUID,
                      dayToNextWater: Int16,
+                     daysToNextFertilize: Int16?,
+                     isFertilized: Bool?,
+                     needsFertilizedFireDate: Date?,
                      context: NSManagedObjectContext = CoreDataStack.context) {
         self.init(context: context)
-        
         self.name = name
         self.isWatered = isWatered
         self.needsWateredFireDate = needsWateredFireDate
         self.image = image
         self.uuid = uuid
         self.dayToNextWater = dayToNextWater
+        self.daysToNextFertilize = daysToNextFertilize ?? 0
+        self.isFertilized = isFertilized ?? true
+        self.needsFertilizedFireDate = needsFertilizedFireDate
     }
     
 }

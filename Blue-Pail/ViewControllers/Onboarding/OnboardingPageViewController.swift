@@ -55,7 +55,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         // Setting the direction, dataSource protocol and background color to an off white
         setViewControllers([getStepZero()], direction: .forward, animated: false, completion: nil)
         dataSource = self
-        view.backgroundColor = UIColor(red: 247/255, green: 250/255, blue: 250/255, alpha: 250/255)
+        view.backgroundColor = UIColor(red: 220/255, green: 221/255, blue: 202/255, alpha: 1.0)
     }
     
     override func viewDidLayoutSubviews() {
