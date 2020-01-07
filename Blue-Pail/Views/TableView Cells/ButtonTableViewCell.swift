@@ -48,6 +48,7 @@ class ButtonTableViewCell: UITableViewCell {
 //            buttonImageView.image = image
 //        }
         ViewHelper.roundCornersOf(viewLayer: button.layer, withRoundingCoefficient: 5.0)
+        ViewHelper.roundCornersOf(viewLayer: buttonImageView.layer, withRoundingCoefficient: 15.0)
     }
     
 }

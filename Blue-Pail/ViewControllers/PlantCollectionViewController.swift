@@ -23,6 +23,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         if areAllPlantsWatered() {
             UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         }
+        animateConfirmationImageView(notificationKey: Keys.waterNotification)
     }
     
     // MARK: - PickerView Delegate Methods
@@ -95,6 +96,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         } else {
             PlantController.shared.fertilizePlant(plant: plant)
             self.collectionView.reloadItems(at: targetIndex)
+            animateConfirmationImageView(notificationKey: Keys.fertilizerNotification)
         }
     }
     
@@ -114,6 +116,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
             if areAllPlantsWatered() {
                 UNUserNotificationCenter.current().removeAllDeliveredNotifications()
             }
+            animateConfirmationImageView(notificationKey: Keys.waterNotification)
         } else {
             selectedIndex = targetIndex
             let todayAtFireHourMinute = DayHelper.shared.getSameTimeAsDateToday(targetDate: targetPlantFireDate)
@@ -135,6 +138,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     }
     
     // MARK: - Stored Properties
+    let confirmationImageView = UIImageView(image: UIImage(named:"confirmationIcon"))
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     private let spacing: CGFloat = 16.0
     var tempInput: UITextField?
@@ -163,7 +167,9 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     #warning("Find a more effiecent way of refreshing the collection view")
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        confirmationImageView.frame = CGRect(x: view.frame.midX - 75.0, y: view.frame.midY - 150.0, width: 150.0, height: 150.0)
+        collectionView.addSubview(confirmationImageView)
+        confirmationImageView.isHidden = true
         // Notification Access Check:
         askForNotificationAccessIfNecessary()
     
@@ -249,6 +255,14 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     
     // MARK: - Internal Methods
     
+    private func animateConfirmationImageView(notificationKey: String) {
+        if notificationKey == Keys.waterNotification {
+            confirmationImageView.tintColor = .defaultBlue
+        } else {
+            confirmationImageView.tintColor = .fertilizerGreen
+        }
+         UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: {self.confirmationImageView.isHidden = false}, completion: {completion in UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: {self.confirmationImageView.isHidden = true }, completion: nil)})
+    }
     /// Returns an array that is populated with every Plant object.
     func getAllPlants() -> [Plant] {
         let intialResult: [Plant] = []
@@ -382,6 +396,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         PlantController.shared.waterPlant(plant: plant)
         guard let index = selectedIndex else { return }
         self.collectionView.reloadItems(at: index)
+        animateConfirmationImageView(notificationKey: Keys.waterNotification)
     }
     
     func fertilizePlantEarly(action: UIAlertAction) {
@@ -389,6 +404,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
         PlantController.shared.fertilizePlant(plant: plant)
         guard let index = selectedIndex else { return }
         self.collectionView.reloadItems(at: index)
+        animateConfirmationImageView(notificationKey: Keys.fertilizerNotification)
     }
     
     /// Generates the notification access request alert if access has not been given.
@@ -457,6 +473,9 @@ extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
         if selectedPlant!.daysToNextFertilize != 0 {
             detailVC.fertilizerDayInteger = Int(selectedPlant!.daysToNextFertilize)
             detailVC.fertilizerReminderNext = selectedPlant?.needsFertilizedFireDate
+        } else {
+            detailVC.fertilizerDayInteger = nil
+            detailVC.fertilizerReminderNext = nil
         }
         detailVC.navigationItem.title = selectedPlant?.name
     } else if segue.identifier == "toShowFertilizerHistory" {

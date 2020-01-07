@@ -296,17 +296,9 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
     var plant: Plant?
     var tag: Tag?
     var plantTitle = ""
-    var wateringReminderNext: Date? = nil {
-        didSet {
-            print("watering reminder set")
-        }
-    }
+    var wateringReminderNext: Date?
     var wateringDayInteger: Int?
-    var fertilizerReminderNext: Date? = nil {
-        didSet {
-            print("Fertilizer reminder set")
-        }
-    }
+    var fertilizerReminderNext: Date? 
     var fertilizerDayInteger: Int?
     var image: UIImage?
     
