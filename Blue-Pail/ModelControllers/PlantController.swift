@@ -101,7 +101,7 @@ class PlantController : AlarmScheduler {
             cancelUserNotifications(for: plant,
                                     givenNotificationKey: Keys.waterNotificationCatagoryIdentifier)
         }
-        if newFertilizerFireDate != nil {
+        if newFertilizerFireDate != nil && plant.needsFertilizedFireDate != nil {
             cancelUserNotifications(for: plant,
                                     givenNotificationKey: Keys.fertilizerNotificationCatagoryIdentifier)
         }
