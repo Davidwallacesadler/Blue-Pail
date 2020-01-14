@@ -78,8 +78,8 @@
             filePath = "Blue-Pail/ViewControllers/PlantCollectionViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "467"
-            endingLineNumber = "467"
+            startingLineNumber = "469"
+            endingLineNumber = "469"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -94,8 +94,8 @@
             filePath = "Blue-Pail/ViewControllers/PlantCollectionViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "464"
-            endingLineNumber = "464"
+            startingLineNumber = "466"
+            endingLineNumber = "466"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -363,10 +363,104 @@
             filePath = "Blue-Pail/ViewControllers/PlantCollectionViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "357"
-            endingLineNumber = "357"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
             landmarkName = "setupCell(cell:selectedPlant:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C606BAA4-DF99-49D5-819F-FCEFA37BF9FA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Blue-Pail/ViewControllers/PlantCollectionViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
+            landmarkName = "animateConfirmationImageView(notificationKey:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C40764E2-9CED-40B0-B9EF-395CDA262B80"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Blue-Pail/ViewControllers/PlantCollectionViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
+            landmarkName = "animateConfirmationImageView(notificationKey:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C40764E2-9CED-40B0-B9EF-395CDA262B80 - fcd02906a36fc253"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Blue_Pail.PlantCollectionViewController.(animateConfirmationImageView in _E2AC86DC7B7799317FD158389235289F)(notificationKey: Swift.String) -&gt; ()"
+                  moduleName = "Blue-Pail"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davidsadler/SwiftCoding/Creating/Blue-Pail/Blue-Pail/ViewControllers/PlantCollectionViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "262"
+                  endingLineNumber = "262"
+                  offsetFromSymbolStart = "403">
+               </Location>
+               <Location
+                  uuid = "C40764E2-9CED-40B0-B9EF-395CDA262B80 - 726bf7b2f16640f7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in Blue_Pail.PlantCollectionViewController.(animateConfirmationImageView in _E2AC86DC7B7799317FD158389235289F)(notificationKey: Swift.String) -&gt; ()"
+                  moduleName = "Blue-Pail"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davidsadler/SwiftCoding/Creating/Blue-Pail/Blue-Pail/ViewControllers/PlantCollectionViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "262"
+                  endingLineNumber = "262"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "C40764E2-9CED-40B0-B9EF-395CDA262B80 - 5815441d510a4ec6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Bool) -&gt; () in Blue_Pail.PlantCollectionViewController.(animateConfirmationImageView in _E2AC86DC7B7799317FD158389235289F)(notificationKey: Swift.String) -&gt; ()"
+                  moduleName = "Blue-Pail"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davidsadler/SwiftCoding/Creating/Blue-Pail/Blue-Pail/ViewControllers/PlantCollectionViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "262"
+                  endingLineNumber = "262"
+                  offsetFromSymbolStart = "87">
+               </Location>
+               <Location
+                  uuid = "C40764E2-9CED-40B0-B9EF-395CDA262B80 - af617081b438cd81"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #2 (Swift.Bool) -&gt; () in Blue_Pail.PlantCollectionViewController.(animateConfirmationImageView in _E2AC86DC7B7799317FD158389235289F)(notificationKey: Swift.String) -&gt; ()"
+                  moduleName = "Blue-Pail"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davidsadler/SwiftCoding/Creating/Blue-Pail/Blue-Pail/ViewControllers/PlantCollectionViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "262"
+                  endingLineNumber = "262"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

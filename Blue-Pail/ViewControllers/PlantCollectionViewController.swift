@@ -138,7 +138,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     }
     
     // MARK: - Stored Properties
-    let confirmationImageView = UIImageView(image: UIImage(named:"confirmationIcon"))
+    let confirmationImageView = UIImageView(image: UIImage(named:"wateringConfirmationIcon"))
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     private let spacing: CGFloat = 16.0
     var tempInput: UITextField?
@@ -256,10 +256,10 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     // MARK: - Internal Methods
     
     private func animateConfirmationImageView(notificationKey: String) {
-        if notificationKey == Keys.waterNotification {
-            confirmationImageView.tintColor = .defaultBlue
+        if notificationKey == Keys.fertilizerNotification {
+            confirmationImageView.image = UIImage(named:"fertilizingConfirmationIcon")
         } else {
-            confirmationImageView.tintColor = .fertilizerGreen
+            confirmationImageView.image = UIImage(named:"wateringConfirmationIcon")
         }
          UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: {self.confirmationImageView.isHidden = false}, completion: {completion in UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: {self.confirmationImageView.isHidden = true }, completion: nil)})
     }

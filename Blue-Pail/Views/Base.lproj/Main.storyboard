@@ -368,12 +368,6 @@
                                         <exclude reference="ah8-hp-F5o"/>
                                         <exclude reference="naw-k4-USJ"/>
                                         <exclude reference="tYL-g6-krf"/>
-                                        <exclude reference="9cN-wG-5Ht"/>
-                                        <exclude reference="Fyd-ZX-AH3"/>
-                                        <exclude reference="MIh-Fj-qGm"/>
-                                        <exclude reference="WU8-5J-Jx7"/>
-                                        <exclude reference="edR-dE-trg"/>
-                                        <exclude reference="wAH-x7-ewn"/>
                                         <exclude reference="5tg-rt-ywE"/>
                                         <exclude reference="IXV-Nx-a9k"/>
                                         <exclude reference="Skx-GI-zkY"/>
@@ -382,6 +376,12 @@
                                         <exclude reference="pZO-GQ-SQK"/>
                                         <exclude reference="xH0-Tv-j4e"/>
                                         <exclude reference="zxo-9z-4JO"/>
+                                        <exclude reference="9cN-wG-5Ht"/>
+                                        <exclude reference="Fyd-ZX-AH3"/>
+                                        <exclude reference="MIh-Fj-qGm"/>
+                                        <exclude reference="WU8-5J-Jx7"/>
+                                        <exclude reference="edR-dE-trg"/>
+                                        <exclude reference="wAH-x7-ewn"/>
                                         <exclude reference="3A9-8y-Nxb"/>
                                         <exclude reference="6dy-TH-ZH6"/>
                                         <exclude reference="7IT-NS-P3z"/>
@@ -395,13 +395,13 @@
                                         <include reference="HlG-SH-k2M"/>
                                         <include reference="Xve-vn-sMN"/>
                                         <include reference="tYL-g6-krf"/>
-                                        <include reference="Fyd-ZX-AH3"/>
-                                        <include reference="WU8-5J-Jx7"/>
-                                        <include reference="wAH-x7-ewn"/>
                                         <include reference="IXV-Nx-a9k"/>
                                         <include reference="pZO-GQ-SQK"/>
                                         <include reference="xH0-Tv-j4e"/>
                                         <include reference="zxo-9z-4JO"/>
+                                        <include reference="Fyd-ZX-AH3"/>
+                                        <include reference="WU8-5J-Jx7"/>
+                                        <include reference="wAH-x7-ewn"/>
                                         <include reference="6dy-TH-ZH6"/>
                                         <include reference="7IT-NS-P3z"/>
                                         <include reference="mrt-sg-d0f"/>
@@ -412,13 +412,13 @@
                                         <include reference="S0c-x8-WFR"/>
                                         <include reference="ah8-hp-F5o"/>
                                         <include reference="naw-k4-USJ"/>
-                                        <include reference="9cN-wG-5Ht"/>
-                                        <include reference="MIh-Fj-qGm"/>
-                                        <include reference="edR-dE-trg"/>
                                         <include reference="5tg-rt-ywE"/>
                                         <include reference="Skx-GI-zkY"/>
                                         <include reference="Xvt-Gz-WIg"/>
                                         <include reference="mk1-IT-5Ro"/>
+                                        <include reference="9cN-wG-5Ht"/>
+                                        <include reference="MIh-Fj-qGm"/>
+                                        <include reference="edR-dE-trg"/>
                                         <include reference="3A9-8y-Nxb"/>
                                         <include reference="GbG-Wu-Pjx"/>
                                         <include reference="J1i-zz-NRJ"/>
@@ -531,13 +531,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hW5-px-BNy" userLabel="Setting Icon Image View">
-                                            <rect key="frame" x="16" y="13" width="24" height="24"/>
+                                            <rect key="frame" x="16" y="11" width="28" height="28"/>
+                                            <color key="tintColor" red="0.37647058820000001" green="0.30980392159999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="hW5-px-BNy" secondAttribute="height" multiplier="1:1" id="B7a-ro-CBf"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jg3-Vd-Ax8" userLabel="Setting Label">
-                                            <rect key="frame" x="55" y="14.666666666666664" width="270" height="21"/>
+                                            <rect key="frame" x="59" y="14.666666666666664" width="266" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -546,8 +547,8 @@
                                     <constraints>
                                         <constraint firstItem="hW5-px-BNy" firstAttribute="leading" secondItem="9Ef-zh-2zl" secondAttribute="leadingMargin" id="81P-hl-fUx"/>
                                         <constraint firstItem="Jg3-Vd-Ax8" firstAttribute="centerY" secondItem="hW5-px-BNy" secondAttribute="centerY" id="cMN-at-o52"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="hW5-px-BNy" secondAttribute="bottom" constant="2" id="eGP-cO-GbM"/>
-                                        <constraint firstItem="hW5-px-BNy" firstAttribute="top" secondItem="9Ef-zh-2zl" secondAttribute="topMargin" constant="2" id="f1B-2k-t8w"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="hW5-px-BNy" secondAttribute="bottom" id="eGP-cO-GbM"/>
+                                        <constraint firstItem="hW5-px-BNy" firstAttribute="top" secondItem="9Ef-zh-2zl" secondAttribute="topMargin" id="f1B-2k-t8w"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Jg3-Vd-Ax8" secondAttribute="trailing" constant="15" id="oHk-uc-PJ1"/>
                                         <constraint firstItem="Jg3-Vd-Ax8" firstAttribute="leading" secondItem="hW5-px-BNy" secondAttribute="trailing" constant="15" id="u9W-dx-ygW"/>
                                     </constraints>
@@ -704,7 +705,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Welcome" translatesAutoresizingMaskIntoConstraints="NO" id="nVQ-8c-x3W">
-                                <rect key="frame" x="187" y="330.66666666666669" width="1" height="1"/>
+                                <rect key="frame" x="90" y="205.66666666666663" width="195" height="251"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The best way to keep your plants watered and happy!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cW-h5-aRP">
                                 <rect key="frame" x="23" y="523.66666666666663" width="329" height="46.666666666666629"/>
@@ -746,7 +747,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Notifications" translatesAutoresizingMaskIntoConstraints="NO" id="Rwi-VG-eu9">
-                                <rect key="frame" x="187" y="330.66666666666669" width="1" height="1"/>
+                                <rect key="frame" x="66.666666666666686" y="223" width="242" height="216"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep Up To Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vWI-sW-pLr">
                                 <rect key="frame" x="90.666666666666686" y="488.66666666666669" width="194" height="35.000000000000057"/>
@@ -793,7 +794,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GetStarted" translatesAutoresizingMaskIntoConstraints="NO" id="0YI-H1-Bb2">
-                                <rect key="frame" x="187" y="330.66666666666669" width="1" height="1"/>
+                                <rect key="frame" x="55" y="210" width="265" height="242"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="skr-pA-wrD">
                                 <rect key="frame" x="50" y="603.33333333333337" width="275" height="36"/>
@@ -847,7 +848,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WaterAndTimer" translatesAutoresizingMaskIntoConstraints="NO" id="Kfh-Gq-4Wm">
-                                <rect key="frame" x="187" y="330.66666666666669" width="1" height="1"/>
+                                <rect key="frame" x="78" y="221" width="219" height="220"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aNM-zd-Z8N">
                                 <rect key="frame" x="15" y="523.66666666666663" width="345" height="93"/>
@@ -908,7 +909,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Y4f-Tr-KDW">
-                            <color key="tintColor" red="0.37743471750000002" green="0.30931613870000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.37647058823529411" green="0.30980392156862746" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="saveButtonPressed:" destination="ADt-cV-qID" id="PyM-rw-zjF"/>
                             </connections>
