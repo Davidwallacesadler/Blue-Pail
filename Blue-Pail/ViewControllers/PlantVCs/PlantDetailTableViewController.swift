@@ -362,10 +362,10 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
             self.present(noDateAlert, animated: true)
             return
         }
-        guard let selectedPlant = plant, let plantImage = image else {
+        guard let selectedPlant = plant else {
             // CREATE
             PlantController.shared.createPlant(name: plantTitle,
-                                               image: UIImage(named: Keys.noImage),
+                                               image: image,
                                                needsWateredFireDate: wateringDate,
                                                tag: tag!,
                                                wateringDayInteger: wateringDayInt,
@@ -377,7 +377,7 @@ class PlantDetailTableViewController: UITableViewController, UIPickerViewDelegat
         //UPDATE
         PlantController.shared.updatePlant(plant: selectedPlant,
                                            newName: plantTitle,
-                                           newImage: plantImage,
+                                           newImage: image,
                                            newWateringFireDate: wateringReminderNext,
                                            newTag: tag!,
                                            daysToNextWater: wateringDayInt,

@@ -168,7 +168,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         confirmationImageView.frame = CGRect(x: view.frame.midX - 75.0, y: view.frame.midY - 150.0, width: 150.0, height: 150.0)
-        collectionView.addSubview(confirmationImageView)
+        view.addSubview(confirmationImageView)
         confirmationImageView.isHidden = true
         // Notification Access Check:
         askForNotificationAccessIfNecessary()
@@ -462,7 +462,6 @@ extension PlantCollectionViewController: UICollectionViewDelegateFlowLayout {
      
  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "toEditPlant" {
-        
         guard let detailVC = segue.destination as? PlantDetailTableViewController, let plant = selectedPlant else { return }
         detailVC.plant = plant
         detailVC.plantTitle = (plant.name)!

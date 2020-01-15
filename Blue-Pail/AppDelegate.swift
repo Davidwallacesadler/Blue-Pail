@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 PlantController.shared.fertilizePlant(plant: plant)
                 break
             case Keys.oneHourSnoozeNotificationAction:
-                if userInfo[Keys.userInfoFertilizerSnooze] != nil {
+                if response.notification.request.content.categoryIdentifier == Keys.fertilizerNotificationCatagoryIdentifier {
                     PlantController.shared.snoozeReminderFor(plant: plant,
                                                              hoursForSnooze: 1,
                                                              givenNotificationName: Keys.fertilizerNotification)
@@ -60,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
                 break
             case Keys.oneDaySnoozeNotificationAction:
-                if userInfo[Keys.userInfoFertilizerSnooze] != nil {
+                if response.notification.request.content.categoryIdentifier == Keys.fertilizerNotificationCatagoryIdentifier {
                     PlantController.shared.snoozeReminderFor(plant: plant,
                                                              hoursForSnooze: 24,
                                                              givenNotificationName: Keys.fertilizerNotification)

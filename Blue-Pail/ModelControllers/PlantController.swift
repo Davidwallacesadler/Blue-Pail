@@ -62,7 +62,8 @@ class PlantController : AlarmScheduler {
         }
         let uuid = UUID()
         let plant = Plant(name: name,
-                          needsWateredFireDate: needsWateredFireDate, image: imageData,
+                          needsWateredFireDate: needsWateredFireDate,
+                          image: imageData,
                           uuid: uuid,
                           dayToNextWater: Int16(wateringDayInteger),
                           daysToNextFertilize: Int16(fertilizingDayInteger ?? 0),
@@ -277,9 +278,6 @@ extension AlarmScheduler {
             content.title = "Time To Fertilize"
             content.body = "Fertilize your \(plant.name!)."
             content.categoryIdentifier = Keys.fertilizerNotificationCatagoryIdentifier
-            if isSnoozed {
-                content.userInfo[Keys.userInfoFertilizerSnooze] = true
-            }
         default:
             return
         }
