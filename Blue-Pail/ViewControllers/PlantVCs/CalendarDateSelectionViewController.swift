@@ -105,7 +105,15 @@ class CalendarDateSelectionViewController: UIViewController, FSCalendarDelegate,
     // MARK: - Actions
     
     @IBAction func doneButtonPressed(_ sender: Any) {
-        guard let calendarDelegate = delegate, let key = reminderKey, let dateOne = firstSelectedDate, let dateTwo = secondSelectedDate else { return }
+        guard let calendarDelegate = delegate, let key = reminderKey, let dateOne = firstSelectedDate, let dateTwo = secondSelectedDate else {
+            let dismissEarlyAlert = UIAlertController(title: "Early Dismissal", message: "Are you sure you want to cancel setup?", preferredStyle: .alert)
+            dismissEarlyAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            dismissEarlyAlert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            self.present(dismissEarlyAlert, animated: true, completion: nil)
+            return
+        }
         if let intervalDays = DayHelper.shared.amountOfDaysBetweenInteger(previousDate: dateOne, futureDate: dateTwo) {
             calendarDelegate.updateDates(selectedKey: key, dateAndInterval: (dateOne,intervalDays))
             self.dismiss(animated: true, completion: nil)
