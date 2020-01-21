@@ -109,7 +109,12 @@ class SettingsTableViewController: UITableViewController {
                 // User tapped the "Share" cell:
                 let activityViewController = UIActivityViewController(activityItems: ["https://apps.apple.com/us/app/blue-pail/id1468522792?ls=1"], applicationActivities: nil)
                 activityViewController.popoverPresentationController?.sourceView = self.view
-                self.present(activityViewController, animated: true, completion: nil)
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    self.present(activityViewController, animated: true, completion: nil)
+                } else {
+                    let popup = UIPopoverController(contentViewController: activityViewController)
+                    popup.present(from: CGRect(x: self.view!.frame.size.width / 2, y: self.view!.frame.size.height / 4, width: 0, height: 0), in: self.view!, permittedArrowDirections: .any, animated: true)
+                }
             } else {
                 //User tapped the "rate" cell:
                 return
