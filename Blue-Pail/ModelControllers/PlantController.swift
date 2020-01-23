@@ -303,11 +303,11 @@ extension AlarmScheduler {
             var dateComponents: DateComponents?
             var identifier = ""
             if givenNotificationName == Keys.fertilizerNotification {
-                dateComponents = calendar.dateComponents([.day,.hour,.minute],
+                dateComponents = calendar.dateComponents([.year,.month,.day,.hour,.minute],
                                                          from: plant.needsFertilizedFireDate!)
                 identifier += "F"
             } else {
-                dateComponents = calendar.dateComponents([.day, .hour, .minute],
+                dateComponents = calendar.dateComponents([.year,.month,.day,.hour,.minute],
                                                           from: plant.needsWateredFireDate!)
                 identifier += "W"
             }

@@ -363,7 +363,7 @@ class PlantCollectionViewController: UICollectionViewController, PopupDelegate, 
                 cell.tagTitleLabel.text =  selectedPlant.needsFertilizedFireDate?.dayMonthYearValue()
             } else {
                 cell.tagNameIconImageView.tintColor = .fertilizerGreen
-                cell.tagTitleLabel.text =  DayHelper.shared.amountOfDaysBetween(previousDate: Date(), futureDate: selectedPlant.needsFertilizedFireDate!)
+                cell.tagTitleLabel.text =  DayHelper.shared.determineReadableIntervalBetweenDates(dateOne: Date(), dateTwo: selectedPlant.needsFertilizedFireDate!)
             }
            } else {
                cell.fertilizerStatusImageView.isHidden = true
